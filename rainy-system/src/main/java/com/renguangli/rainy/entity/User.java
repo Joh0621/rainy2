@@ -1,8 +1,12 @@
 package com.renguangli.rainy.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 用户实体类
@@ -13,4 +17,18 @@ import lombok.ToString;
 @Setter
 @ToString
 public class User extends BaseEntity {
+
+    private String username;
+    @JsonIgnore
+    private String password;
+    private String nickName;
+    private String avatar;
+    private LocalDate birthday;
+    private String email;
+    private String telephone;
+    private Integer status;
+    private Long loginCount;
+    private LocalDateTime usernameExpiredTime;
+    private LocalDateTime passwordExpiredTime;
+
 }

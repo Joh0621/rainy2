@@ -26,14 +26,14 @@ public class RefererFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String referer = request.getHeader(HttpHeaders.REFERER);
-        if (referer.equals("")) {
-            Result<Object> result = Result.of(ResultCode.ILLEGAL_REQUEST, referer);
-            String res = objectMapper.writeValueAsString(result);
-            servletResponse.getWriter().write(res);
-            return;
-        }
+//        HttpServletRequest request = (HttpServletRequest) servletRequest;
+//        String referer = request.getHeader(HttpHeaders.REFERER);
+//        if (referer.equals("")) {
+//            Result<Object> result = Result.of(ResultCode.ILLEGAL_REQUEST, referer);
+//            String res = objectMapper.writeValueAsString(result);
+//            servletResponse.getWriter().write(res);
+//            return;
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

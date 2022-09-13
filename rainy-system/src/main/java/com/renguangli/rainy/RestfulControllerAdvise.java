@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  */
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
+public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
 
     /**
      * 拦截系统异常
