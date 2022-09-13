@@ -12,5 +12,5 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 }

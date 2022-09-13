@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 @TableName("t_dict_item")
-public class DictItem {
+public class DictItem extends BaseEntity {
 
     @NotBlank
     private String dictCode;
