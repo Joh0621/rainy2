@@ -2,6 +2,8 @@ package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.validation.Group;
+import com.renguangli.rainy.common.validation.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,9 +25,11 @@ import javax.validation.constraints.Size;
 public class Role extends BaseEntity {
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Role.class)
     private String name;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Role.class, field = "code")
     private String code;
 
     @Positive

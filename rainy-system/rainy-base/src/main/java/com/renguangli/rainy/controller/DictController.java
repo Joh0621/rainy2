@@ -2,13 +2,15 @@ package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.renguangli.rainy.common.annotation.Log;
+import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.Dict;
 import com.renguangli.rainy.service.DictService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +51,7 @@ public class DictController {
 
     @Log(module = "字典管理", type = OperationType.ADD, detail = "'新增了字典[' + #param.name + '].'")
     @PostMapping("/dict")
-    public boolean save(@Valid @RequestBody Dict param) {
+    public boolean save(@RequestBody @Validated(Group.Add.class) Dict param) {
         return dictService.save(param);
     }
 

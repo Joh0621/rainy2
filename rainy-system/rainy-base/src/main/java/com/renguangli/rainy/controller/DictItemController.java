@@ -2,7 +2,7 @@ package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.renguangli.rainy.common.annotation.Log;
+import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;

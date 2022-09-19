@@ -2,15 +2,16 @@ package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.renguangli.rainy.common.annotation.Log;
+import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.User;
-import com.renguangli.rainy.entity.UserRoleRel;
 import com.renguangli.rainy.service.UserRoleRelService;
 import com.renguangli.rainy.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,7 @@ public class UserController {
 
     @Log(module = "用户管理", type = OperationType.ADD, detail = "'新增了用户[' + #param.name + '].'")
     @PostMapping("/user")
-    public Boolean save(@Valid @RequestBody User param) {
+    public Boolean save(@RequestBody @Validated(Group.Add.class) User param) {
         return userService.save(param);
     }
 

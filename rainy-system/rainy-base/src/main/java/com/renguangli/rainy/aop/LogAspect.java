@@ -1,7 +1,6 @@
 package com.renguangli.rainy.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.renguangli.rainy.common.annotation.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.utils.WebUtils;
 import com.renguangli.rainy.entity.OperationLog;
@@ -39,7 +38,7 @@ public class LogAspect {
     private final OperationLogService operationLogService;
 
     // 操作日志切入点
-    @Around("@annotation(com.renguangli.rainy.common.annotation.Log)")
+    @Around("@annotation(com.renguangli.rainy.aop.Log)")
     public Object printMethodExecuteTime(ProceedingJoinPoint joinPoint) throws Throwable {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();

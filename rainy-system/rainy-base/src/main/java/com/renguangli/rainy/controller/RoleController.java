@@ -2,13 +2,15 @@ package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.renguangli.rainy.common.annotation.Log;
+import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.Role;
 import com.renguangli.rainy.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +50,7 @@ public class RoleController {
 
     @Log(module = "角色管理", type = OperationType.ADD, detail = "'新增了角色[' + #param.name + '].'")
     @PostMapping("/role")
-    public Boolean save(@Valid @RequestBody Role param) {
+    public Boolean save(@RequestBody @Validated(Group.Add.class) Role param) {
         return roleService.save(param);
     }
 

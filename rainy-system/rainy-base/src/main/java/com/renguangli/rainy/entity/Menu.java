@@ -3,6 +3,8 @@ package com.renguangli.rainy.entity;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.validation.Group;
+import com.renguangli.rainy.common.validation.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,13 +28,16 @@ public class Menu extends BaseEntity {
     private Long parentId;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Menu.class)
     private String name;
+    @NotUnique(groups = Group.Add.class, entity = Menu.class, field = "path")
     private String path;
     private String component;
 
     @Positive
     private Integer type;
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Menu.class, field = "title")
     private String title;
     private String icon;
     private String url;

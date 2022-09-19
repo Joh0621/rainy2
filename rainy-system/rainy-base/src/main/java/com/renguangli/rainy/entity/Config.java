@@ -1,6 +1,8 @@
 package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.validation.Group;
+import com.renguangli.rainy.common.validation.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,9 +25,11 @@ public class Config extends BaseEntity {
     private String categoryCode;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Config.class)
     private String name;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Config.class, field = "code")
     private String code;
 
     @NotBlank

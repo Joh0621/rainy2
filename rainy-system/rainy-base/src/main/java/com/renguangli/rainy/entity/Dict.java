@@ -2,6 +2,8 @@ package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.validation.Group;
+import com.renguangli.rainy.common.validation.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,9 +27,11 @@ public class Dict extends BaseEntity {
     private String categoryCode;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Dict.class)
     private String name;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Dict.class, field = "code")
     private String code;
 
     @NotBlank

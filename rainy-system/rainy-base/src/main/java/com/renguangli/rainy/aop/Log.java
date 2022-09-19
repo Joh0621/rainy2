@@ -1,4 +1,4 @@
-package com.renguangli.rainy.common.annotation;
+package com.renguangli.rainy.aop;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

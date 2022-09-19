@@ -2,13 +2,15 @@ package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.renguangli.rainy.common.annotation.Log;
+import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.Menu;
 import com.renguangli.rainy.service.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +51,7 @@ public class MenuController {
 
     @Log(module = "菜单管理", type = OperationType.ADD, detail = "'新增了菜单[' + #param.name + '].'")
     @PostMapping("/menu")
-    public Boolean save(@Valid @RequestBody Menu param) {
+    public Boolean save(@RequestBody @Validated(Group.Add.class) Menu param) {
         return menuService.save(param);
     }
 

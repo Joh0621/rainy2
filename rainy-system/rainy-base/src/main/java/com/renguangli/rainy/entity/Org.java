@@ -3,6 +3,8 @@ package com.renguangli.rainy.entity;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.validation.Group;
+import com.renguangli.rainy.common.validation.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,9 +30,11 @@ public class Org extends BaseEntity {
     private Long parentId;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Org.class)
     private String name;
 
     @NotBlank
+    @NotUnique(groups = Group.Add.class, entity = Org.class, field = "code")
     private String code;
 
     @Positive

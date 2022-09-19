@@ -1,5 +1,6 @@
 package com.renguangli.rainy.service;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,5 +10,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BaseService<T> extends IService<T> {
 
+    boolean exists(SFunction<T, ?> sFunction, Object value);
+
+    boolean exists(Integer id, String column, Object value);
 
 }
