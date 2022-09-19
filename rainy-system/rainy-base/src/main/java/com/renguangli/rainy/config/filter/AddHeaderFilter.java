@@ -30,7 +30,7 @@ public class AddHeaderFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         // 1.从字典中查询响应头列表
-        List<DictItem> dictItems = dictItemService.listByDictCode(DictConstants.RESPONSE_HEADER);
+        List<DictItem> dictItems = dictItemService.listByDictCode(DictConstants.CODE_RESPONSE_HEADER);
         // 2.设置响应头，可以设置跨域和其他安全响应头
         for (DictItem dictItem : dictItems) {
             response.setHeader(dictItem.getCode(), dictItem.getValue());

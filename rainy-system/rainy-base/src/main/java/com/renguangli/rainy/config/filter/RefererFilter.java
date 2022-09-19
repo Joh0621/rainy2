@@ -1,15 +1,11 @@
 package com.renguangli.rainy.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.renguangli.rainy.common.Result;
-import com.renguangli.rainy.common.ResultCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

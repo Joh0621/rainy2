@@ -1,7 +1,6 @@
 package com.renguangli.rainy.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.common.annotation.Log;
 import com.renguangli.rainy.common.constant.OperationType;

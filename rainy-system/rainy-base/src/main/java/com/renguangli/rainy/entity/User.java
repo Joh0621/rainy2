@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @TableName("t_user")
 public class User extends BaseEntity {
 
+    private Long orgId;
     private String username;
     @JsonIgnore
     private String password;

@@ -11,6 +11,6 @@ public interface DictConstants {
     String CONFIG_CATEGORY_SYSTEM = "system";
 
     /** 响应头 */
-    String RESPONSE_HEADER = "system";
+    String CODE_RESPONSE_HEADER = "sys_response_header";
 
 }

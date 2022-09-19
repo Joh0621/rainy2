@@ -1,15 +1,9 @@
 package com.renguangli.rainy.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.renguangli.rainy.entity.User;
 import com.renguangli.rainy.mapper.UserMapper;
 import com.renguangli.rainy.service.UserService;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * data-middle-platform

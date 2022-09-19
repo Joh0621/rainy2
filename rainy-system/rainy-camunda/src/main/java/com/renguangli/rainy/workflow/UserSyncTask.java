@@ -9,7 +9,6 @@ import com.renguangli.rainy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.Group;
-import org.camunda.bpm.engine.identity.GroupQuery;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

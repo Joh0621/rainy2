@@ -14,9 +14,9 @@ import java.util.List;
 @Data
 public class IdNamesParam {
 
-    @NotEmpty
-    private List<Integer> ids;
-
+    private Long id;
+    private String name;
+    private List<Long> ids;
     private List<String> names;
 
 }

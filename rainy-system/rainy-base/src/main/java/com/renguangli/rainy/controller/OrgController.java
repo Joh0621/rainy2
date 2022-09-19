@@ -6,7 +6,6 @@ import com.renguangli.rainy.common.annotation.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
-import com.renguangli.rainy.entity.Config;
 import com.renguangli.rainy.entity.Org;
 import com.renguangli.rainy.service.OrgService;
 import lombok.RequiredArgsConstructor;
