@@ -13,7 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>com.renguangli</groupId>
-            <artifactId>rainy-system</artifactId>
+            <artifactId>rainy-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.renguangli</groupId>
+            <artifactId>rainy-camunda</artifactId>
         </dependency>
     </dependencies>
 
@@ -22,6 +26,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.renguangli.rainy.RainyApplication</mainClass>
+                    <classifier>exec</classifier>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
