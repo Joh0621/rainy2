@@ -45,7 +45,7 @@ public class BaseEntity {
     private Boolean delFlag;
 
     @JsonIgnore
-    public String getStringId(){
+    public String getStringId() {
         return String.valueOf(this.id);
     }
 

@@ -38,10 +38,10 @@ public class MybatisPlusConfiguration {
     }
 
     /**
-     *  自动填充时间：创建时间和更新时间,创建人更新人，删除标志
+     * 自动填充时间：创建时间和更新时间,创建人更新人，删除标志
      */
     @Bean
-    public MetaObjectHandler metaObjectHandler(){
+    public MetaObjectHandler metaObjectHandler() {
         return new MetaObjectHandler() {
             @Override
             public void insertFill(MetaObject metaObject) {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -57,13 +56,13 @@ public class DeviceController {
 
     @Log(module = "设备管理", type = OperationType.DEL, detail = "'删除了设备[' + #param.names + '].'")
     @PostMapping("/devices")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return deviceService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "设备管理", type = OperationType.UPDATE, detail = "'更新了设备[' + #param.name + '].'")
     @PostMapping("/device/update")
-    public Boolean update(@Valid @RequestBody Device param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Device param) {
         return deviceService.updateById(param);
     }
 

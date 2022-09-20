@@ -1,17 +1,12 @@
 package com.renguangli.rainy.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.renguangli.rainy.entity.UserRoleRel;
 import com.renguangli.rainy.mapper.UserRoleRelMapper;
 import com.renguangli.rainy.service.UserRoleRelService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * data-middle-platform
@@ -40,7 +35,7 @@ public class UserRoleRelServiceImpl extends BaseServiceImpl<UserRoleRelMapper, U
     /**
      * 给用户分配角色
      *
-     * @param userId 用户id
+     * @param userId  用户id
      * @param roleIds 角色id列表
      * @return {@link Boolean}
      */

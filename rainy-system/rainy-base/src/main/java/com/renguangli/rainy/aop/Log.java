@@ -13,26 +13,35 @@ public @interface Log {
 
     /**
      * 系统模块
+     *
      * @return string
      */
     String module() default "";
+
     /**
      * 操作类型
+     *
      * @return string
      */
     String type() default "";
+
     /**
      * 操作详情
+     *
      * @return string
      */
     String detail() default "";
+
     /**
      * 是否保存请求参数
+     *
      * @return string
      */
     boolean paramSaved() default true;
+
     /**
      * 是否保存响应结果
+     *
      * @return string
      */
     boolean resSaved() default true;

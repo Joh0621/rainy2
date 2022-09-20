@@ -1,7 +1,6 @@
 package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.renguangli.rainy.common.constant.CommonConstants;
 import com.renguangli.rainy.common.validation.Group;

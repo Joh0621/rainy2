@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class DictItemController {
 
     @Log(module = "字典项管理", type = OperationType.ADD, detail = "'新增了字典项[' + #param.value + '].'")
     @PostMapping("/dictItem")
-    public boolean save( @RequestBody @Validated(Group.Add.class) DictItem param) {
+    public boolean save(@RequestBody @Validated(Group.Add.class) DictItem param) {
         return dictItemService.save(param);
     }
 

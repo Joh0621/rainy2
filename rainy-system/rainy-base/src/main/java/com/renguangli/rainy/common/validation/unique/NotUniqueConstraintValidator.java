@@ -14,7 +14,7 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author Created by renguangli at 2022/9/19 21:40
  */
-public class NotUniqueConstraintValidator implements ConstraintValidator<NotUnique,String> {
+public class NotUniqueConstraintValidator implements ConstraintValidator<NotUnique, String> {
 
     private static final String UNIQUE_SQL = "select count(*) from {} where {} = {0}";
     private static final String UNIQUE_SQL_EXCLUDE_SELF = "select count(*) from {} where {} = {0} and id != {1}";

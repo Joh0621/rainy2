@@ -40,7 +40,7 @@ public class OrgServiceImpl extends BaseServiceImpl<OrgMapper, Org> implements O
      * @return {@link List}<{@link Org}>
      */
     @Override
-    public List<Org> list(Org org){
+    public List<Org> list(Org org) {
         List<Org> orgs = new ArrayList<>();
         Org one = this.getById(org.getId());
         if (one == null) {
@@ -80,8 +80,9 @@ public class OrgServiceImpl extends BaseServiceImpl<OrgMapper, Org> implements O
 
     /**
      * 递归查找子节点下的所有节点列表
+     *
      * @param parentId 父节点id
-     * @param orgs 列表
+     * @param orgs     列表
      * @return 子节点下的节点列表
      */
     private List<Org> listById(Long parentId, List<Org> orgs) {

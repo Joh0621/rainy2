@@ -91,7 +91,7 @@ public class LogAspect {
     }
 
 
-    public String resolveSpEL(String spELStr, Method method, Object[] args){
+    public String resolveSpEL(String spELStr, Method method, Object[] args) {
         ExpressionParser expressionParser = new SpelExpressionParser();
         ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
         EvaluationContext context = new StandardEvaluationContext();
@@ -107,6 +107,6 @@ public class LogAspect {
             return expressionParser.parseExpression(spELStr)
                     .getValue(context, String.class);
         }
-        return  spELStr;
+        return spELStr;
     }
 }

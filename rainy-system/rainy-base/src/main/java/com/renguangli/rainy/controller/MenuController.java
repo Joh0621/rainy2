@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +34,7 @@ public class MenuController {
 
     @Log(module = "菜单管理", type = OperationType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/menus")
-    public Page<Menu> list(Page<Menu> page, Menu param){
+    public Page<Menu> list(Page<Menu> page, Menu param) {
         return menuService.lambdaQuery()
                 .eq(StrUtil.isNotBlank(param.getName()), Menu::getName, param.getName())
                 .eq(Objects.nonNull(param.getType()), Menu::getType, param.getType())

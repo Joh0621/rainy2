@@ -7,10 +7,14 @@ package com.renguangli.rainy.common.constant;
  */
 public interface DictConstants {
 
-    /** 系统配置分类 */
+    /**
+     * 系统配置分类
+     */
     String CONFIG_CATEGORY_SYSTEM = "system";
 
-    /** 响应头 */
+    /**
+     * 响应头
+     */
     String CODE_RESPONSE_HEADER = "sys_response_header";
 
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -55,13 +54,13 @@ public class PointController {
 
     @Log(module = "点码管理", type = OperationType.DEL, detail = "'删除了点码[' + #param.names + '].'")
     @PostMapping("/points")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return pointService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "点码管理", type = OperationType.UPDATE, detail = "'更新了点码[' + #param.name + '].'")
     @PostMapping("/points/update")
-    public Boolean update(@Valid @RequestBody Point param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Point param) {
         return pointService.updateById(param);
     }
 

@@ -10,8 +10,8 @@ import java.lang.annotation.*;
  * @author Created by renguangli at 2022/9/19 21:39
  */
 @Documented
-@Constraint(validatedBy = { NotUniqueConstraintValidator.class})
-@Target({ElementType.FIELD })
+@Constraint(validatedBy = {NotUniqueConstraintValidator.class})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotUnique {
 

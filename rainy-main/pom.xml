@@ -15,10 +15,15 @@
             <groupId>com.renguangli</groupId>
             <artifactId>rainy-base</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.renguangli</groupId>-->
-<!--            <artifactId>rainy-camunda</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.renguangli</groupId>-->
+        <!--            <artifactId>rainy-camunda</artifactId>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.renguangli</groupId>
+            <artifactId>rainy-dataway</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

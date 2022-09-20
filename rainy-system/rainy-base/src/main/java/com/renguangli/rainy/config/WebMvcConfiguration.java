@@ -22,7 +22,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public Validator validator(){
+    public Validator validator() {
         return new RainyValidator();
     }
 }

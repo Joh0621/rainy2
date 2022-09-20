@@ -40,15 +40,15 @@ public final class DateUtils {
         return DateTimeFormatter.ofPattern(pattern);
     }
 
-    public static LocalDateTime get5Datetime(){
+    public static LocalDateTime get5Datetime() {
         return getDatetime(5);
     }
 
-    public static LocalDateTime get15Datetime(){
+    public static LocalDateTime get15Datetime() {
         return getDatetime(15);
     }
 
-    public static LocalDateTime getDatetime(int interval){
+    public static LocalDateTime getDatetime(int interval) {
         LocalDateTime now = LocalDateTime.now();
         int minute = now.getMinute();
         int i = minute / interval * interval;

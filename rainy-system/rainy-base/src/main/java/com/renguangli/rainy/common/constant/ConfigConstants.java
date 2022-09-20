@@ -7,15 +7,25 @@ package com.renguangli.rainy.common.constant;
  */
 public interface ConfigConstants {
 
-    /** 头像上传路径 */
+    /**
+     * 头像上传路径
+     */
     String AVATAR_UPLOAD_PATH = "avatar_upload_path";
-    /** 重置密码 */
+    /**
+     * 重置密码
+     */
     String RESET_PASSWORD = "reset_password";
-    /** mail */
+    /**
+     * mail
+     */
     String MAIL_CONFIG = "mail_config";
-    /** 日志保留天数 */
+    /**
+     * 日志保留天数
+     */
     String LOG_RETENTION_DAYS = "log_retention_days";
-    /** 算法 sm4 密钥 */
+    /**
+     * 算法 sm4 密钥
+     */
     String SM4_KEY = "sm4_key";
 
 }

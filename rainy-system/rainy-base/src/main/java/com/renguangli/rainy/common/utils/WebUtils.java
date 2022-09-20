@@ -30,11 +30,11 @@ public final class WebUtils {
 
     private static final String USER_INFO_KEY = "userinfo";
 
-    public static String getRequestURI(){
+    public static String getRequestURI() {
         return getRequest().getRequestURI();
     }
 
-    public static String getRequestMethod(){
+    public static String getRequestMethod() {
         return getRequest().getMethod();
     }
 
@@ -43,7 +43,7 @@ public final class WebUtils {
      *
      * @return the browser
      */
-    public static String getBrowser(){
+    public static String getBrowser() {
         UserAgent userAgent = getUserAgent();
         if (userAgent == null) {
             return UNKNOWN_ZH;
@@ -60,7 +60,7 @@ public final class WebUtils {
      *
      * @return the browser
      */
-    public static String getOs(){
+    public static String getOs() {
         UserAgent userAgent = getUserAgent();
         if (userAgent == null) {
             return UNKNOWN_ZH;
@@ -72,12 +72,12 @@ public final class WebUtils {
         return name;
     }
 
-    public static UserAgent getUserAgent(){
+    public static UserAgent getUserAgent() {
         String userAgentStr = getRequest().getHeader(HttpHeaders.USER_AGENT);
         return UserAgentUtil.parse(userAgentStr);
     }
 
-    public static String getRemoteIp(){
+    public static String getRemoteIp() {
         HttpServletRequest request = getRequest();
         for (String header : ipHeaders) {
             String ip = request.getHeader(header);
@@ -95,6 +95,7 @@ public final class WebUtils {
 
     /**
      * 从上下文中获取 HttpServletRequest
+     *
      * @return HttpServletRequest
      */
     public static String getContextPath() {
@@ -103,6 +104,7 @@ public final class WebUtils {
 
     /**
      * 从上下文中获取 HttpServletRequest
+     *
      * @return HttpServletRequest
      */
     public static HttpServletRequest getRequest() {

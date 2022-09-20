@@ -17,7 +17,8 @@ public class Result<T> {
     private String message;
     private T data;
 
-    public Result() {}
+    public Result() {
+    }
 
     public Result(int code, boolean success, String message, T data) {
         this.code = code;

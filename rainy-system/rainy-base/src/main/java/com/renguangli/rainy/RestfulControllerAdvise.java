@@ -60,6 +60,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
 
     /**
      * 请求方法不支持
+     *
      * @param e HttpRequestMethodNotSupportedException
      * @return Result
      */
@@ -104,7 +105,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
      * 封装响应体
      */
     @Override
-    public Object beforeBodyWrite(Object body, @NonNull MethodParameter returnType, @NonNull MediaType selectedContentType,@NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, @NonNull MethodParameter returnType, @NonNull MediaType selectedContentType, @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
         if (body instanceof Result) {
             return body;
         }

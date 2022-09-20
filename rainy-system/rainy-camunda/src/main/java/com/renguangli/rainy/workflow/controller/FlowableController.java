@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/flowable")
 public class FlowableController {
 
-    public Object getTasks(){
+    public Object getTasks() {
         return null;
     }
 }

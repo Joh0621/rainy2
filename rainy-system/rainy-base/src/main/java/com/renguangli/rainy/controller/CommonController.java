@@ -26,7 +26,7 @@ public class CommonController {
     private final ConfigService configService;
 
     @GetMapping("/common")
-    public Map<String, Object> common(){
+    public Map<String, Object> common() {
         Map<String, Object> data = new LinkedHashMap<>();
         // 1.字典树
         data.put("dictTree", dictService.getDictTree());

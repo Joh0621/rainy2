@@ -78,6 +78,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.renguangli</groupId>
+                <artifactId>rainy-dataway</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.rainy</groupId>
                 <artifactId>rainy-mybatis-crypto</artifactId>
                 <version>${project.version}</version>

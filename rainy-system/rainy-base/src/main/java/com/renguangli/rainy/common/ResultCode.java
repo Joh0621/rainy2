@@ -7,7 +7,9 @@ package com.renguangli.rainy.common;
  */
 public enum ResultCode {
 
-    /** success */
+    /**
+     * success
+     */
     SUCCESS(200, "操作成功！"),
 
     ILLEGAL_REQUEST(400, "非法请求，未知请求来源,referer:{}"),

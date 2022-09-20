@@ -28,7 +28,7 @@ public class UserSyncTask {
     private final UserService userService;
 
     @PostConstruct
-    public void run(){
+    public void run() {
         List<Org> orgList = orgService.list();
         for (Org org : orgList) {
             // 1.同步用户组

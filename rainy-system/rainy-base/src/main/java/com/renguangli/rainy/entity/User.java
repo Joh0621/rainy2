@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 

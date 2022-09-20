@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class PositionController {
 
     @Log(module = "职位管理", type = OperationType.DEL, detail = "'删除了职位[' + #param.names + '].'")
     @PostMapping("/positions")
-    public Boolean remove(@RequestBody  @Validated(Group.Del.class) IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return positionService.lambdaUpdate()
                 .in(Position::getId, param.getIds())
                 .set(Position::getDelFlag, true)

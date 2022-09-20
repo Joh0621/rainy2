@@ -5,17 +5,18 @@ import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.LoginLog;
 import com.renguangli.rainy.entity.OperationLog;
 import com.renguangli.rainy.service.OperationLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class OperationLogController {
 
     @Log(module = "登陆日志管理", type = OperationType.DEL, detail = "'删除了登陆日志[' + #param.names + '].'")
     @PostMapping("/operationLogs")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return operationLogService.removeBatchByIds(param.getIds());
     }
 
