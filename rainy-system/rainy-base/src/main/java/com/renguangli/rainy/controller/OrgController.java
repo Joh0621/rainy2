@@ -70,7 +70,7 @@ public class OrgController {
 
     @Log(module = "组织管理", type = OperationType.DEL, detail = "'删除了组织[' + #param.names + '].'")
     @PostMapping("/orgs")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return orgService.lambdaUpdate()
                 .in(Org::getId, param.getIds())
                 .set(Org::getDelFlag, true)
@@ -79,7 +79,7 @@ public class OrgController {
 
     @Log(module = "组织管理", type = OperationType.UPDATE, detail = "'更新了组织[' + #param.name + '].'")
     @PostMapping("/org/update")
-    public Boolean update(@Valid @RequestBody Org param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Org param) {
         return orgService.updateById(param);
     }
 

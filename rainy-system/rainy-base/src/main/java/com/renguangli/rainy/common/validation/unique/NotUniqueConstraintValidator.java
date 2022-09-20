@@ -1,8 +1,10 @@
-package com.renguangli.rainy.common.validation;
+package com.renguangli.rainy.common.validation.unique;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.toolkit.SqlRunner;
+import com.renguangli.rainy.common.constant.CommonConstants;
+import com.renguangli.rainy.common.utils.WebUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,8 +16,8 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class NotUniqueConstraintValidator implements ConstraintValidator<NotUnique,String> {
 
-    private static final String EDIT_URL_PREFIX = "update";
     private static final String UNIQUE_SQL = "select count(*) from {} where {} = {0}";
+    private static final String UNIQUE_SQL_EXCLUDE_SELF = "select count(*) from {} where {} = {0} and id != {1}";
 
     private String tableName;
     private String field;
@@ -30,13 +32,13 @@ public class NotUniqueConstraintValidator implements ConstraintValidator<NotUniq
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        Object id = WebUtils.getRequest().getAttribute(CommonConstants.ID);
+        if (id != null) {
+            String sql = StrUtil.format(UNIQUE_SQL_EXCLUDE_SELF, tableName, field);
+            return SqlRunner.db().selectCount(sql, value, id) <= 0;
+        }
         String sql = StrUtil.format(UNIQUE_SQL, tableName, field);
         long count = SqlRunner.db().selectCount(sql, value);
-        // todo 判断是新增还是更新(如何判断是更新还是新增以及获取更新的id）
-//        String requestURI = WebUtils.getRequestURI();
-//        if (requestURI.contains(EDIT_URL_PREFIX)) {
-//            return count > 0;
-//        }
         return count <= 0;
     }
 

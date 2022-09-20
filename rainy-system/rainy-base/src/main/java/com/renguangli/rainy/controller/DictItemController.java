@@ -6,9 +6,11 @@ import com.renguangli.rainy.aop.Log;
 import com.renguangli.rainy.common.constant.OperationType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
+import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.entity.DictItem;
 import com.renguangli.rainy.service.DictItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,19 +51,19 @@ public class DictItemController {
 
     @Log(module = "字典项管理", type = OperationType.ADD, detail = "'新增了字典项[' + #param.value + '].'")
     @PostMapping("/dictItem")
-    public boolean save(@Valid @RequestBody DictItem param) {
+    public boolean save( @RequestBody @Validated(Group.Add.class) DictItem param) {
         return dictItemService.save(param);
     }
 
     @Log(module = "字典项管理", type = OperationType.DEL, detail = "'删除了字典项[' + #param.names + '].'")
     @PostMapping("/dictItems")
-    public boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return dictItemService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "字典项管理", type = OperationType.UPDATE, detail = "'更新了字典项[' + #param.value + '].'")
     @PostMapping("/dictItem/update")
-    public boolean update(@Valid @RequestBody DictItem param) {
+    public boolean update(@RequestBody @Validated(Group.Edit.class) DictItem param) {
         return dictItemService.updateById(param);
     }
 

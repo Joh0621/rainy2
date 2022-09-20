@@ -3,8 +3,9 @@ package com.renguangli.rainy.entity;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.constant.CommonConstants;
 import com.renguangli.rainy.common.validation.Group;
-import com.renguangli.rainy.common.validation.NotUnique;
+import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,7 +24,6 @@ import javax.validation.constraints.*;
 @TableName("t_menu")
 public class Menu extends BaseEntity {
 
-    @NotNull
     @PositiveOrZero
     private Long parentId;
 
@@ -32,6 +32,7 @@ public class Menu extends BaseEntity {
     private String name;
     @NotUnique(groups = Group.Add.class, entity = Menu.class, field = "path")
     private String path;
+    @NotBlank
     private String component;
 
     @Positive
@@ -45,14 +46,13 @@ public class Menu extends BaseEntity {
     private String permission;
 
     @NotNull
-    @TableField("`show`")
     private Boolean isShow;
 
     @Positive
     @OrderBy(asc = true)
-    private Boolean sort;
+    private Integer sort;
 
-    @Size(max = 128)
+    @Size(max = CommonConstants.MAX_SIZE)
     private String description;
 
 }

@@ -56,13 +56,13 @@ public class RoleController {
 
     @Log(module = "角色管理", type = OperationType.DEL, detail = "'删除了角色[' + #param.names + '].'")
     @PostMapping("/roles")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return roleService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "角色管理", type = OperationType.UPDATE, detail = "'更新了角色[' + #param.name + '].'")
     @PostMapping("/role/update")
-    public Boolean update(@Valid @RequestBody Role param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Role param) {
         return roleService.updateById(param);
     }
 

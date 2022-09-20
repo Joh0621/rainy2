@@ -3,11 +3,13 @@ package com.renguangli.rainy.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.renguangli.rainy.common.validation.Group;
-import com.renguangli.rainy.common.validation.NotUnique;
+import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -23,9 +25,11 @@ import java.time.LocalDateTime;
 public class User extends BaseEntity {
 
     private Long orgId;
+    @NotNull
     @NotUnique(groups = Group.Add.class, entity = User.class, field = "username")
     private String username;
     @JsonIgnore
+    @NotNull
     private String password;
     @NotUnique(groups = Group.Add.class, entity = User.class, field = "nickName")
     private String nickName;
@@ -33,6 +37,7 @@ public class User extends BaseEntity {
     private LocalDate birthday;
     private String email;
     private String telephone;
+    @NotNull
     private Integer status;
     private Long loginCount;
     private LocalDateTime usernameExpiredTime;

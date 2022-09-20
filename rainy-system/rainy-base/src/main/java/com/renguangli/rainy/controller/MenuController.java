@@ -57,13 +57,13 @@ public class MenuController {
 
     @Log(module = "菜单管理", type = OperationType.DEL, detail = "'删除了菜单[' + #param.names + '].'")
     @PostMapping("/menus")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return menuService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "菜单管理", type = OperationType.UPDATE, detail = "'更新了菜单[' + #param.name + '].'")
     @PostMapping("/menu/update")
-    public Boolean update(@Valid @RequestBody Menu param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Menu param) {
         return menuService.updateById(param);
     }
 

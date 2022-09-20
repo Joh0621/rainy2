@@ -57,7 +57,7 @@ public class ConfigController {
 
     @Log(module = "配置管理", type = OperationType.DEL, detail = "'删除了配置[' + #param.names + '].'")
     @PostMapping("/configs")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return configService.lambdaUpdate()
                 .in(Config::getId, param.getIds())
                 .set(Config::getDelFlag, true)
@@ -66,7 +66,7 @@ public class ConfigController {
 
     @Log(module = "配置管理", type = OperationType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
     @PostMapping("/config/update")
-    public Boolean update(@Valid @RequestBody Config param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Config param) {
         return configService.updateById(param);
     }
 

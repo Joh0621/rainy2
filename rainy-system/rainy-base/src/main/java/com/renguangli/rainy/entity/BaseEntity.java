@@ -2,10 +2,12 @@ package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.renguangli.rainy.common.validation.Group;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 @ToString
 public class BaseEntity {
 
+    @Null(groups = {Group.Add.class})
     @TableId(type = IdType.AUTO)
     private Long id;
 

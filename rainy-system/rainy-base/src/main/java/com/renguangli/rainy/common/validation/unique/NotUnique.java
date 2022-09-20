@@ -1,4 +1,4 @@
-package com.renguangli.rainy.common.validation;
+package com.renguangli.rainy.common.validation.unique;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

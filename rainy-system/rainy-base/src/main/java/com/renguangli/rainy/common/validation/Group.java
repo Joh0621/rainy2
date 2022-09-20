@@ -10,15 +10,20 @@ public interface Group {
     /**
      * 分组校验添加
      */
-    public interface Add {}
+    interface Add {}
 
     /**
      * 分组校验编辑/更新
      */
-    public interface Edit {}
+    interface Edit {}
 
     /**
      * 分组校验删除
      */
-    public interface Del {}
+    interface Del {}
+
+    /**
+     * 分组校验: 分配菜单或者分配角色
+     */
+    interface ASSIGN {}
 }

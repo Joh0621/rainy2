@@ -57,7 +57,7 @@ public class PositionController {
 
     @Log(module = "职位管理", type = OperationType.DEL, detail = "'删除了职位[' + #param.names + '].'")
     @PostMapping("/positions")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody  @Validated(Group.Del.class) IdNamesParam param) {
         return positionService.lambdaUpdate()
                 .in(Position::getId, param.getIds())
                 .set(Position::getDelFlag, true)
@@ -66,7 +66,7 @@ public class PositionController {
 
     @Log(module = "职位管理", type = OperationType.UPDATE, detail = "'更新了职位[' + #param.name + '].'")
     @PostMapping("/position/update")
-    public Boolean update(@Valid @RequestBody Position param) {
+    public Boolean update(@RequestBody @Validated(Group.Edit.class) Position param) {
         return positionService.updateById(param);
     }
 

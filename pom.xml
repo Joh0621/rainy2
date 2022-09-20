@@ -31,6 +31,7 @@
         <lombok.version>1.18.24</lombok.version>
         <druid.version>1.2.12</druid.version>
         <flowable.version>6.7.2</flowable.version>
+        <dataway.version>4.2.5</dataway.version>
     </properties>
 
     <dependencies>
@@ -81,7 +82,17 @@
                 <artifactId>rainy-mybatis-crypto</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <!-- 查看最新版本：https://mvnrepository.com/artifact/net.hasor/hasor-spring -->
+            <dependency>
+                <groupId>net.hasor</groupId>
+                <artifactId>hasor-spring</artifactId>
+                <version>${dataway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.hasor</groupId>
+                <artifactId>hasor-dataway</artifactId>
+                <version>${dataway.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
             <dependency>
                 <groupId>com.alibaba</groupId>

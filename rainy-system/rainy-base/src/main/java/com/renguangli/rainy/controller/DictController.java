@@ -57,13 +57,13 @@ public class DictController {
 
     @Log(module = "字典管理", type = OperationType.DEL, detail = "'删除了字典[' + #param.names + '].'")
     @PostMapping("/dicts")
-    public boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return dictService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "字典管理", type = OperationType.UPDATE, detail = "'更新了字典[' + #param.name + '].'")
     @PostMapping("/dict/update")
-    public boolean update(@Valid @RequestBody Dict param) {
+    public boolean update(@RequestBody @Validated(Group.Edit.class) Dict param) {
         return dictService.updateById(param);
     }
 

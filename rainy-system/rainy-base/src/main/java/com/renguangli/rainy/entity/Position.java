@@ -2,8 +2,9 @@ package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.constant.CommonConstants;
 import com.renguangli.rainy.common.validation.Group;
-import com.renguangli.rainy.common.validation.NotUnique;
+import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,18 +25,18 @@ import javax.validation.constraints.Size;
 public class Position extends BaseEntity {
 
     @NotBlank
-    @NotUnique(groups = Group.Add.class, entity = Position.class)
+    @NotUnique(groups = {Group.Add.class, Group.Edit.class}, entity = Position.class)
     private String name;
 
     @NotBlank
-    @NotUnique(groups = Group.Add.class, entity = Position.class, field = "code")
+    @NotUnique(groups = {Group.Add.class, Group.Edit.class}, entity = Position.class, field = "code")
     private String code;
 
     @Positive
     @OrderBy(asc = true)
     private Integer sort;
 
-    @Size(max = 128)
+    @Size(max = CommonConstants.MAX_SIZE)
     private String description;
 
 }

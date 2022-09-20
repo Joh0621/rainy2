@@ -3,7 +3,9 @@ package com.renguangli.rainy.common.param;
 import com.renguangli.rainy.common.validation.Group;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,9 +17,10 @@ import java.util.List;
 @Data
 public class IdNamesParam {
 
+    @NotNull(groups = Group.ASSIGN.class)
     private Long id;
     private String name;
-    @NotEmpty(groups = {Group.Del.class})
+    @NotEmpty(groups = {Group.Del.class, Group.ASSIGN.class})
     private List<Long> ids;
     private List<String> names;
 

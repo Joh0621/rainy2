@@ -2,8 +2,9 @@ package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.constant.CommonConstants;
 import com.renguangli.rainy.common.validation.Group;
-import com.renguangli.rainy.common.validation.NotUnique;
+import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -41,6 +42,6 @@ public class Dict extends BaseEntity {
     @OrderBy(asc = true)
     private Integer sort;
 
-    @Size(max = 128)
+    @Size(max = CommonConstants.MAX_SIZE)
     private String description;
 }

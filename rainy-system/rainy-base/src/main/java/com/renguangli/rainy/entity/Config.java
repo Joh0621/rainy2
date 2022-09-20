@@ -1,8 +1,9 @@
 package com.renguangli.rainy.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.renguangli.rainy.common.constant.CommonConstants;
 import com.renguangli.rainy.common.validation.Group;
-import com.renguangli.rainy.common.validation.NotUnique;
+import com.renguangli.rainy.common.validation.unique.NotUnique;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -38,7 +39,7 @@ public class Config extends BaseEntity {
     @NotBlank
     private String value;
 
-    @Size(max = 128)
+    @Size(max = CommonConstants.MAX_SIZE)
     private String description;
 
 }

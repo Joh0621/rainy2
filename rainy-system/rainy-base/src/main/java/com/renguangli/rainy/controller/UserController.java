@@ -56,13 +56,13 @@ public class UserController {
 
     @Log(module = "用户管理", type = OperationType.DEL, detail = "'删除了用户[' + #param.names + '].'")
     @PostMapping("/users")
-    public Boolean remove(@RequestBody @Valid IdNamesParam param) {
+    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return userService.removeBatchByIds(param.getIds());
     }
 
     @Log(module = "用户管理", type = OperationType.UPDATE, detail = "'更新了用户[' + #param.name + '].'")
     @PostMapping("/user/update")
-    public Boolean update(@Valid @RequestBody User param) {
+    public Boolean update( @RequestBody @Validated(Group.Edit.class) User param) {
         return userService.updateById(param);
     }
 
@@ -74,7 +74,7 @@ public class UserController {
 
     @Log(module = "用户管理", type = OperationType.ADD, detail = "'给用户[' + #param.name + ']分配了角色[' + #param.names + '].'")
     @PostMapping("/user/roles/assign")
-    public Boolean assignRoles(@RequestBody @Valid IdNamesParam param){
+    public Boolean assignRoles(@RequestBody  @Validated(Group.ASSIGN.class) IdNamesParam param){
         return userRoleRelService.assignRoles(param.getId() ,param.getIds());
     }
 
