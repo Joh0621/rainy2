@@ -1,5 +1,6 @@
 package com.renguangli.rainy.common.param;
 
+import com.renguangli.rainy.common.validation.Group;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,7 @@ public class IdNamesParam {
 
     private Long id;
     private String name;
+    @NotEmpty(groups = {Group.Del.class})
     private List<Long> ids;
     private List<String> names;
 

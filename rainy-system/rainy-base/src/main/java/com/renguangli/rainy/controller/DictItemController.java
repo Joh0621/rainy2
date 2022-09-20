@@ -36,6 +36,7 @@ public class DictItemController {
         return dictItemService.lambdaQuery()
                 .eq(StrUtil.isNotBlank(param.getDictCode()), DictItem::getDictCode, param.getDictCode())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), DictItem::getCode, param.getCode())
+                .likeRight(StrUtil.isNotBlank(param.getValue()), DictItem::getValue, param.getValue())
                 .page(page);
     }
 
@@ -46,7 +47,7 @@ public class DictItemController {
         ExcelUtils.export(response, configs, "dictItems.xls");
     }
 
-    @Log(module = "字典项管理", type = OperationType.ADD, detail = "'新增了字典项[' + #param.name + '].'")
+    @Log(module = "字典项管理", type = OperationType.ADD, detail = "'新增了字典项[' + #param.value + '].'")
     @PostMapping("/dictItem")
     public boolean save(@Valid @RequestBody DictItem param) {
         return dictItemService.save(param);
@@ -58,7 +59,7 @@ public class DictItemController {
         return dictItemService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "字典项管理", type = OperationType.UPDATE, detail = "'更新了字典项[' + #param.name + '].'")
+    @Log(module = "字典项管理", type = OperationType.UPDATE, detail = "'更新了字典项[' + #param.value + '].'")
     @PostMapping("/dictItem/update")
     public boolean update(@Valid @RequestBody DictItem param) {
         return dictItemService.updateById(param);

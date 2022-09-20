@@ -32,7 +32,7 @@ public class DictItem extends BaseEntity {
 
     @Positive
     @OrderBy(asc = true)
-    private Boolean sort;
+    private Integer sort;
 
     @Size(max = 128)
     private String description;

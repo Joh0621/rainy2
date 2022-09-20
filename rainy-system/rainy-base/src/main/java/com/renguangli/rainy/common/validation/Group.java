@@ -16,4 +16,9 @@ public interface Group {
      * 分组校验编辑/更新
      */
     public interface Edit {}
+
+    /**
+     * 分组校验删除
+     */
+    public interface Del {}
 }

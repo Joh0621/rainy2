@@ -41,6 +41,7 @@ public class BaseEntity {
     @TableLogic
     private Boolean delFlag;
 
+    @JsonIgnore
     public String getStringId(){
         return String.valueOf(this.id);
     }

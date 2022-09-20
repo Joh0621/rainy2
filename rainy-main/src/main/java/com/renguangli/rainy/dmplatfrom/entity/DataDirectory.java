@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -20,9 +23,15 @@ import java.util.List;
 @TableName("biz_data_directory")
 public class DataDirectory extends BaseEntity {
 
+    @NotNull
     private Long parentId;
+    @NotBlank
     private String name;
+    @NotBlank
     private String code;
+    @NotNull
+    private Integer type;
+    @Size(max = 128)
     private String description;
 
     @TableField(exist = false)
