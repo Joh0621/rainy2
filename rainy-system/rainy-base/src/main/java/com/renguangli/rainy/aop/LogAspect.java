@@ -1,7 +1,7 @@
 package com.renguangli.rainy.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.utils.WebUtils;
 import com.renguangli.rainy.entity.OperationLog;
 import com.renguangli.rainy.service.OperationLogService;
@@ -64,7 +64,7 @@ public class LogAspect {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Log sysLog = method.getAnnotation(Log.class);
         // 是否保存查询操作日志
-        if (OperationType.QUERY.equals(sysLog.type())) {
+        if (OpType.QUERY.equals(sysLog.type())) {
             return;
         }
 

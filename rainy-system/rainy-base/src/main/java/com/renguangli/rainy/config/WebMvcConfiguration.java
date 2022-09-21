@@ -25,4 +25,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public Validator validator() {
         return new RainyValidator();
     }
+
 }

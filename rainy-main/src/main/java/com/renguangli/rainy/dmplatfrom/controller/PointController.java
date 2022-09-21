@@ -3,7 +3,7 @@ package com.renguangli.rainy.dmplatfrom.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -39,27 +39,27 @@ public class PointController {
                 .page(page);
     }
 
-    @Log(module = "点码管理", type = OperationType.EXPORT, detail = "导出了点码列表")
+    @Log(module = "点码管理", type = OpType.EXPORT, detail = "导出了点码列表")
     @GetMapping("/points/export")
     public void export(HttpServletResponse response) throws IOException {
-        List<Point> devices = pointService.list();
-        ExcelUtils.export(response, devices, "devices.xls");
+        List<Point> points = pointService.list();
+        ExcelUtils.export(response, points, "points.xls");
     }
 
-    @Log(module = "点码管理", type = OperationType.ADD, detail = "'新增了点码[' + #param.name + '].'")
+    @Log(module = "点码管理", type = OpType.ADD, detail = "'新增了点码[' + #param.name + '].'")
     @PostMapping("/point")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Point param) {
         return pointService.save(param);
     }
 
-    @Log(module = "点码管理", type = OperationType.DEL, detail = "'删除了点码[' + #param.names + '].'")
+    @Log(module = "点码管理", type = OpType.DEL, detail = "'删除了点码[' + #param.names + '].'")
     @PostMapping("/points")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return pointService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "点码管理", type = OperationType.UPDATE, detail = "'更新了点码[' + #param.name + '].'")
-    @PostMapping("/points/update")
+    @Log(module = "点码管理", type = OpType.UPDATE, detail = "'更新了点码[' + #param.name + '].'")
+    @PostMapping("/point/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Point param) {
         return pointService.updateById(param);
     }

@@ -2,7 +2,7 @@ package com.renguangli.rainy.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -31,20 +31,20 @@ public class OperationLogController {
 
     private final OperationLogService operationLogService;
 
-    @Log(module = "登陆日志管理", type = OperationType.QUERY, detail = "'查询了登陆日志列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "登陆日志管理", type = OpType.QUERY, detail = "'查询了登陆日志列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/operationLogs")
     public Page<OperationLog> list(Page<OperationLog> page, LoginLog param) {
         return operationLogService.page(page);
     }
 
-    @Log(module = "登陆日志管理", type = OperationType.EXPORT, detail = "导出了登陆日志列表")
+    @Log(module = "登陆日志管理", type = OpType.EXPORT, detail = "导出了登陆日志列表")
     @GetMapping("/operationLogs/export")
     public void export(HttpServletResponse response) throws IOException {
         List<OperationLog> configs = operationLogService.list();
         ExcelUtils.export(response, configs, "operationLogs.xls");
     }
 
-    @Log(module = "登陆日志管理", type = OperationType.DEL, detail = "'删除了登陆日志[' + #param.names + '].'")
+    @Log(module = "登陆日志管理", type = OpType.DEL, detail = "'删除了登陆日志[' + #param.names + '].'")
     @PostMapping("/operationLogs")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return operationLogService.removeBatchByIds(param.getIds());

@@ -3,7 +3,7 @@ package com.renguangli.rainy.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -31,7 +31,7 @@ public class OrgController {
 
     private final OrgService orgService;
 
-    @Log(module = "组织管理", type = OperationType.QUERY, detail = "'查询了组织列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "组织管理", type = OpType.QUERY, detail = "'查询了组织列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/orgs")
     public Page<Org> list(Page<Org> page, Org param) {
         // 当查询某个节点下的所有节点时分页大小为total
@@ -48,26 +48,26 @@ public class OrgController {
                 .page(page);
     }
 
-    @Log(module = "组织管理", type = OperationType.QUERY, detail = "'查询了组织列表树", resSaved = false)
+    @Log(module = "组织管理", type = OpType.QUERY, detail = "'查询了组织列表树", resSaved = false)
     @GetMapping("/orgs/tree")
     public List<Org> tree() {
         return orgService.tree();
     }
 
-    @Log(module = "组织管理", type = OperationType.EXPORT, detail = "导出了组织列表")
+    @Log(module = "组织管理", type = OpType.EXPORT, detail = "导出了组织列表")
     @GetMapping("/orgs/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Org> configs = orgService.list();
         ExcelUtils.export(response, configs, "orgs.xls");
     }
 
-    @Log(module = "组织管理", type = OperationType.ADD, detail = "'新增了组织[' + #param.name + '].'")
+    @Log(module = "组织管理", type = OpType.ADD, detail = "'新增了组织[' + #param.name + '].'")
     @PostMapping("/org")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Org param) {
         return orgService.save(param);
     }
 
-    @Log(module = "组织管理", type = OperationType.DEL, detail = "'删除了组织[' + #param.names + '].'")
+    @Log(module = "组织管理", type = OpType.DEL, detail = "'删除了组织[' + #param.names + '].'")
     @PostMapping("/orgs")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return orgService.lambdaUpdate()
@@ -76,7 +76,7 @@ public class OrgController {
                 .update();
     }
 
-    @Log(module = "组织管理", type = OperationType.UPDATE, detail = "'更新了组织[' + #param.name + '].'")
+    @Log(module = "组织管理", type = OpType.UPDATE, detail = "'更新了组织[' + #param.name + '].'")
     @PostMapping("/org/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Org param) {
         return orgService.updateById(param);

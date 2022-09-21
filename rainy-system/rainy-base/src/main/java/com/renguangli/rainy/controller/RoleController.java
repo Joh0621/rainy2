@@ -3,7 +3,7 @@ package com.renguangli.rainy.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -31,7 +31,7 @@ public class RoleController {
 
     private final RoleService roleService;
 
-    @Log(module = "角色管理", type = OperationType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "角色管理", type = OpType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/roles")
     public Page<Role> list(Page<Role> page, Role param) {
         return roleService.lambdaQuery()
@@ -40,26 +40,26 @@ public class RoleController {
                 .page(page);
     }
 
-    @Log(module = "角色管理", type = OperationType.EXPORT, detail = "导出了角色列表")
+    @Log(module = "角色管理", type = OpType.EXPORT, detail = "导出了角色列表")
     @GetMapping("/roles/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Role> configs = roleService.list();
         ExcelUtils.export(response, configs, "roles.xls");
     }
 
-    @Log(module = "角色管理", type = OperationType.ADD, detail = "'新增了角色[' + #param.name + '].'")
+    @Log(module = "角色管理", type = OpType.ADD, detail = "'新增了角色[' + #param.name + '].'")
     @PostMapping("/role")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Role param) {
         return roleService.save(param);
     }
 
-    @Log(module = "角色管理", type = OperationType.DEL, detail = "'删除了角色[' + #param.names + '].'")
+    @Log(module = "角色管理", type = OpType.DEL, detail = "'删除了角色[' + #param.names + '].'")
     @PostMapping("/roles")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return roleService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "角色管理", type = OperationType.UPDATE, detail = "'更新了角色[' + #param.name + '].'")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'更新了角色[' + #param.name + '].'")
     @PostMapping("/role/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Role param) {
         return roleService.updateById(param);

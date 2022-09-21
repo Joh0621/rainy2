@@ -3,7 +3,7 @@ package com.renguangli.rainy.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -32,7 +32,7 @@ public class PositionController {
 
     private final PositionService positionService;
 
-    @Log(module = "职位管理", type = OperationType.QUERY, detail = "'查询了职位列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "职位管理", type = OpType.QUERY, detail = "'查询了职位列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/positions")
     public Page<Position> list(Page<Position> page, Org param) {
         return positionService.lambdaQuery()
@@ -41,20 +41,20 @@ public class PositionController {
                 .page(page);
     }
 
-    @Log(module = "职位管理", type = OperationType.EXPORT, detail = "导出了职位列表")
+    @Log(module = "职位管理", type = OpType.EXPORT, detail = "导出了职位列表")
     @GetMapping("/positions/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Position> configs = positionService.list();
         ExcelUtils.export(response, configs, "positions.xls");
     }
 
-    @Log(module = "职位管理", type = OperationType.ADD, detail = "'新增了职位[' + #param.name + '].'")
+    @Log(module = "职位管理", type = OpType.ADD, detail = "'新增了职位[' + #param.name + '].'")
     @PostMapping("/position")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Position param) {
         return positionService.save(param);
     }
 
-    @Log(module = "职位管理", type = OperationType.DEL, detail = "'删除了职位[' + #param.names + '].'")
+    @Log(module = "职位管理", type = OpType.DEL, detail = "'删除了职位[' + #param.names + '].'")
     @PostMapping("/positions")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return positionService.lambdaUpdate()
@@ -63,7 +63,7 @@ public class PositionController {
                 .update();
     }
 
-    @Log(module = "职位管理", type = OperationType.UPDATE, detail = "'更新了职位[' + #param.name + '].'")
+    @Log(module = "职位管理", type = OpType.UPDATE, detail = "'更新了职位[' + #param.name + '].'")
     @PostMapping("/position/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Position param) {
         return positionService.updateById(param);

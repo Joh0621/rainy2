@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Configuration
 @MapperScan(value = {"com.**.mapper"})
-public class MybatisPlusConfiguration {
+public class MybatisConfiguration {
 
     private static final String CREATE_BY_FIELD = "createBy";
     private static final String CREATE_TIME_FIELD = "createTime";

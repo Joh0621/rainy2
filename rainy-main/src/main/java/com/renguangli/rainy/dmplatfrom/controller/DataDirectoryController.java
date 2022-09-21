@@ -1,7 +1,7 @@
 package com.renguangli.rainy.dmplatfrom.controller;
 
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.validation.Group;
 import com.renguangli.rainy.dmplatfrom.entity.DataDirectory;
@@ -31,19 +31,19 @@ public class DataDirectoryController {
         return dataDirectoryService.tree();
     }
 
-    @Log(module = "数据目录", type = OperationType.ADD, detail = "'新增了数据目录[' + #param.name + '].'")
+    @Log(module = "数据目录", type = OpType.ADD, detail = "'新增了数据目录[' + #param.name + '].'")
     @PostMapping("/dataDirectory")
     public Boolean save(@RequestBody @Validated(Group.Add.class) DataDirectory param) {
         return dataDirectoryService.save(param);
     }
 
-    @Log(module = "数据目录", type = OperationType.DEL, detail = "'删除了数据目录[' + #param.names + '].'")
+    @Log(module = "数据目录", type = OpType.DEL, detail = "'删除了数据目录[' + #param.names + '].'")
     @PostMapping("/dataDirectories")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return dataDirectoryService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "数据目录", type = OperationType.UPDATE, detail = "'更新了数据目录[' + #param.name + '].'")
+    @Log(module = "数据目录", type = OpType.UPDATE, detail = "'更新了数据目录[' + #param.name + '].'")
     @PostMapping("/dataDirectory/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) DataDirectory param) {
         return dataDirectoryService.updateById(param);

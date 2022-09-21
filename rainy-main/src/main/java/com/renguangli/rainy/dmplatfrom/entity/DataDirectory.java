@@ -1,5 +1,6 @@
 package com.renguangli.rainy.dmplatfrom.entity;
 
+import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.renguangli.rainy.entity.BaseEntity;
@@ -31,6 +32,9 @@ public class DataDirectory extends BaseEntity {
     private String code;
     @NotNull
     private Integer type;
+    @NotNull
+    @OrderBy(asc = true)
+    private Integer sort;
     @Size(max = 128)
     private String description;
 

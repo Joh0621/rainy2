@@ -3,7 +3,7 @@ package com.renguangli.rainy.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -31,7 +31,7 @@ public class ConfigController {
 
     private final ConfigService configService;
 
-    @Log(module = "配置管理", type = OperationType.QUERY, detail = "'查询了配置列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "配置管理", type = OpType.QUERY, detail = "'查询了配置列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/configs")
     public Page<Config> list(Page<Config> page, Config param) {
         return configService.lambdaQuery()
@@ -41,20 +41,20 @@ public class ConfigController {
                 .page(page);
     }
 
-    @Log(module = "配置管理", type = OperationType.EXPORT, detail = "导出了配置列表")
+    @Log(module = "配置管理", type = OpType.EXPORT, detail = "导出了配置列表")
     @GetMapping("/configs/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Config> configs = configService.list();
         ExcelUtils.export(response, configs, "configs.xls");
     }
 
-    @Log(module = "配置管理", type = OperationType.ADD, detail = "'新增了配置[' + #param.name + '].'")
+    @Log(module = "配置管理", type = OpType.ADD, detail = "'新增了配置[' + #param.name + '].'")
     @PostMapping("/config")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Config param) {
         return configService.save(param);
     }
 
-    @Log(module = "配置管理", type = OperationType.DEL, detail = "'删除了配置[' + #param.names + '].'")
+    @Log(module = "配置管理", type = OpType.DEL, detail = "'删除了配置[' + #param.names + '].'")
     @PostMapping("/configs")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return configService.lambdaUpdate()
@@ -63,7 +63,7 @@ public class ConfigController {
                 .update();
     }
 
-    @Log(module = "配置管理", type = OperationType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
+    @Log(module = "配置管理", type = OpType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
     @PostMapping("/config/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Config param) {
         return configService.updateById(param);

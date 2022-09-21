@@ -3,7 +3,7 @@ package com.renguangli.rainy.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -32,7 +32,7 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @Log(module = "菜单管理", type = OperationType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
+    @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/menus")
     public Page<Menu> list(Page<Menu> page, Menu param) {
         return menuService.lambdaQuery()
@@ -41,26 +41,26 @@ public class MenuController {
                 .page(page);
     }
 
-    @Log(module = "菜单管理", type = OperationType.EXPORT, detail = "导出了菜单列表")
+    @Log(module = "菜单管理", type = OpType.EXPORT, detail = "导出了菜单列表")
     @GetMapping("/menus/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Menu> configs = menuService.list();
         ExcelUtils.export(response, configs, "menus.xls");
     }
 
-    @Log(module = "菜单管理", type = OperationType.ADD, detail = "'新增了菜单[' + #param.name + '].'")
+    @Log(module = "菜单管理", type = OpType.ADD, detail = "'新增了菜单[' + #param.name + '].'")
     @PostMapping("/menu")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Menu param) {
         return menuService.save(param);
     }
 
-    @Log(module = "菜单管理", type = OperationType.DEL, detail = "'删除了菜单[' + #param.names + '].'")
+    @Log(module = "菜单管理", type = OpType.DEL, detail = "'删除了菜单[' + #param.names + '].'")
     @PostMapping("/menus")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return menuService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "菜单管理", type = OperationType.UPDATE, detail = "'更新了菜单[' + #param.name + '].'")
+    @Log(module = "菜单管理", type = OpType.UPDATE, detail = "'更新了菜单[' + #param.name + '].'")
     @PostMapping("/menu/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Menu param) {
         return menuService.updateById(param);

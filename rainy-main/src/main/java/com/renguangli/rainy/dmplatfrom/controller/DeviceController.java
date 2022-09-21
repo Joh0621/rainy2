@@ -3,7 +3,7 @@ package com.renguangli.rainy.dmplatfrom.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.renguangli.rainy.aop.Log;
-import com.renguangli.rainy.common.constant.OperationType;
+import com.renguangli.rainy.common.constant.OpType;
 import com.renguangli.rainy.common.param.IdNamesParam;
 import com.renguangli.rainy.common.utils.ExcelUtils;
 import com.renguangli.rainy.common.validation.Group;
@@ -41,26 +41,26 @@ public class DeviceController {
                 .page(page);
     }
 
-    @Log(module = "设备管理", type = OperationType.EXPORT, detail = "导出了设备列表")
+    @Log(module = "设备管理", type = OpType.EXPORT, detail = "导出了设备列表")
     @GetMapping("/devices/export")
     public void export(HttpServletResponse response) throws IOException {
         List<Device> devices = deviceService.list();
         ExcelUtils.export(response, devices, "devices.xls");
     }
 
-    @Log(module = "设备管理", type = OperationType.ADD, detail = "'新增了设备[' + #param.name + '].'")
+    @Log(module = "设备管理", type = OpType.ADD, detail = "'新增了设备[' + #param.name + '].'")
     @PostMapping("/device")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Device param) {
         return deviceService.save(param);
     }
 
-    @Log(module = "设备管理", type = OperationType.DEL, detail = "'删除了设备[' + #param.names + '].'")
+    @Log(module = "设备管理", type = OpType.DEL, detail = "'删除了设备[' + #param.names + '].'")
     @PostMapping("/devices")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return deviceService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "设备管理", type = OperationType.UPDATE, detail = "'更新了设备[' + #param.name + '].'")
+    @Log(module = "设备管理", type = OpType.UPDATE, detail = "'更新了设备[' + #param.name + '].'")
     @PostMapping("/device/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Device param) {
         return deviceService.updateById(param);

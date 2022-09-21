@@ -1,6 +1,11 @@
 package com.renguangli.rainy.common.constant;
 
-public interface OperationType {
+/**
+ * 操作类型常量类
+ *
+ * @author renguangli
+ */
+public interface OpType {
 
     String ADD = "add";
     String DEL = "delete";
