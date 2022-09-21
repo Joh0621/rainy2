@@ -9,6 +9,7 @@
     <modules>
         <module>rainy-camunda</module>
         <module>rainy-base</module>
+        <module>rainy-dataway</module>
     </modules>
 
     <parent>

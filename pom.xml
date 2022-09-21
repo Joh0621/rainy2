@@ -13,7 +13,6 @@
     <modules>
         <module>rainy-main</module>
         <module>rainy-system</module>
-        <module>rainy-system/rainy-dataway</module>
     </modules>
 
     <properties>

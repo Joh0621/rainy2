@@ -41,6 +41,6 @@ public class Role extends BaseEntity {
     private String description;
 
     @NotNull
-    private Integer isDefault;
+    private Boolean isDefault;
 
 }
