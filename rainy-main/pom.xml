@@ -15,15 +15,14 @@
             <groupId>com.renguangli</groupId>
             <artifactId>rainy-base</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.renguangli</groupId>-->
-        <!--            <artifactId>rainy-camunda</artifactId>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>com.renguangli</groupId>
-            <artifactId>rainy-dataway</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>rainy-camunda</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.renguangli</groupId>-->
+<!--            <artifactId>rainy-dataway</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -32,7 +31,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.renguangli.rainy.RainyApplication</mainClass>
+                    <mainClass>com.rainy.RainyApplication</mainClass>
                     <classifier>exec</classifier>
                 </configuration>
                 <executions>

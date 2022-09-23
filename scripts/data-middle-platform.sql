@@ -435,7 +435,7 @@ CREATE TABLE `t_operation_log` (
 -- Records of t_operation_log
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (1, '配置管理', 'delete', NULL, '2022-09-14 18:24:58', '删除了配置[sm4密钥].', '/api/configs', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.renguangli.rainy.controller.ConfigController', 'remove', '[IdNamesParam(ids=[48], names=[sm4密钥])]', NULL, 3, 1, NULL);
+INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (1, '配置管理', 'delete', NULL, '2022-09-14 18:24:58', '删除了配置[sm4密钥].', '/api/configs', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'controller.com.rainy.ConfigController', 'remove', '[IdNamesParam(ids=[48], names=[sm4密钥])]', NULL, 3, 1, NULL);
 COMMIT;
 
 -- ----------------------------
