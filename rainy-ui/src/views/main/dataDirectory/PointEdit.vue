@@ -92,11 +92,7 @@ onMounted(() => {
 
 const loadTree = () => {
   Tree({}).then(res => {
-    treeData.value = [{
-      name: 'root',
-      id: 0,
-      children: res.data
-    }]
+    treeData.value = res.data
   })
 }
 const open = (flagValue, record) => {

@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     ATree: typeof import('ant-design-vue/es')['Tree']
     ATreeSelect: typeof import('ant-design-vue/es')['TreeSelect']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
     BTable: typeof import('./components/BTable/BTable.vue')['default']
     MonacoEditor: typeof import('./components/Editor/MonacoEditor.vue')['default']
     RightContent: typeof import('./components/RightContent/RightContent.vue')['default']

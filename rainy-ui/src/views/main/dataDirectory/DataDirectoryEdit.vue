@@ -17,6 +17,21 @@
     >
       <a-form-item v-show="false" name="id"></a-form-item>
       <a-form-item
+          name="orgId"
+          label="组织机构"
+          :rules="[{ required: true, message: '请选择组织机构!' }]"
+          has-feedback
+      >
+        <a-tree-select
+            v-model:value="form.orgId"
+            :fieldNames="fieldNames"
+            placeholder="请选择组织机构"
+            tree-default-expand-all
+            :tree-data="orgTreeData"
+        >
+        </a-tree-select>
+      </a-form-item>
+      <a-form-item
         label="上级目录"
         name="parentId"
         :rules="[{ required: true, message: '请选择上级目录' }]"
@@ -74,6 +89,7 @@
 
 <script setup>
 import { Tree, Add, Edit } from '@/api/main/dataDirectory'
+import { Tree as OrgTree } from '@/api/org/org'
 import { message } from 'ant-design-vue'
 
 import { useAppStore } from '@/store/app'
@@ -91,6 +107,7 @@ const visible = ref(false)
 const confirmLoading = ref(false)
 const flag = ref(true)
 const treeData = ref([])
+const orgTreeData = ref([])
 const form = ref({})
 const formRef = ref()
 
@@ -102,6 +119,7 @@ const open = (flagVal, record) => {
 
 onMounted(() => {
   loadTree()
+  loadOrgTree()
 })
 
 const loadTree = () => {
@@ -111,6 +129,12 @@ const loadTree = () => {
       id: 0,
       children: res.data
     }]
+  })
+}
+
+const loadOrgTree = () => {
+  OrgTree({}).then(res => {
+    orgTreeData.value = res.data
   })
 }
 

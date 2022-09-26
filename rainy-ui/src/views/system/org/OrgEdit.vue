@@ -93,6 +93,10 @@ const fieldNames = {
 }
 const treeData = ref([])
 onMounted(() => {
+  loadTree()
+})
+
+const loadTree = () => {
   Tree({}).then(res => {
     treeData.value = [{
       name: 'root',
@@ -100,7 +104,7 @@ onMounted(() => {
       children: res.data
     }]
   })
-})
+}
 
 // 是否是新增: true 新增，false 编辑，默认新增
 const flag = ref(true)
@@ -156,6 +160,7 @@ const handleEdit = (values) => {
 
 const handleCancel = () => {
   visible.value = false
+  loadTree()
   emits('ok')
 }
 

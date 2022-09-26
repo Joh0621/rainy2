@@ -111,7 +111,8 @@ const handleReset = () => {
 const editor = ref()
 const handleAdd = () => {
   editor.value.open(true, {
-    sort: sortValue
+    sort: sortValue,
+    dictCode: queryParam.value.dictCode
   })
 }
 const handleEdit = (record) => {

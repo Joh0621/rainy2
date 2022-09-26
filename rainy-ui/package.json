@@ -12,9 +12,12 @@
   "dependencies": {
     "@ant-design-vue/pro-layout": "^3.2.3",
     "@ant-design/icons-vue": "^6.1.0",
+    "@bpmn-io/properties-panel": "^0.21.0",
     "@rushstack/eslint-patch": "^1.2.0",
     "ant-design-vue": "^3.2.12",
     "axios": "^0.27.2",
+    "bpmn-js-properties-panel": "^1.7.0",
+    "camunda-bpmn-js": "^0.18.0",
     "monaco-editor": "0.34.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.21",

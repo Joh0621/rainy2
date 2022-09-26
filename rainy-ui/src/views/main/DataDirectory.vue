@@ -9,22 +9,6 @@
               :tree-data="treeData"
               :selectedKeys="[queryParam.dataDirectoryId]"
               @select="handleTreeSelect">
-            <template #title="record">
-              <a-dropdown :trigger="['contextmenu']">
-                <span>{{ record.name }}</span>
-                <template #overlay>
-                  <a-menu>
-                    <a-menu-item @click="onAddClick"><a>新增目录</a></a-menu-item>
-                    <a-menu-item @click="onEditClick(record)">编辑目录</a-menu-item>
-                    <a-menu-item>
-                      <a-popconfirm title="确认删除吗？" @confirm="onDelClick(record)">
-                        <a-button type="link" size="small" danger>删除目录</a-button>
-                      </a-popconfirm>
-                    </a-menu-item>
-                  </a-menu>
-                </template>
-              </a-dropdown>
-            </template>
           </a-directory-tree>
         </a-skeleton>
       </a-card>
@@ -47,86 +31,59 @@
             </a-form-item>
           </a-form>
         </div>
-        <b-table
-          ref="table"
-          :columns="columns"
-          :row-key="record => record.id"
-          :load-data="data"
-          @add="handleAdd"
-          @batch-del="handleBatchDel"
-        >
-          <template #major="{ record }">
-            {{ appStore.dictItemValue('biz_major', record.major) }}
-          </template>
-          <template #operation>
-            <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
-            <a-button type="dashed">
-              <import-outlined />
-              批量导入
-            </a-button>
-            <a-button type="dashed">
-              <download-outlined />
-              模版下载
-            </a-button>
-          </template>
-          <template #action="{ record }">
-            <a @click="handlePoint(record)">数据点码</a>
-            <a-divider type="vertical"/>
-            <a-dropdown>
-              <a class="ant-dropdown-link" @click.prevent>
-                更多  <DownOutlined />
-              </a>
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item>
-                    <a-button @click="handleEdit(record)" type="link" size="small">编辑</a-button>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
-                      <a-button type="link" size="small" danger>删除</a-button>
-                    </a-popconfirm>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
-          </template>
-        </b-table>
+        <a-skeleton :loading="dataLoading">
+          <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+            <template #renderItem="{ item }">
+              <a-list-item :key="item.id">
+                <a-list-item-meta :description="item.description">
+                  <template #title>
+                    <router-link :to="`/data/${item.id}/detail`">
+                      <a class="data-title">{{ item.name }}</a>
+                    </router-link>
+                  </template>
+                </a-list-item-meta>
+                {{ item.content }}
+              </a-list-item>
+            </template>
+          </a-list>
+        </a-skeleton>
       </a-card>
     </a-col>
   </a-row>
 </template>
 <script setup>
-import { Del, Tree } from '@/api/main/dataDirectory'
-import { List as ListDevices, Del as DelDevice, Export } from '@/api/main/device'
-import { toIdNamesParam } from '@/utils/ParamUtils'
-import { message } from 'ant-design-vue'
-import { DownOutlined, ImportOutlined, DownloadOutlined } from '@ant-design/icons-vue'
-
-import { useAppStore } from '@/store/app'
-const appStore = useAppStore()
+import { Tree } from '@/api/main/dataDirectory'
+import { List as ListDevices } from '@/api/main/device'
+// import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue'
 
 const fieldNames = {
   key: 'id',
   title: 'name'
 }
-const searchValue = ref('')
-const treeData = ref([])
-const point = ref()
-const handlePoint = record => {
-  point.value.open()
-}
-watch(searchValue, value => {
-})
+
 onMounted(() => {
   loadTree()
+  listDevices(1)
 })
+
+const handleOk = () => {
+  listDevices()
+}
+const handleReset = () => {
+  queryParam.value = {}
+  handleOk()
+}
+
 const loading = ref(false)
+const treeData = ref([])
 const loadTree = () => {
   loading.value = true
   Tree().then(res => {
     treeData.value = res.data
   }).finally(() => {
-    loading.value = false
+    setTimeout(() => {
+      loading.value = false
+    }, 100)
   })
 }
 const handleTreeSelect = (selectedKeys, e) => {
@@ -135,79 +92,27 @@ const handleTreeSelect = (selectedKeys, e) => {
     handleOk()
   }
 }
-const dataDirectoryEditor = ref()
-const onAddClick = () => {
-  dataDirectoryEditor.value.open(true, {})
-}
-const onEditClick = (record) => {
-  dataDirectoryEditor.value.open(false, record)
-}
-const onDelClick = (record) => {
-  const idNamesParam = toIdNamesParam(record)
-  Del(idNamesParam).then((res) => {
-    if (res.success) {
-      message.success('删除成功！')
-      loadTree()
-    }
-  })
-}
 
-const table = ref()
+const dataLoading = ref(false)
 const queryParam = ref({})
-const columns = [
-  { title: '设备名称', dataIndex: 'name' },
-  { title: '设备编码', dataIndex: 'code' },
-  { title: '专业', dataIndex: 'major' },
-  { title: '描述', dataIndex: 'description', ellipsis: true },
-  { title: '操作', dataIndex: 'action', width: '150px' }
-]
-const data = (parameter) => {
-  return ListDevices(Object.assign(parameter, queryParam.value)).then(res => {
-    return res.data
-  })
+const listData = ref([])
+const pagination = {
+  onChange: page => {
+    listDevices(page)
+  },
+  pageSize: 4
 }
 
-const handleOk = () => {
-  table.value.refresh()
-}
-const handleReset = () => {
-  queryParam.value = {}
-  handleOk()
-}
-
-const deviceEditor = ref()
-const handleAdd = () => {
-  deviceEditor.value.open(true, {
-    dataType: 'string'
-  })
-}
-const handleEdit = (record) => {
-  deviceEditor.value.open(false, record)
-}
-
-const handleDel = (record) => {
-  const idNamesParam = toIdNamesParam(record)
-  DelDevice(idNamesParam).then((res) => {
-    if (res.success) {
-      message.success('删除成功！')
-      handleOk()
-    }
-  })
-}
-const handleBatchDel = (keys, rows) => {
-  const idNamesParam = toIdNamesParam(rows)
-  DelDevice(idNamesParam).then((res) => {
-    if (res.success) {
-      message.success('删除成功！')
-      handleOk()
-    }
-  })
-}
-
-const downloader = ref()
-const handleExportExcel = () => {
-  Export().then(res => {
-    downloader.value.download(res)
+const listDevices = (current) => {
+  queryParam.value.current = current
+  queryParam.value.size = pagination.pageSize
+  dataLoading.value = true
+  ListDevices(queryParam.value).then(res => {
+    listData.value = res.data.records
+  }).finally(() => {
+    setTimeout(() => {
+      dataLoading.value = false
+    }, 100)
   })
 }
 </script>
@@ -217,5 +122,11 @@ const handleExportExcel = () => {
 }
 .ant-tree .ant-tree-node-content-wrapper .ant-tree-iconEle {
   color: blue;
+}
+.ant-list-item {
+  padding-left: 4px;
+}
+.data-title {
+  color:#1890ff
 }
 </style>

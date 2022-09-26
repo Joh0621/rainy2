@@ -53,6 +53,7 @@
 <script setup>
 import { useAppStore } from '@/store/app'
 import { List, Del, Export } from '@/api/config'
+import { Workflow } from '@/api/workflow/apply'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import ConfigEdit from './ConfigEdit.vue'
 import { message } from 'ant-design-vue'
@@ -86,6 +87,9 @@ const handleReset = () => {
 
 const editor = ref()
 const handleAdd = () => {
+  Workflow({}).then(res => {
+    message.info(res.message)
+  })
   editor.value.open(true, {
     dataType: 'string'
   })

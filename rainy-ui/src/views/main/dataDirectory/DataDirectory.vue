@@ -14,7 +14,7 @@
                 <span>{{ record.name }}</span>
                 <template #overlay>
                   <a-menu>
-                    <a-menu-item @click="onAddClick"><a>新增目录</a></a-menu-item>
+                    <a-menu-item @click="onAddClick(record)"><a>新增目录</a></a-menu-item>
                     <a-menu-item @click="onEditClick(record)">编辑目录</a-menu-item>
                     <a-menu-item>
                       <a-popconfirm title="确认删除吗？" @confirm="onDelClick(record)">
@@ -109,6 +109,7 @@ import { message } from 'ant-design-vue'
 import { DownOutlined, ImportOutlined, DownloadOutlined } from '@ant-design/icons-vue'
 
 import { useAppStore } from '@/store/app'
+import { sortValue } from '@/utils/constants.js'
 const appStore = useAppStore()
 
 const fieldNames = {
@@ -142,8 +143,12 @@ const handleTreeSelect = (selectedKeys, e) => {
   }
 }
 const dataDirectoryEditor = ref()
-const onAddClick = () => {
-  dataDirectoryEditor.value.open(true, {})
+const onAddClick = (record) => {
+  dataDirectoryEditor.value.open(true, {
+    sort: sortValue,
+    type: appStore.dictItems('biz_data_directory_type')[0].value,
+    parentId: record.id
+  })
 }
 const onEditClick = (record) => {
   dataDirectoryEditor.value.open(false, record)
@@ -164,6 +169,7 @@ const columns = [
   { title: '设备名称', dataIndex: 'name' },
   { title: '设备编码', dataIndex: 'code' },
   { title: '专业', dataIndex: 'major' },
+  { title: '责任人', dataIndex: 'responsible' },
   { title: '描述', dataIndex: 'description', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]

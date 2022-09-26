@@ -59,19 +59,18 @@ export const menus = [
     ]
   },
   {
-    path: '/data/directory',
-    name: 'tree',
+    path: '/data/directory/mgt',
+    name: 'dataDirectoryMgt',
     component: 'main/dataDirectory/DataDirectory',
-    title: '数据目录管理',
+    title: '数据管理',
     icon: 'icon-Report'
   },
   {
-    path: '/data/detail',
-    name: 'detail',
-    component: 'main/dataDirectory/DataDirectoryDetail',
-    title: '数据详情',
-    icon: 'icon-unorderedlist',
-    hideInMenu: true
+    path: '/data/directory',
+    name: 'dataDirector',
+    component: 'main/DataDirectory',
+    title: '数据目录',
+    icon: 'icon-Report'
   },
   {
     path: '/data/service',
@@ -85,17 +84,38 @@ export const menus = [
   {
     path: '/apply',
     name: 'apply',
-    component: 'system/workflow/Apply',
+    component: 'system/workflow/TaskApply',
     title: '我的申请',
-    icon: 'icon-unorderedlist',
-    url: 'http://172.16.22.207:18585/interface-ui/'
+    icon: 'icon-unorderedlist'
   },
   {
-    path: '/todo',
-    name: 'todo',
-    component: 'system/workflow/Todo',
-    title: '我的待办',
-    icon: 'icon-unorderedlist',
-    url: 'http://172.16.22.207:18585/interface-ui/'
+    path: '/我的任务',
+    name: '我的任务',
+    component: 'RouteView',
+    title: '我的任务',
+    icon: 'icon-Report',
+    children: [
+      {
+        path: '/workflow/task/todo',
+        name: 'taskTodo',
+        component: 'system/workflow/TaskTodo',
+        title: '我的待办',
+        icon: 'icon-unorderedlist'
+      },
+      {
+        path: '/workflow/task/done',
+        name: 'taskDone',
+        component: 'system/workflow/TaskDone',
+        title: '我的已办',
+        icon: 'icon-unorderedlist'
+      }
+    ]
+  },
+  {
+    path: '/designer',
+    name: 'designer',
+    component: 'system/workflow/Designer',
+    title: '设计器',
+    icon: 'icon-unorderedlist'
   }
 ]

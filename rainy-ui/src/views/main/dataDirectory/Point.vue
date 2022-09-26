@@ -23,9 +23,6 @@
       <template #operation>
         <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
       </template>
-      <template #isDefault="{ record }">
-        {{ appStore.dictItemValue('sys_yes_or_no', record.isDefault) }}
-      </template>
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
@@ -40,13 +37,10 @@
 
 <script setup>
 import { List, Export, Del } from '@/api/main/point'
-import { useAppStore } from '@/store/app'
 import PointEdit from './PointEdit.vue'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 
 import { message } from 'ant-design-vue'
-
-const appStore = useAppStore()
 
 const visible = ref(false)
 const confirmLoading = ref(false)

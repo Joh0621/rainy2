@@ -67,6 +67,13 @@
         </a-select>
       </a-form-item>
       <a-form-item
+        name="responsible"
+        label="责任人"
+        has-feedback
+      >
+        <a-textarea v-model:value="form.responsible" placeholder="请输入责任人" :rows="4" />
+      </a-form-item>
+      <a-form-item
         name="description"
         label="描述"
         has-feedback

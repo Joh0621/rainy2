@@ -10,7 +10,13 @@ const routes = [
     meta: { title: '控制台' },
     component: BasicLayout,
     redirect: '/org',
-    children: []
+    children: [
+      {
+        path: '/data/:id/detail',
+        name: BasicLayout,
+        component: () => import('@/views/main/DataDirectoryDetail.vue')
+      }
+    ]
   },
   {
     path: '/404',

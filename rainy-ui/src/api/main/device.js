@@ -16,6 +16,13 @@ export function List (parameter) {
   })
 }
 
+export function Detail (id) {
+  return request({
+    url: `${api.List}/${id}`,
+    method: method.GET
+  })
+}
+
 export function Add (parameter) {
   return request({
     url: api.Add,
