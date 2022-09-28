@@ -1,6 +1,7 @@
 package com.rainy.base.entity;
 
 import com.baomidou.mybatisplus.annotation.OrderBy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.rainy.base.common.constant.CommonConstants;
 import com.rainy.base.common.validation.Group;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 /**
  * 菜单实体类
@@ -45,7 +47,8 @@ public class Menu extends BaseEntity {
     private String permission;
 
     @NotNull
-    private Boolean isShow;
+    @TableField("`show`")
+    private Boolean show;
 
     @Positive
     @OrderBy(asc = true)
@@ -53,5 +56,8 @@ public class Menu extends BaseEntity {
 
     @Size(max = CommonConstants.MAX_SIZE)
     private String description;
+
+    @TableField(exist = false)
+    List<Menu> children;
 
 }

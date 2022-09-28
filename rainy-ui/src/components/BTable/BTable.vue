@@ -82,8 +82,12 @@ const refresh = () => {
   props
     .loadData(parameter)
     .then((res) => {
-      dataSource.value = res.records
-      pagination.value.total = res.total
+      if (res.records) {
+        dataSource.value = res.records
+        pagination.value.total = res.total
+      } else {
+        dataSource.value = res
+      }
     })
     .finally(() => {
       setTimeout(() => {

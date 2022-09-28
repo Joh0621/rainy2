@@ -43,6 +43,13 @@ export const menus = [
         icon: 'icon-unorderedlist'
       },
       {
+        path: '/menu',
+        name: 'menu',
+        component: 'system/permission/Menu',
+        title: '菜单管理',
+        icon: 'icon-unorderedlist'
+      },
+      {
         path: '/config',
         name: 'config',
         component: 'system/config/Config',

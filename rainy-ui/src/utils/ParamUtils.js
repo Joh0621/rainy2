@@ -1,3 +1,10 @@
+const toIdNameParam = (record) => {
+  return {
+    id: record.id,
+    name: record.name
+  }
+}
+
 const toIdNamesParam = (record) => {
   const ids = []
   const names = []
@@ -27,5 +34,6 @@ const toIdNamesParam = (record) => {
 }
 
 export {
+  toIdNameParam,
   toIdNamesParam
 }

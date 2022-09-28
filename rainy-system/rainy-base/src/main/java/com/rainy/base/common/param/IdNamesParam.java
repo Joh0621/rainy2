@@ -22,5 +22,9 @@ public class IdNamesParam {
     @NotEmpty(groups = {Group.Del.class, Group.ASSIGN.class})
     private List<Long> ids;
     private List<String> names;
+    /**
+     * 半选id列表, 分配菜单时使用,其他地方不用传
+     */
+    private List<Long> halfIds;
 
 }

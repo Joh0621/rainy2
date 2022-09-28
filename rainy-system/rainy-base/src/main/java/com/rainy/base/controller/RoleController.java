@@ -8,6 +8,8 @@ import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.Role;
+import com.rainy.base.entity.RoleMenuRel;
+import com.rainy.base.service.RoleMenuRelService;
 import com.rainy.base.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +33,7 @@ import java.util.List;
 public class RoleController {
 
     private final RoleService roleService;
+    private final RoleMenuRelService roleMenuRelService;
 
     @Log(module = "角色管理", type = OpType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/roles")
@@ -63,6 +67,34 @@ public class RoleController {
     @PostMapping("/role/update")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Role param) {
         return roleService.updateById(param);
+    }
+
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了菜单[' + #param.names + ']'")
+    @PostMapping("/role/menus/assign")
+    public Boolean assignMenus(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
+        List<RoleMenuRel> roleMenuRelList = new ArrayList<>();
+        List<RoleMenuRel> roleMenuRels = param.getIds().stream()
+                .map(menuId -> new RoleMenuRel(param.getId(), menuId, false))
+                .toList();
+        List<RoleMenuRel> halfRoleMenuRels = param.getHalfIds().stream()
+                .map(menuId -> new RoleMenuRel(param.getId(), menuId, true))
+                .toList();
+        roleMenuRelList.addAll(roleMenuRels);
+        roleMenuRelList.addAll(halfRoleMenuRels);
+        return roleService.assignMenus(param.getId(), roleMenuRelList);
+    }
+
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的菜单'")
+    @GetMapping("/role/menuIds")
+    public List<Long> getMenuIdsByRoleId(IdNamesParam param) {
+        List<RoleMenuRel> roleMenuRels = roleMenuRelService.lambdaQuery()
+                .select(RoleMenuRel::getMenuId)
+                .eq(RoleMenuRel::getRoleId, param.getId())
+                .eq(RoleMenuRel::getHalf, false)
+                .list();
+        return roleMenuRels.stream()
+                .map(RoleMenuRel::getMenuId)
+                .toList();
     }
 
 }

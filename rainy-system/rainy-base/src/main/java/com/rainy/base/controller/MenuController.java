@@ -32,6 +32,14 @@ public class MenuController {
 
     private final MenuService menuService;
 
+    @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单树列表'", resSaved = false)
+    @GetMapping("/menus/tree")
+    public List
+
+            <Menu> tree(Menu param) {
+        return menuService.tree(param);
+    }
+
     @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/menus")
     public Page<Menu> list(Page<Menu> page, Menu param) {
