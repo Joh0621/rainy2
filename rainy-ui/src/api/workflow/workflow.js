@@ -1,9 +1,27 @@
 import request, { method } from '@/utils/request'
 
 const api = {
+  ListProcessDefinitions: '/workflow/processDefs',
+  ProcessBpmn20xml: '/workflow/process/bpmn20xml',
   ListTasks: '/workflow/tasks',
   ListHistoryTasks: '/workflow/historyTasks',
   CompleteTask: '/workflow/task/complete'
+}
+
+export function ListProcessDefinitions (parameter) {
+  return request({
+    url: api.ListProcessDefinitions,
+    method: method.GET,
+    params: parameter
+  })
+}
+
+export function ProcessBpmn20xml (parameter) {
+  return request({
+    url: api.ProcessBpmn20xml,
+    method: method.GET,
+    params: parameter
+  })
 }
 
 export function ListTasks (parameter) {

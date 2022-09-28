@@ -24,19 +24,22 @@
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
       <template #action="{ record }">
-        <a @click="handleComplete(record)">详情</a>
+        <a @click="handleDetail(record)">详情</a>
         <a-divider type="vertical"/>
-        <a @click="handleComplete(record)">跟踪</a>
+        <a @click="() => { taskTrack.open(record) }">跟踪</a>
       </template>
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
+    <TaskTrack ref="taskTrack" @ok="handleOk"></TaskTrack>
   </a-card>
 </template>
 
 <script setup>
 import { ListHistoryTasks } from '@/api/workflow/workflow'
 import TaskComplete from './TaskComplete.vue'
+import TaskTrack from './TaskTrack.vue'
 import { useAppStore } from '@/store/app'
+import { message } from 'ant-design-vue'
 
 const appStore = useAppStore()
 
@@ -44,6 +47,8 @@ const options = {
   showAdd: false,
   showBatchDel: false
 }
+
+const taskTrack = ref()
 const table = ref()
 const queryParam = ref({})
 const columns = [
@@ -73,8 +78,8 @@ const handleReset = () => {
 }
 
 const taskComplete = ref()
-const handleComplete = (record) => {
-  taskComplete.value.open(record)
+const handleDetail = (record) => {
+  message.info('开发中....')
 }
 
 </script>

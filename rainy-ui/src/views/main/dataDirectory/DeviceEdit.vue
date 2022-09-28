@@ -71,7 +71,7 @@
         label="责任人"
         has-feedback
       >
-        <a-textarea v-model:value="form.responsible" placeholder="请输入责任人" :rows="4" />
+        <a-input v-model:value="form.responsible" placeholder="请输入责任人" />
       </a-form-item>
       <a-form-item
         name="description"

@@ -10,6 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
@@ -114,6 +115,20 @@ public final class WebUtils {
             throw new RuntimeException("非 web 上下文，无法获取 Request.");
         }
         return servletRequestAttributes.getRequest();
+    }
+
+    /**
+     * 从上下文中获取 HttpServletRequest
+     *
+     * @return HttpServletRequest
+     */
+    public static HttpServletResponse getResponse() {
+        // 获取 servletRequestAttributes
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (servletRequestAttributes == null) {
+            throw new RuntimeException("非 web 上下文，无法获取 Request.");
+        }
+        return servletRequestAttributes.getResponse();
     }
 
 }

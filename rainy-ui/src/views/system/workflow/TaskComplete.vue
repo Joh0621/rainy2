@@ -52,7 +52,6 @@ const labelCol = reactive({ span: 5, offset: 0 })
 const wrapperCol = reactive({ span: 16, offset: 0 })
 const formRef = ref()
 
-// 是否是新增: true 新增，false 编辑，默认新增
 const visible = ref(false)
 const confirmLoading = ref(false)
 const form = ref({})

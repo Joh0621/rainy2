@@ -19,6 +19,7 @@ public final class DateUtils {
     public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     private static final String ZONE_OFFSET_8 = "+8";
+    public static final String ZONE_OFFSET_CST = "Asia/Shanghai";
 
     public static String format(TemporalAccessor datetime) {
         return getDtf(YYYY_MM_DD_HH_MM_SS).format(datetime);

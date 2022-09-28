@@ -12,6 +12,7 @@ export const method = {
  * 创建axios实例
  */
 // const baseURL = import.meta.env.VITE_API_BASE_URL;
+// const baseURL = '/dm-platform/api'
 const baseURL = '/api'
 const instance = axios.create({
   baseURL,

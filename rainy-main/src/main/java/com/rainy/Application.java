@@ -11,15 +11,15 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @author Created by renguangli at 2022/9/13 17:33
  */
 @SpringBootApplication
-public class RainyApplication extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(RainyApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(RainyApplication.class);
+        return builder.sources(Application.class);
     }
 
 }

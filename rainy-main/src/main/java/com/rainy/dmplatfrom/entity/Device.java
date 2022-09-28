@@ -3,6 +3,7 @@ package com.rainy.dmplatfrom.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rainy.base.entity.BaseEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Data
 @TableName("biz_device")
-public class Device {
+public class Device extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -27,6 +28,8 @@ public class Device {
     private String name;
     @NotBlank
     private String code;
+    @NotBlank
+    private String responsible;
     @PositiveOrZero
     private Integer major;
     @Size(max = 128)

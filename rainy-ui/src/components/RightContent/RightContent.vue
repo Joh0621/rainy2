@@ -20,7 +20,7 @@
               <template #icon>
                 <LogoutOutlined />
               </template>
-              <span>退出登录</span>
+              <span @click="logout">退出登录</span>
             </a-menu-item>
           </a-menu>
         </template>
@@ -37,6 +37,7 @@
 import { SettingOutlined, LogoutOutlined, BgColorsOutlined, BellOutlined } from '@ant-design/icons-vue'
 
 import { apply, randomTheme } from '@/hooks/useTheme'
+import { Modal } from 'ant-design-vue'
 
 defineProps({
   nickName: {
@@ -47,6 +48,19 @@ defineProps({
   }
 })
 
+const logout = () => {
+  Modal.confirm({
+    title: '退出登录',
+    content: '确认退出登录吗?',
+    okText: '确认',
+    cancelText: '取消',
+    onOk () {
+      localStorage.removeItem('Access-Token')
+      location.reload()
+    },
+    onCancel () {}
+  })
+}
 const handleClick = () => {
   apply(randomTheme())
 }

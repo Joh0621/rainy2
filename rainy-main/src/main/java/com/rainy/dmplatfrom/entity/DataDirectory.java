@@ -3,7 +3,7 @@ package com.rainy.dmplatfrom.entity;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.rainy.entity.BaseEntity;
+import com.rainy.base.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +24,8 @@ import java.util.List;
 @TableName("biz_data_directory")
 public class DataDirectory extends BaseEntity {
 
+    @NotNull
+    private Long orgId;
     @NotNull
     private Long parentId;
     @NotBlank

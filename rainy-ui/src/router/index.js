@@ -9,7 +9,7 @@ const routes = [
     name: 'index',
     meta: { title: '控制台' },
     component: BasicLayout,
-    redirect: '/org',
+    redirect: '/data/directory',
     children: [
       {
         path: '/data/:id/detail',

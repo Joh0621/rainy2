@@ -1,4 +1,4 @@
-package com.rainy.workflow.entity;
+package com.rainy.workflow.param;
 
 import lombok.Data;
 

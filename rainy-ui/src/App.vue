@@ -44,4 +44,7 @@ useUserTheme()
 .ant-col {
   padding-left: 6px;
 }
+.bjs-powered-by {
+  display: none;
+}
 </style>

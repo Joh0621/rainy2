@@ -59,6 +59,22 @@ export const menus = [
     ]
   },
   {
+    path: '/流程管理',
+    name: '流程管理',
+    component: 'RouteView',
+    title: '流程管理',
+    icon: 'icon-Report',
+    children: [
+      {
+        path: '/process/definition',
+        name: 'processDefinition',
+        component: 'system/workflow/ProcessDefinition',
+        title: '流程定义',
+        icon: 'icon-Report'
+      }
+    ]
+  },
+  {
     path: '/data/directory/mgt',
     name: 'dataDirectoryMgt',
     component: 'main/dataDirectory/DataDirectory',
@@ -114,7 +130,7 @@ export const menus = [
   {
     path: '/designer',
     name: 'designer',
-    component: 'system/workflow/Designer',
+    component: 'system/workflow/ProcessDesigner',
     title: '设计器',
     icon: 'icon-unorderedlist'
   }

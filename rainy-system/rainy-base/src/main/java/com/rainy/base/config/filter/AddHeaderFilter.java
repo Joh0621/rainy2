@@ -1,8 +1,8 @@
 package com.rainy.base.config.filter;
 
+import com.rainy.base.common.constant.DictConstants;
 import com.rainy.base.entity.DictItem;
 import com.rainy.base.service.DictItemService;
-import com.rainy.base.common.constant.DictConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

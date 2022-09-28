@@ -1,4 +1,5 @@
 <template>
+  <a-back-top />
   <pro-layout
     v-model:collapsed="state.collapsed"
     v-model:selectedKeys="state.selectedKeys"

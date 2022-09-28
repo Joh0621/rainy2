@@ -1,9 +1,9 @@
 package com.rainy.dmplatfrom.service.impl;
 
+import com.rainy.base.service.impl.BaseServiceImpl;
 import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.mapper.PointMapper;
 import com.rainy.dmplatfrom.service.PointService;
-import com.rainy.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

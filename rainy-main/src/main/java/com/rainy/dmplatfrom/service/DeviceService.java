@@ -1,7 +1,7 @@
 package com.rainy.dmplatfrom.service;
 
+import com.rainy.base.service.BaseService;
 import com.rainy.dmplatfrom.entity.Device;
-import com.rainy.service.BaseService;
 
 /**
  * data-middle-platform

@@ -2,11 +2,11 @@ package com.rainy.dmplatfrom.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rainy.aop.Log;
-import com.rainy.common.utils.ExcelUtils;
-import com.rainy.common.validation.Group;
-import com.rainy.common.constant.OpType;
-import com.rainy.common.param.IdNamesParam;
+import com.rainy.base.aop.Log;
+import com.rainy.base.common.constant.OpType;
+import com.rainy.base.common.param.IdNamesParam;
+import com.rainy.base.common.utils.ExcelUtils;
+import com.rainy.base.common.validation.Group;
 import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.service.PointService;
 import lombok.RequiredArgsConstructor;

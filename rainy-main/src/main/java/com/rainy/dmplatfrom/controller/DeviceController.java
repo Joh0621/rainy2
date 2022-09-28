@@ -2,19 +2,16 @@ package com.rainy.dmplatfrom.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rainy.aop.Log;
-import com.rainy.common.constant.OpType;
-import com.rainy.common.param.IdNamesParam;
-import com.rainy.common.utils.ExcelUtils;
-import com.rainy.common.validation.Group;
+import com.rainy.base.aop.Log;
+import com.rainy.base.common.constant.OpType;
+import com.rainy.base.common.param.IdNamesParam;
+import com.rainy.base.common.utils.ExcelUtils;
+import com.rainy.base.common.validation.Group;
 import com.rainy.dmplatfrom.entity.Device;
 import com.rainy.dmplatfrom.service.DeviceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,6 +36,11 @@ public class DeviceController {
                 .likeRight(StrUtil.isNotBlank(param.getName()), Device::getName, param.getName())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Device::getCode, param.getCode())
                 .page(page);
+    }
+
+    @GetMapping("/devices/{id:\\d+}")
+    public Device detail(@PathVariable Long id) {
+        return deviceService.getById(id);
     }
 
     @Log(module = "设备管理", type = OpType.EXPORT, detail = "导出了设备列表")

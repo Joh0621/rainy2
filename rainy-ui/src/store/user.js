@@ -6,8 +6,8 @@ import { generatorDynamicRouter } from '@/router/generator-routers'
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
-      avatar: '',
-      nickName: '',
+      avatar: '/vite.svg',
+      nickName: 'admin',
       addRouters: []
     }
   },

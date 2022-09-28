@@ -7,9 +7,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>rainy-camunda</module>
         <module>rainy-base</module>
         <module>rainy-dataway</module>
+        <module>rainy-workflow</module>
     </modules>
 
     <parent>

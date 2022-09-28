@@ -27,16 +27,16 @@
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
       <template #action="{ record }">
-        <a @click="handleComplete(record)">详情</a>
+        <a @click="handleTrack(record)">详情</a>
       </template>
     </b-table>
-    <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
+    <TaskTrack ref="taskTrack" @ok="handleOk"></TaskTrack>
   </a-card>
 </template>
 
 <script setup>
 import { ListHistoryTasks } from '@/api/workflow/workflow'
-import TaskComplete from './TaskComplete.vue'
+import TaskTrack from './TaskTrack.vue'
 import { useAppStore } from '@/store/app'
 
 const appStore = useAppStore()
@@ -72,9 +72,9 @@ const handleReset = () => {
   handleOk()
 }
 
-const taskComplete = ref()
-const handleComplete = (record) => {
-  taskComplete.value.open(record)
+const taskTrack = ref()
+const handleTrack = (record) => {
+  taskTrack.value.open(record)
 }
 
 </script>

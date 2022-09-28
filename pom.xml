@@ -73,7 +73,7 @@
             </dependency>
             <dependency>
                 <groupId>com.renguangli</groupId>
-                <artifactId>rainy-camunda</artifactId>
+                <artifactId>rainy-workflow</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,21 +1,21 @@
 package com.rainy.dmplatfrom.controller;
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rainy.aop.Log;
-import com.rainy.common.constant.OpType;
-import com.rainy.common.param.IdNamesParam;
-import com.rainy.common.utils.ExcelUtils;
-import com.rainy.common.validation.Group;
+import cn.hutool.core.bean.BeanUtil;
+import com.rainy.base.common.Result;
+import com.rainy.base.common.ResultCode;
+import com.rainy.base.common.utils.SaTokenUtils;
+import com.rainy.dmplatfrom.entity.DataDirectory;
 import com.rainy.dmplatfrom.entity.Device;
-import com.rainy.dmplatfrom.service.DeviceService;
+import com.rainy.dmplatfrom.entity.UserDataRel;
+import com.rainy.dmplatfrom.service.DataDirectoryService;
+import com.rainy.dmplatfrom.service.UserDataRelService;
+import com.rainy.workflow.service.WorkflowService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,47 +25,35 @@ import java.util.Objects;
  */
 @RestController
 @RequiredArgsConstructor
-public class DeviceController {
+public class DataApplyController {
 
-    private final DeviceService deviceService;
+    private final WorkflowService camundaService;
+    private final UserDataRelService userDataRelService;
+    private final DataDirectoryService dataDirectoryService;
+    private static final String processDefinitionKey = "process-data-apply";
 
-    @GetMapping("/devices")
-    public Page<Device> list(Page<Device> page, Device param) {
-        return deviceService.lambdaQuery()
-                .eq(!Objects.isNull(param.getDataDirectoryId()), Device::getDataDirectoryId, param.getDataDirectoryId())
-                .likeRight(StrUtil.isNotBlank(param.getName()), Device::getName, param.getName())
-                .likeRight(StrUtil.isNotBlank(param.getCode()), Device::getCode, param.getCode())
-                .page(page);
-    }
-
-    @GetMapping("/devices/{id:\\d+}")
-    public Device detail(@PathVariable Long id) {
-        return deviceService.getById(id);
-    }
-
-    @Log(module = "设备管理", type = OpType.EXPORT, detail = "导出了设备列表")
-    @GetMapping("/devices/export")
-    public void export(HttpServletResponse response) throws IOException {
-        List<Device> devices = deviceService.list();
-        ExcelUtils.export(response, devices, "devices.xls");
-    }
-
-    @Log(module = "设备管理", type = OpType.ADD, detail = "'新增了设备[' + #param.name + '].'")
-    @PostMapping("/device")
-    public Boolean save(@RequestBody @Validated(Group.Add.class) Device param) {
-        return deviceService.save(param);
-    }
-
-    @Log(module = "设备管理", type = OpType.DEL, detail = "'删除了设备[' + #param.names + '].'")
-    @PostMapping("/devices")
-    public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
-        return deviceService.removeBatchByIds(param.getIds());
-    }
-
-    @Log(module = "设备管理", type = OpType.UPDATE, detail = "'更新了设备[' + #param.name + '].'")
-    @PostMapping("/device/update")
-    public Boolean update(@RequestBody @Validated(Group.Edit.class) Device param) {
-        return deviceService.updateById(param);
+    @PostMapping("/data/apply")
+    public Result<Object> apply(@RequestBody Device device) {
+        // 1.检查是否申请过该数据
+        Long userId = SaTokenUtils.getUserId();
+        boolean exists = userDataRelService.lambdaQuery()
+                .eq(UserDataRel::getUserId, userId)
+                .eq(UserDataRel::getDataDirectionId, device.getDataDirectoryId())
+                .eq(UserDataRel::getDataId, device.getId()).exists();
+        if (exists) {
+            return Result.of(ResultCode.BAD_REQUEST, "您已经申请过该数据，请不要重复申请！");
+        }
+        // 2.判断是否申请本部门数据
+        DataDirectory dataDirectory = dataDirectoryService.getById(device.getDataDirectoryId());
+        Map<String, Object> variables = BeanUtil.beanToMap(device);
+        variables.put("flag", 1);
+        if (Objects.equals(SaTokenUtils.getUserinfo().getOrgId(), dataDirectory.getOrgId())) {
+            variables.put("flag", 0);
+        }
+        variables.put("startBy", SaTokenUtils.getUsername());
+        // 3.启动数据申请流程
+        camundaService.startProcess(processDefinitionKey, variables);
+        return Result.ok();
     }
 
 }

@@ -50,21 +50,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@bpmn-io/align-to-origin@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@bpmn-io/align-to-origin/-/align-to-origin-0.7.0.tgz#2d9015aefdeb482fa2c24f545ca7cd317250b3df"
-  integrity sha512-a8Ri5q2uhCrHJ415BR9ZulajvOw0SX2Eh0jxwoMZ/ynxcZPBbOKm6kW6HAQFJp0EFHwftMiJstcvIcSjyz0hZA==
-
-"@bpmn-io/element-templates-icons-renderer@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@bpmn-io/element-templates-icons-renderer/-/element-templates-icons-renderer-0.2.0.tgz#02d4af5bb8e8ce42506dad0c49652308ec3ab47b"
-  integrity sha512-hJQ1WyDIG5XsyrrJ/2CaqQy9t/8ZnwxPFMeAQ+DSb5x47e0TOoMWIWYW3i2aSqUPLk77E+i712emyOMjPhHKmg==
-  dependencies:
-    bpmn-js "^9.0.3"
-    diagram-js "^8.2.1"
-    inherits "^2.0.4"
-    tiny-svg "^2.2.3"
-
 "@bpmn-io/element-templates-validator@^0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@bpmn-io/element-templates-validator/-/element-templates-validator-0.10.0.tgz#5771ca26645303d7e0905f0e2c848e551ae75ca5"
@@ -559,18 +544,6 @@ boolbase@^1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
-bpmn-js-disable-collapsed-subprocess@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/bpmn-js-disable-collapsed-subprocess/-/bpmn-js-disable-collapsed-subprocess-0.1.5.tgz#bc1d4685ef2fa4120b1f96b51cc51b7726c8cdfa"
-  integrity sha512-OydebFC1js0BKa+4C01WiauWStmVKZuoC1aiAQ68NvSLqtVTwbgCewN1I/wiHPJsa9XHCqKX6+EJdA+x/iUVlw==
-  dependencies:
-    min-dash "^3.5.2"
-
-bpmn-js-executable-fix@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/bpmn-js-executable-fix/-/bpmn-js-executable-fix-0.1.4.tgz#102f2368957311ba7f8a82af3136a8331477c573"
-  integrity sha512-YKC88KrCUxNX6pcXDT4VE8e0Akx6MRheSgaG+CK8EZf0RFhi1A0yP/aHxH/pGuD+bOIRB6L7eTn61nSctGv87g==
-
 bpmn-js-properties-panel@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/bpmn-js-properties-panel/-/bpmn-js-properties-panel-1.7.0.tgz#a3d59820b85c8bd53311058c5aaba37aac76c7ca"
@@ -586,10 +559,10 @@ bpmn-js-properties-panel@^1.7.0:
     preact-markup "^2.1.1"
     semver-compare "^1.0.0"
 
-bpmn-js@^9.0.3, bpmn-js@^9.4.1:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-9.4.1.tgz#f81af00a63f15ffb365037973be8bce72e18eb69"
-  integrity sha512-uid1EctbT0c3dO5+Ghm9Qu8EQCSVjZS1Ff7z9qQ0ZoxRWayvbWaHUYSVdKlzXZi7911Pe7rkSqCuXpQ68ouPRw==
+bpmn-js@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-10.0.0.tgz#8e1ef79b403fdc2dbea3b21f211c1486160ce1b0"
+  integrity sha512-H+4cn3HzbVPBpwks22cuSw+k6I6wwPJOm9sRifwpzgAS3zuv0XeWM8a6PQpsxfkUvJ77N3fpgBKlBEvWkTL6fA==
   dependencies:
     bpmn-moddle "^7.1.3"
     css.escape "^1.5.1"
@@ -652,33 +625,6 @@ callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
-
-camunda-bpmn-js-behaviors@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/camunda-bpmn-js-behaviors/-/camunda-bpmn-js-behaviors-0.2.0.tgz#e2e8ebb1fd8f2e12071879e9afd58d0552637cf3"
-  integrity sha512-pIaSLBUfJSObCBvfH2WHPTzZbdW4rV0vN4PObyXX1iqy0idKy2uJURQj/lLy7cGmZAWO4GVpDuco8+f8WzH9HA==
-  dependencies:
-    ids "^1.0.0"
-    min-dash "^3.8.1"
-
-camunda-bpmn-js@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/camunda-bpmn-js/-/camunda-bpmn-js-0.18.0.tgz#92dcc34759be6af31bdca10fe0fe82db7ad0f8bf"
-  integrity sha512-CRcG3UHW1BoF/4Is4Hy/6UfBIqVC6LCVfDJTb5Dsni+RLK5oTRktmnoDZuBhnvpwOGHmWAUmb5i6oz9l6Tit2Q==
-  dependencies:
-    "@bpmn-io/align-to-origin" "^0.7.0"
-    "@bpmn-io/element-templates-icons-renderer" "^0.2.0"
-    bpmn-js "^9.4.1"
-    bpmn-js-disable-collapsed-subprocess "^0.1.5"
-    bpmn-js-executable-fix "^0.1.4"
-    camunda-bpmn-js-behaviors "^0.2.0"
-    camunda-bpmn-moddle "^7.0.1"
-    diagram-js "^8.9.0"
-    diagram-js-minimap "^2.1.1"
-    diagram-js-origin "^1.3.3"
-    inherits "^2.0.4"
-    min-dash "^3.8.1"
-    zeebe-bpmn-moddle "^0.15.0"
 
 camunda-bpmn-moddle@^7.0.1:
   version "7.0.1"
@@ -840,24 +786,7 @@ diagram-js-direct-editing@^1.7.0:
     min-dash "^3.5.2"
     min-dom "^3.1.3"
 
-diagram-js-minimap@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/diagram-js-minimap/-/diagram-js-minimap-2.1.1.tgz#88fc4140e17d7a5fc612ca8c6ce0d6e3021204d8"
-  integrity sha512-H+UM6qoIVgJAOJgm3kZ57zpPyTx41YtAQAs0c/rrRube25ljygA0PSO5x42CJNulJdgK0AEWdsnhefMzlxyKfQ==
-  dependencies:
-    css.escape "^1.5.1"
-    min-dash "^3.5.2"
-    min-dom "^3.1.1"
-    tiny-svg "^2.2.2"
-
-diagram-js-origin@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/diagram-js-origin/-/diagram-js-origin-1.3.3.tgz#6a6667c2bbdc58f3251c5279a13ccf144e6281f2"
-  integrity sha512-viNNc2zmZUNcNyQnxTo9si8lMAEVocKOmQQ2ldLhBQJs+WknXItn9BdAOxgcLLqFVcgS9q9CeYGfgRM28Oh5iw==
-  dependencies:
-    tiny-svg "^2.0.0"
-
-diagram-js@^8.2.1, diagram-js@^8.9.0:
+diagram-js@^8.9.0:
   version "8.9.0"
   resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-8.9.0.tgz#851e8bda1a97d0e2995a3c853691cd4261a1777b"
   integrity sha512-577bUEbkwZ7id4SCXcD2qrlKoRPXry2SDSPt5T6tEOjwKrTllKr5d1HZoJzGws4VMQq5fmY51Gce1iFT9S4Dlw==
@@ -1581,7 +1510,7 @@ inherits-browser@0.0.1:
   resolved "https://registry.yarnpkg.com/inherits-browser/-/inherits-browser-0.0.1.tgz#e85be69ebe554cc9840ec816ef3596a4316645ec"
   integrity sha512-kaDA3DkCdCpvrKIo/1T/3yVn+qpFUHLjYtSHmTYewb+QfjfaQy6FGQ7LwBu7st0tG9UvYad/XAlqQmdIh6CICw==
 
-inherits@2, inherits@^2.0.4:
+inherits@2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -1895,7 +1824,7 @@ min-dash@^3.0.0, min-dash@^3.5.2, min-dash@^3.8.1:
   resolved "https://registry.yarnpkg.com/min-dash/-/min-dash-3.8.1.tgz#09a8bd8a041d65eec4732042cde9cb24a6e84b0d"
   integrity sha512-evumdlmIlg9mbRVPbC4F5FuRhNmcMS5pvuBUbqb1G9v09Ro0ImPEgz5n3khir83lFok1inKqVDjnKEg3GpDxQg==
 
-min-dom@^3.1.1, min-dom@^3.1.3, min-dom@^3.2.0, min-dom@^3.2.1:
+min-dom@^3.1.3, min-dom@^3.2.0, min-dom@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/min-dom/-/min-dom-3.2.1.tgz#c272a814397d8bfe97edd12670e7ac34123c043f"
   integrity sha512-v6YCmnDzxk4rRJntWTUiwggLupPw/8ZSRqUq0PDaBwVZEO/wYzCH4SKVBV+KkEvf3u0XaWHly5JEosPtqRATZA==
@@ -2446,7 +2375,7 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
-tiny-svg@^2.0.0, tiny-svg@^2.2.2, tiny-svg@^2.2.3, tiny-svg@^2.2.4:
+tiny-svg@^2.2.2, tiny-svg@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/tiny-svg/-/tiny-svg-2.2.4.tgz#8d4a16bd2c4644c8444fd3c2ece91db7631cfb35"
   integrity sha512-NOi39lBknf4UdDEahNkbEAJnzhu1ZcN2j75IS2vLRmIhsfxdZpTChfLKBcN1ShplVmPIXJAIafk6YY5/Aa80lQ==
@@ -2694,8 +2623,3 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-zeebe-bpmn-moddle@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/zeebe-bpmn-moddle/-/zeebe-bpmn-moddle-0.15.0.tgz#fa1ea5634b0a2a9914c7e26c21316595d97e8e39"
-  integrity sha512-cgn6bjkjrtOGcRumrgWnT1J93wTKmnFlSGGuwGXjF7pOksPF28ssbKiwKVMU6IXHnBDIVLQdf8fVNZn7JiBtQQ==
