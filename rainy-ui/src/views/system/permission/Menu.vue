@@ -3,10 +3,7 @@
     <div class="table-query">
       <a-form layout="inline">
         <a-form-item label="菜单名称">
-          <a-input v-model:value="queryParam.name" placeholder="请输入菜单名称" />
-        </a-form-item>
-        <a-form-item label="菜单编码">
-          <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />
+          <a-input v-model:value="queryParam.name" placeholder="请输入菜单名称!" />
         </a-form-item>
         <a-form-item>
           <a-space>
@@ -27,29 +24,23 @@
       <template #operation>
         <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
       </template>
-      <template #isDefault="{ record }">
-        {{ appStore.dictItemValue('sys_yes_or_no', record.isDefault) }}
+      <template #type="{ record }">
+        <a-tag v-if="record.type === 0" color="#2db7f5">
+          {{ appStore.dictItemValue('sys_menu_type', record.type) }}
+        </a-tag>
+        <a-tag v-if="record.type === 1" color="#87d068">
+          {{ appStore.dictItemValue('sys_menu_type', record.type) }}
+        </a-tag>
+        <a-tag v-if="record.type === 2" color="cyan">
+          {{ appStore.dictItemValue('sys_menu_type', record.type) }}
+        </a-tag>
       </template>
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
-        <a-dropdown>
-          <a class="ant-dropdown-link" @click.prevent>
-            更多  <DownOutlined />
-          </a>
-          <template #overlay>
-            <a-menu>
-              <a-menu-item>
-                <a-button @click="handleAuthorize(record)" type="link" size="small">分配菜单</a-button>
-              </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm :disabled="record.isDefault" title="确认删除吗？" @confirm="handleDel(record)">
-                  <a-button type="link" size="small" :disabled="record.isDefault" danger>删除</a-button>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
+        <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
+          <a-button type="link" danger>删除</a-button>
+        </a-popconfirm>
       </template>
     </b-table>
     <menu-edit ref="editor" @ok="handleOk"></menu-edit>
@@ -58,26 +49,26 @@
 </template>
 
 <script setup>
+import MenuEdit from './MenuEdit.vue'
+import RoleAuthorize from './RoleAuthorize.vue'
 import { useAppStore } from '@/store/app'
 import { Tree, Del, Export } from '@/api/menu'
 import { toIdNamesParam } from '@/utils/ParamUtils'
-import MenuEdit from './MenuEdit.vue'
-import RoleAuthorize from './RoleAuthorize.vue'
+import { sortValue } from '@/utils/constants'
 import { message } from 'ant-design-vue'
-import { DownOutlined } from '@ant-design/icons-vue'
 
 const appStore = useAppStore()
 
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '菜单名称', dataIndex: 'title' },
-  { title: '路由名称', dataIndex: 'name' },
-  { title: '路由地址', dataIndex: 'path' },
-  { title: '内链Url', dataIndex: 'url' },
-  { title: '前端组件', dataIndex: 'component' },
-  { title: '权限码', dataIndex: 'permission' },
+  { title: '菜单名称', dataIndex: 'name' },
   { title: '菜单类型', dataIndex: 'type' },
+  // { title: '路由名称', dataIndex: 'name' },
+  { title: '路由地址', dataIndex: 'path' },
+  { title: '前端组件', dataIndex: 'component' },
+  { title: '内链Url', dataIndex: 'url' },
+  { title: '权限码', dataIndex: 'permission' },
   { title: '排序', dataIndex: 'sort' },
   { title: '描述', dataIndex: 'description' },
   { title: '操作', dataIndex: 'action', width: '150px' }
@@ -99,16 +90,17 @@ const handleReset = () => {
 const editor = ref()
 const handleAdd = () => {
   editor.value.open(true, {
-    isDefault: false
+    parentId: 0,
+    type: 1,
+    target: '_self',
+    component: 'Iframe',
+    icon: 'icon-Report',
+    show: true,
+    sort: sortValue
   })
 }
 
-const authorizer = ref()
-const handleAuthorize = (record) => {
-  authorizer.value.open(record)
-}
 const handleEdit = (record) => {
-  // 转化为 string
   editor.value.open(false, record)
 }
 

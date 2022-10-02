@@ -1,6 +1,7 @@
 import router from '@/router'
 import { useUserStore } from '@/store/user'
 import { useAppStore } from '@/store/app'
+import { TOKEN_NAME, ROOT_ROUTER_NAME } from '@/utils/constants'
 
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -20,7 +21,7 @@ router.beforeEach((to, from, next) => {
     })
   } else {
     /* has token */
-    const token = localStorage.getItem('Access-Token')
+    const token = localStorage.getItem(TOKEN_NAME)
     if (token) {
       if (to.path === loginRoutePath) {
         next({ path: defaultRoutePath })
@@ -28,12 +29,14 @@ router.beforeEach((to, from, next) => {
       } else {
         const store = useUserStore()
         if (store.addRouters.length === 0) {
-          store.GenerateRoutes().then(() => {
-            // 动态添加路由
-            store.addRouters.forEach((route) => {
-              router.addRoute('index', route)
+          store.GetUserinfo().then(res => {
+            store.GenerateRoutes(res.data.menus).then(() => {
+              // 动态添加路由
+              store.addRouters.forEach((route) => {
+                router.addRoute(ROOT_ROUTER_NAME, route)
+              })
+              next({ path: to.path, replace: true })
             })
-            next({ path: to.path, replace: true })
           })
         } else {
           next()

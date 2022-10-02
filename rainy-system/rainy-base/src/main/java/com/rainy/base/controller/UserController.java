@@ -1,8 +1,12 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
+import com.rainy.base.common.Result;
+import com.rainy.base.common.constant.CharConstants;
 import com.rainy.base.common.constant.OpType;
 import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
@@ -12,15 +16,14 @@ import com.rainy.base.service.UserRoleRelService;
 import com.rainy.base.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * data-middle-platform
@@ -78,6 +81,29 @@ public class UserController {
     @PostMapping("/user/roles/assign")
     public Boolean assignRoles(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
         return userRoleRelService.assignRoles(param.getId(), param.getIds());
+    }
+
+    @Log(module = "在线用户", type = OpType.QUERY, detail = "'查询了在线用户第' + #page.current + '页.每页' + #page.size + '条数据'")
+    @GetMapping("/users/online")
+    public Page<User> onlineUsers(Page<User> page, String username, String nickName){
+        List<String> sessionIds = StpUtil.searchSessionId(CharConstants.EMPTY, -1, 0, true);
+        if (sessionIds.isEmpty()) {
+            return page;
+        }
+        List<String> userIds = sessionIds.stream()
+                .map(v -> StrUtil.subAfter(v, CharConstants.COLON, true)).toList();
+        return userService.lambdaQuery()
+                .likeRight(StrUtil.isNotBlank(username), User::getUsername, username)
+                .likeRight(StrUtil.isNotBlank(nickName), User::getNickName, username)
+                .in(User::getId, userIds)
+                .page(page);
+    }
+
+    @Log(module = "在线用户", type = OpType.DEL, detail = "'下线了用户[' + #param.names + '].'")
+    @PostMapping("/user/kickOut")
+    public Result<Boolean> kickOut(@RequestBody @Valid IdNamesParam param){
+        param.getIds().forEach(StpUtil::kickout);
+        return Result.ok();
     }
 
 }

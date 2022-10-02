@@ -9,6 +9,12 @@ import cn.hutool.core.util.StrUtil;
  */
 public class ValidateUtils {
 
+    public static void isExists(boolean expression, String message, Object... variables) {
+        if (expression) {
+            throw new IllegalArgumentException(StrUtil.format(message, variables));
+        }
+    }
+
     public static void isContains(String str1, String str2, String message, Object... variables) {
         if (str1 == null || str2 == null) {
             return;

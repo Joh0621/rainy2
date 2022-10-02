@@ -7,6 +7,8 @@ package com.rainy.base.common.constant;
  */
 public interface ConfigConstants {
 
+    String IS_DEMO_DEV = "sys_is_demo_dev";
+
     /**
      * 头像上传路径
      */

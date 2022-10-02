@@ -171,6 +171,7 @@ const handleEdit = (values) => {
 
 const handleCancel = () => {
   visible.value = false
+  formRef.value.resetFields()
   emits('ok')
 }
 

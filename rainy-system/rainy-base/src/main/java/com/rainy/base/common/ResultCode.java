@@ -16,7 +16,7 @@ public enum ResultCode {
     BAD_REQUEST(400, "参数校验失败，{}"),
 
     UNAUTHORIZED(401, "未登录！"),
-    ACCOUNT_PASSWORD_NOT_MATCH(401, "请输入正确的用户名与密码!"),
+    ACCOUNT_PASSWORD_NOT_MATCH(401, "账号与密码不匹配!"),
     ACCOUNT_NOT_ACTIVATE(401, "账号未激活!"),
     ACCOUNT_EXPIRED(401, "您的账号已过期，请联系管理员！"),
     PASSWORD_EXPIRED(401, "您的密码已过期，请修改密码！"),

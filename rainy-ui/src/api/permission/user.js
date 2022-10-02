@@ -7,7 +7,9 @@ const api = {
   Del: '/users',
   Update: '/user/update',
   ListRoleIds: '/user/roleIds',
-  AssignRoles: '/user/roles/assign'
+  AssignRoles: '/user/roles/assign',
+  ListOnline: '/users/online',
+  KickOut: '/user/kickOut'
 }
 
 export function List (parameter) {
@@ -63,5 +65,21 @@ export function Export () {
     url: api.Export,
     method: method.GET,
     responseType: 'blob'
+  })
+}
+
+export function ListOnline (parameter) {
+  return request({
+    url: api.ListOnline,
+    method: method.GET,
+    params: parameter
+  })
+}
+
+export function KickOut (parameter) {
+  return request({
+    url: api.KickOut,
+    method: method.POST,
+    data: parameter
   })
 }

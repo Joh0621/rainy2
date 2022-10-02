@@ -1,5 +1,7 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
@@ -34,15 +36,14 @@ public class MenuController {
 
     @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单树列表'", resSaved = false)
     @GetMapping("/menus/tree")
-    public List
-
-            <Menu> tree(Menu param) {
+    public List <Menu> tree(Menu param) {
         return menuService.tree(param);
     }
 
     @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/menus")
     public Page<Menu> list(Page<Menu> page, Menu param) {
+        List<String> roleList = StpUtil.getRoleList();
         return menuService.lambdaQuery()
                 .eq(StrUtil.isNotBlank(param.getName()), Menu::getName, param.getName())
                 .eq(Objects.nonNull(param.getType()), Menu::getType, param.getType())

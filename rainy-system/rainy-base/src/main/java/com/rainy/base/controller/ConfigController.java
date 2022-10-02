@@ -1,9 +1,11 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
 import com.rainy.base.common.constant.OpType;
+import com.rainy.base.common.constant.Permission;
 import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
@@ -31,8 +33,9 @@ public class ConfigController {
 
     private final ConfigService configService;
 
-    @Log(module = "配置管理", type = OpType.QUERY, detail = "'查询了配置列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/configs")
+    @SaCheckPermission("config:query")
+    @Log(module = "配置管理", type = OpType.QUERY, detail = "'查询了配置列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<Config> list(Page<Config> page, Config param) {
         return configService.lambdaQuery()
                 .likeRight(StrUtil.isNotBlank(param.getName()), Config::getName, param.getName())
@@ -41,21 +44,24 @@ public class ConfigController {
                 .page(page);
     }
 
-    @Log(module = "配置管理", type = OpType.EXPORT, detail = "导出了配置列表")
     @GetMapping("/configs/export")
+    @SaCheckPermission("config:export")
+    @Log(module = "配置管理", type = OpType.EXPORT, detail = "导出了配置列表")
     public void export(HttpServletResponse response) throws IOException {
         List<Config> configs = configService.list();
         ExcelUtils.export(response, configs, "configs.xls");
     }
 
-    @Log(module = "配置管理", type = OpType.ADD, detail = "'新增了配置[' + #param.name + '].'")
     @PostMapping("/config")
+    @SaCheckPermission("config:add")
+    @Log(module = "配置管理", type = OpType.ADD, detail = "'新增了配置[' + #param.name + '].'")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Config param) {
         return configService.save(param);
     }
 
-    @Log(module = "配置管理", type = OpType.DEL, detail = "'删除了配置[' + #param.names + '].'")
     @PostMapping("/configs")
+    @SaCheckPermission("config:del")
+    @Log(module = "配置管理", type = OpType.DEL, detail = "'删除了配置[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return configService.lambdaUpdate()
                 .in(Config::getId, param.getIds())
@@ -63,8 +69,9 @@ public class ConfigController {
                 .update();
     }
 
-    @Log(module = "配置管理", type = OpType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
     @PostMapping("/config/update")
+    @SaCheckPermission("config:update")
+    @Log(module = "配置管理", type = OpType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Config param) {
         return configService.updateById(param);
     }

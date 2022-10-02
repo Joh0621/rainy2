@@ -119,6 +119,8 @@ const handleOk = () => {
     })
     .finally(() => {
       confirmLoading.value = false
+      // 更新
+      appStore.Common()
     })
 }
 

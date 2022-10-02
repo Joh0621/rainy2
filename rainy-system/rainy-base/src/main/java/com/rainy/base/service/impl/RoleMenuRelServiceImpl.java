@@ -5,6 +5,8 @@ import com.rainy.base.mapper.RoleMenuRelMapper;
 import com.rainy.base.service.RoleMenuRelService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * data-middle-platform
  *
@@ -13,4 +15,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleMenuRelServiceImpl extends BaseServiceImpl<RoleMenuRelMapper, RoleMenuRel> implements RoleMenuRelService {
 
+    /**
+     * 查询角色拥有的菜单id列表（按钮）
+     *
+     * @param roleIds 角色id
+     * @return {@link List}<{@link Long}>
+     */
+    @Override
+    public List<Long> listMenuIdsInRoleId(List<Long> roleIds) {
+        List<RoleMenuRel> menuRelList = this.lambdaQuery()
+                .select(RoleMenuRel::getMenuId)
+                .in(RoleMenuRel::getRoleId, roleIds)
+                .list();
+       return menuRelList.stream()
+                .map(RoleMenuRel::getMenuId)
+                .toList();
+    }
 }

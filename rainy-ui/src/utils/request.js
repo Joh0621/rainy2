@@ -1,5 +1,8 @@
 import axios from 'axios'
+import { useUserStore } from '@/store/user'
 import { notification } from 'ant-design-vue'
+import { TOKEN_NAME } from '@/utils/constants'
+import { api } from '@/api/login'
 
 export const method = {
   GET: 'get',
@@ -24,6 +27,10 @@ const instance = axios.create({
  */
 instance.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem(TOKEN_NAME)
+    if (token) {
+      config.headers[TOKEN_NAME] = token
+    }
     return config
   },
   error => {
@@ -38,12 +45,23 @@ instance.interceptors.response.use(
       return response
     }
     const data = response.data
-
     if (data.code === 400) {
       notification.error({
         message: '参数检验失败',
         description: data.message
       })
+    }
+    if (data.code === 401) {
+      notification.error({
+        message: '认证失败',
+        description: data.message
+      })
+      if (response.config.url !== api.Login) {
+        const userStore = useUserStore()
+        userStore.Logout({}).then(res => {
+          location.reload()
+        })
+      }
     }
     if (data.code === 403) {
       notification.error({
@@ -66,6 +84,12 @@ instance.interceptors.response.use(
     return data
   },
   error => {
+    if (error.response.status === 404) {
+      notification.error({
+        message: '请求不存在',
+        description: error.response.message
+      })
+    }
     return Promise.reject(error)
   }
 )

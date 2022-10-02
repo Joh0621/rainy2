@@ -23,7 +23,7 @@ public class UserRoleRelServiceImpl extends BaseServiceImpl<UserRoleRelMapper, U
      * @return {@link List}<{@link Long}>
      */
     @Override
-    public List<Long> listRoleIdsByUserId(Long userId) {
+    public List<Long> listRoleIdsByUserId(Object userId) {
         List<UserRoleRel> userRoleRelList = this.lambdaQuery()
                 .eq(UserRoleRel::getUserId, userId)
                 .list();

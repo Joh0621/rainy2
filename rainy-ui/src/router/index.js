@@ -2,14 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import BlankLayout from '@/layouts/BlankLayout.vue'
 // import NestedLayout from '@/layouts/NestedLayout';
+import { ROOT_ROUTER_NAME } from '@/utils/constants'
 
 const routes = [
   {
     path: '/',
-    name: 'index',
+    name: ROOT_ROUTER_NAME,
     meta: { title: '控制台' },
     component: BasicLayout,
-    redirect: '/data/directory',
+    redirect: '/user/online',
     children: [
       {
         path: '/data/:id/detail',

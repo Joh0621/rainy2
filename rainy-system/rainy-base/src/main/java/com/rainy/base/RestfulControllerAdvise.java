@@ -1,9 +1,14 @@
 package com.rainy.base;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
 import com.rainy.base.common.Result;
 import com.rainy.base.common.ResultCode;
+import com.rainy.base.service.MenuService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -23,13 +28,16 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * 全局异常处理
+ * 全局异常处理/统一结果返回
  *
  * @author created by renguangli at 2022/9/2 10:55
  */
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
+
+    private final MenuService menuService;
 
     /**
      * 拦截系统异常
@@ -38,6 +46,22 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
     public Result<Object> exception(Exception e) {
         log.error(e.getMessage(), e);
         return Result.of(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    /**
+     * 权限异常
+     */
+    @ExceptionHandler(value = SaTokenException.class)
+    public Result<Object> saTokenException(SaTokenException exception) {
+        if (exception instanceof NotLoginException e) {
+            return Result.of(ResultCode.UNAUTHORIZED, e.getMessage());
+        }
+        if (exception instanceof NotPermissionException e) {
+            String message = e.getMessage()
+                    .replace(e.getPermission(), menuService.getName(e.getPermission()));
+            return Result.of(ResultCode.FORBIDDEN, message);
+        }
+        return Result.of(ResultCode.UNAUTHORIZED, exception.getMessage());
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)

@@ -14,4 +14,5 @@ public interface RoleService extends BaseService<Role> {
 
     Boolean assignMenus(Long id, List<RoleMenuRel> roleMenuRelList);
 
+    List<String> listCodesInId(List<Long> roleIds);
 }

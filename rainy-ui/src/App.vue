@@ -42,7 +42,7 @@ useUserTheme()
   padding: 0;
 }
 .ant-col {
-  padding-left: 6px;
+  padding-left: 0;
 }
 .bjs-powered-by {
   display: none;

@@ -125,6 +125,8 @@ const handleDel = (record) => {
     if (res.success) {
       message.success('删除成功！')
       handleOk()
+      // 更新
+      appStore.Common()
     }
   })
 }
@@ -134,6 +136,8 @@ const handleBatchDel = (keys, rows) => {
     if (res.success) {
       message.success('删除成功！')
       handleOk()
+      // 更新
+      appStore.Common()
     }
   })
 }

@@ -2,6 +2,8 @@ package com.rainy.base.service;
 
 import com.rainy.base.entity.RoleMenuRel;
 
+import java.util.List;
+
 /**
  * data-middle-platform
  *
@@ -9,4 +11,5 @@ import com.rainy.base.entity.RoleMenuRel;
  */
 public interface RoleMenuRelService extends BaseService<RoleMenuRel> {
 
+    List<Long> listMenuIdsInRoleId(List<Long> roleIds);
 }

@@ -149,7 +149,6 @@ const handleOk = () => {
     })
 }
 
-const emits = defineEmits(['ok'])
 
 const handleAdd = (values) => {
   Add(values).then((res) => {
@@ -169,8 +168,10 @@ const handleEdit = (values) => {
   })
 }
 
+const emits = defineEmits(['ok'])
 const handleCancel = () => {
   visible.value = false
+  formRef.value.resetFields()
   emits('ok')
 }
 

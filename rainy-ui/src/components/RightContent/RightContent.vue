@@ -38,6 +38,9 @@ import { SettingOutlined, LogoutOutlined, BgColorsOutlined, BellOutlined } from 
 
 import { apply, randomTheme } from '@/hooks/useTheme'
 import { Modal } from 'ant-design-vue'
+import { useUserStore } from '@/store/user.js'
+
+const userStore = useUserStore()
 
 defineProps({
   nickName: {
@@ -55,8 +58,9 @@ const logout = () => {
     okText: '确认',
     cancelText: '取消',
     onOk () {
-      localStorage.removeItem('Access-Token')
-      location.reload()
+      userStore.Logout({}).then(res => {
+        location.reload()
+      })
     },
     onCancel () {}
   })

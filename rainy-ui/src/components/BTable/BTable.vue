@@ -29,8 +29,6 @@
 </template>
 
 <script setup>
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons-vue'
-
 const props = defineProps({
   options: {
     default: {
@@ -82,6 +80,9 @@ const refresh = () => {
   props
     .loadData(parameter)
     .then((res) => {
+      if (!res) {
+        return
+      }
       if (res.records) {
         dataSource.value = res.records
         pagination.value.total = res.total

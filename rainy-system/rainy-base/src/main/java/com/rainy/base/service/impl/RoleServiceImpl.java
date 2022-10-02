@@ -31,4 +31,15 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         return roleMenuRelService.saveBatch(roleMenuRelList);
     }
 
+    @Override
+    public List<String> listCodesInId(List<Long> roleIds) {
+        List<Role> roles = this.lambdaQuery()
+                .select(Role::getCode)
+                .in(Role::getId, roleIds)
+                .list();
+        return roles.stream()
+                .map(Role::getCode)
+                .toList();
+    }
+
 }

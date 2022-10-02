@@ -1,5 +1,4 @@
 <template>
-  <a-back-top />
   <pro-layout
     v-model:collapsed="state.collapsed"
     v-model:selectedKeys="state.selectedKeys"
@@ -17,11 +16,12 @@
       </router-link>
     </template>
     <template #headerContentRender>
-      <menu-unfold-outlined v-if="state.collapsed" style="font-size: 18px; padding: 4px" @click="changeCollapsed" />
-      <menu-fold-outlined v-else style="font-size: 18px; padding: 4px" @click="changeCollapsed" />
-      <a-tooltip title="刷新">
-        <redo-outlined style="font-size: 18px; padding: 4px" @click="reload" />
-      </a-tooltip>
+<!--      <menu-unfold-outlined v-if="state.collapsed" style="font-size: 18px; padding: 4px" @click="changeCollapsed" />-->
+<!--      <menu-fold-outlined v-else style="font-size: 18px; padding: 4px" @click="changeCollapsed" />-->
+<!--      <a-tooltip title="刷新">-->
+<!--        <redo-outlined style="font-size: 20px;" @click="reload" />-->
+<!--      </a-tooltip>-->
+      {{ router.currentRoute.value.meta.title }}
     </template>
     <template #rightContentRender>
       <RightContent :nick-name="nickName" :avatar="avatar" />
@@ -46,7 +46,6 @@ import { useRouter, RouterView, RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
-import { MenuFoldOutlined, MenuUnfoldOutlined, RedoOutlined } from '@ant-design/icons-vue'
 import { defaultConfig } from '@/config/defaultConfig'
 
 const router = useRouter()
@@ -84,9 +83,9 @@ const breadcrumb = computed(() =>
   })
 )
 
-const changeCollapsed = () => {
-  state.collapsed = !state.collapsed
-}
+// const changeCollapsed = () => {
+//   state.collapsed = !state.collapsed
+// }
 
 provide('reload', () => {
   reload()

@@ -1,5 +1,6 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
@@ -31,8 +32,9 @@ public class DictController {
 
     private final DictService dictService;
 
-    @Log(module = "字典管理", type = OpType.QUERY, detail = "'查询了字典列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/dicts")
+    @SaCheckPermission("dict:query")
+    @Log(module = "字典管理", type = OpType.QUERY, detail = "'查询了字典列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<Dict> list(Page<Dict> page, Dict param) {
         return dictService.lambdaQuery()
                 .likeRight(StrUtil.isNotBlank(param.getName()), Dict::getName, param.getName())
@@ -41,27 +43,31 @@ public class DictController {
                 .page(page);
     }
 
-    @Log(module = "字典管理", type = OpType.EXPORT, detail = "导出了字典列表")
     @GetMapping("/dicts/export")
+    @SaCheckPermission("dict:export")
+    @Log(module = "字典管理", type = OpType.EXPORT, detail = "导出了字典列表")
     public void export(HttpServletResponse response) throws IOException {
         List<Dict> configs = dictService.list();
         ExcelUtils.export(response, configs, "dicts.xls");
     }
 
-    @Log(module = "字典管理", type = OpType.ADD, detail = "'新增了字典[' + #param.name + '].'")
     @PostMapping("/dict")
+    @SaCheckPermission("dict:add")
+    @Log(module = "字典管理", type = OpType.ADD, detail = "'新增了字典[' + #param.name + '].'")
     public boolean save(@RequestBody @Validated(Group.Add.class) Dict param) {
         return dictService.save(param);
     }
 
-    @Log(module = "字典管理", type = OpType.DEL, detail = "'删除了字典[' + #param.names + '].'")
     @PostMapping("/dicts")
+    @SaCheckPermission("dict:del")
+    @Log(module = "字典管理", type = OpType.DEL, detail = "'删除了字典[' + #param.names + '].'")
     public boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return dictService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "字典管理", type = OpType.UPDATE, detail = "'更新了字典[' + #param.name + '].'")
     @PostMapping("/dict/update")
+    @SaCheckPermission("dict:update")
+    @Log(module = "字典管理", type = OpType.UPDATE, detail = "'更新了字典[' + #param.name + '].'")
     public boolean update(@RequestBody @Validated(Group.Edit.class) Dict param) {
         return dictService.updateById(param);
     }

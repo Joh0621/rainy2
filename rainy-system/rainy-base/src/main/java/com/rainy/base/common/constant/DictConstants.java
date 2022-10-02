@@ -17,4 +17,19 @@ public interface DictConstants {
      */
     String CODE_RESPONSE_HEADER = "sys_response_header";
 
+    /**
+     * 目录
+     */
+    int MENU_TYPE_DIRECTORY_CODE = 0;
+
+    /**
+     * 菜单
+     */
+    int MENU_TYPE_MENU_CODE = 1;
+
+    /**
+     * 按钮
+     */
+    int MENU_TYPE_BUTTON_CODE = 2;
+
 }

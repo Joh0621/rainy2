@@ -1,5 +1,6 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.rainy.base.common.constant.DictConstants;
 import com.rainy.base.entity.Config;
 import com.rainy.base.service.ConfigService;
@@ -25,6 +26,7 @@ public class CommonController {
     private final DictService dictService;
     private final ConfigService configService;
 
+    @SaIgnore
     @GetMapping("/common")
     public Map<String, Object> common() {
         Map<String, Object> data = new LinkedHashMap<>();

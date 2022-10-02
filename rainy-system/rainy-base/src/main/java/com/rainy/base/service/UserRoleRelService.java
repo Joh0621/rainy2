@@ -3,6 +3,7 @@ package com.rainy.base.service;
 import com.rainy.base.entity.UserRoleRel;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * data-middle-platform
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface UserRoleRelService extends BaseService<UserRoleRel> {
 
-    List<Long> listRoleIdsByUserId(Long userId);
+    List<Long> listRoleIdsByUserId(Object userId);
 
     Boolean assignRoles(Long userId, List<Long> roleIds);
 }

@@ -35,12 +35,11 @@ public class Menu extends BaseEntity {
     private String path;
     @NotBlank
     private String component;
+    @NotBlank
+    private String target;
 
     @Positive
     private Integer type;
-    @NotBlank
-    @NotUnique(groups = Group.Add.class, entity = Menu.class, field = "title")
-    private String title;
     private String icon;
     private String url;
 

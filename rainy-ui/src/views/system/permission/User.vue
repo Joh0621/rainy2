@@ -18,7 +18,7 @@
         <div class="table-query">
           <a-form layout="inline">
             <a-form-item label="用户名">
-              <a-input v-model:value="queryParam.name" placeholder="请输入用户名" />
+              <a-input v-model:value="queryParam.username" placeholder="请输入用户名!" />
             </a-form-item>
             <a-form-item>
               <a-space>

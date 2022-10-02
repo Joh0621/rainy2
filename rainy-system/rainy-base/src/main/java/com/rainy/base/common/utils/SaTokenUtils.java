@@ -1,5 +1,6 @@
 package com.rainy.base.common.utils;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.rainy.base.entity.User;
 
 /**
@@ -18,10 +19,10 @@ public class SaTokenUtils {
     }
 
     public static User getUserinfo(){
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setOrgId(5L);
-        return user;
+        return (User) StpUtil.getSessionByLoginId(StpUtil.getLoginId()).get("userinfo");
+    }
+
+    public static void setUserinfo(User user) {
+        StpUtil.getSessionByLoginId(user.getId()).set("userinfo", user);
     }
 }
