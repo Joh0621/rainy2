@@ -18,6 +18,8 @@ router.beforeEach((to, from, next) => {
   if (!appStore.dictTree) {
     appStore.Common().then(() => {
       next({ path: to.path, replace: true })
+    }).catch(() => {
+      next()
     })
   } else {
     /* has token */

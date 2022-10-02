@@ -1,5 +1,6 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
@@ -35,8 +36,9 @@ public class RoleController {
     private final RoleService roleService;
     private final RoleMenuRelService roleMenuRelService;
 
-    @Log(module = "角色管理", type = OpType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/roles")
+//    @SaCheckPermission("role:query")
+    @Log(module = "角色管理", type = OpType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<Role> list(Page<Role> page, Role param) {
         return roleService.lambdaQuery()
                 .likeRight(StrUtil.isNotBlank(param.getName()), Role::getName, param.getName())
@@ -44,33 +46,38 @@ public class RoleController {
                 .page(page);
     }
 
-    @Log(module = "角色管理", type = OpType.EXPORT, detail = "导出了角色列表")
     @GetMapping("/roles/export")
+//    @SaCheckPermission("role:export")
+    @Log(module = "角色管理", type = OpType.EXPORT, detail = "导出了角色列表")
     public void export(HttpServletResponse response) throws IOException {
-        List<Role> configs = roleService.list();
-        ExcelUtils.export(response, configs, "roles.xls");
+        List<Role> roles = roleService.list();
+        ExcelUtils.export(response, roles, "roles.xls");
     }
 
-    @Log(module = "角色管理", type = OpType.ADD, detail = "'新增了角色[' + #param.name + '].'")
     @PostMapping("/role")
+//    @SaCheckPermission("role:add")
+    @Log(module = "角色管理", type = OpType.ADD, detail = "'新增了角色[' + #param.name + '].'")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Role param) {
         return roleService.save(param);
     }
 
-    @Log(module = "角色管理", type = OpType.DEL, detail = "'删除了角色[' + #param.names + '].'")
     @PostMapping("/roles")
+//    @SaCheckPermission("role:del")
+    @Log(module = "角色管理", type = OpType.DEL, detail = "'删除了角色[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return roleService.removeBatchByIds(param.getIds());
     }
 
-    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'更新了角色[' + #param.name + '].'")
     @PostMapping("/role/update")
+    @SaCheckPermission("role:update")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'更新了角色[' + #param.name + '].'")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Role param) {
         return roleService.updateById(param);
     }
 
-    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了菜单[' + #param.names + ']'")
     @PostMapping("/role/menus/assign")
+//    @SaCheckPermission("role:assignMenus")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了菜单[' + #param.names + ']'")
     public Boolean assignMenus(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
         List<RoleMenuRel> roleMenuRelList = new ArrayList<>();
         List<RoleMenuRel> roleMenuRels = param.getIds().stream()
@@ -84,8 +91,8 @@ public class RoleController {
         return roleService.assignMenus(param.getId(), roleMenuRelList);
     }
 
-    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的菜单'")
     @GetMapping("/role/menuIds")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的菜单id列表'")
     public List<Long> getMenuIdsByRoleId(IdNamesParam param) {
         List<RoleMenuRel> roleMenuRels = roleMenuRelService.lambdaQuery()
                 .select(RoleMenuRel::getMenuId)

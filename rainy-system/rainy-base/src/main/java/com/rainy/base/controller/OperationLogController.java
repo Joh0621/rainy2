@@ -1,5 +1,6 @@
 package com.rainy.base.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
 import com.rainy.base.common.constant.OpType;
@@ -31,21 +32,24 @@ public class OperationLogController {
 
     private final OperationLogService operationLogService;
 
-    @Log(module = "登陆日志管理", type = OpType.QUERY, detail = "'查询了登陆日志列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/operationLogs")
+    @SaCheckPermission("operationLog:query")
+    @Log(module = "操作日志", type = OpType.QUERY, detail = "'查询了操作日志列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<OperationLog> list(Page<OperationLog> page, LoginLog param) {
         return operationLogService.page(page);
     }
 
-    @Log(module = "登陆日志管理", type = OpType.EXPORT, detail = "导出了登陆日志列表")
     @GetMapping("/operationLogs/export")
+    @SaCheckPermission("operationLog:export")
+    @Log(module = "操作日志", type = OpType.EXPORT, detail = "导出了操作日志列表")
     public void export(HttpServletResponse response) throws IOException {
-        List<OperationLog> configs = operationLogService.list();
-        ExcelUtils.export(response, configs, "operationLogs.xls");
+        List<OperationLog> operationLogs = operationLogService.list();
+        ExcelUtils.export(response, operationLogs, "operationLogs.xls");
     }
 
-    @Log(module = "登陆日志管理", type = OpType.DEL, detail = "'删除了登陆日志[' + #param.names + '].'")
+    @Log(module = "操作日志", type = OpType.DEL, detail = "'删除了操作日志[' + #param.names + '].'")
     @PostMapping("/operationLogs")
+    @SaCheckPermission("operationLog:del")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return operationLogService.removeBatchByIds(param.getIds());
     }

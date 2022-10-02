@@ -11,6 +11,7 @@ import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.Menu;
 import com.rainy.base.service.MenuService;
+import com.rainy.base.service.RoleMenuRelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,6 @@ public class MenuController {
     @Log(module = "菜单管理", type = OpType.QUERY, detail = "'查询了菜单列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     @GetMapping("/menus")
     public Page<Menu> list(Page<Menu> page, Menu param) {
-        List<String> roleList = StpUtil.getRoleList();
         return menuService.lambdaQuery()
                 .eq(StrUtil.isNotBlank(param.getName()), Menu::getName, param.getName())
                 .eq(Objects.nonNull(param.getType()), Menu::getType, param.getType())
@@ -53,13 +53,14 @@ public class MenuController {
     @Log(module = "菜单管理", type = OpType.EXPORT, detail = "导出了菜单列表")
     @GetMapping("/menus/export")
     public void export(HttpServletResponse response) throws IOException {
-        List<Menu> configs = menuService.list();
-        ExcelUtils.export(response, configs, "menus.xls");
+        List<Menu> menus = menuService.list();
+        ExcelUtils.export(response, menus, "menus.xls");
     }
 
     @Log(module = "菜单管理", type = OpType.ADD, detail = "'新增了菜单[' + #param.name + '].'")
     @PostMapping("/menu")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Menu param) {
+        // todo 新增菜单时将父节点设置为半悬状态
         return menuService.save(param);
     }
 

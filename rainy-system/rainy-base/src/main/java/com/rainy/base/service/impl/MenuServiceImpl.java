@@ -2,12 +2,14 @@ package com.rainy.base.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rainy.base.common.constant.DictConstants;
 import com.rainy.base.entity.Menu;
 import com.rainy.base.mapper.MenuMapper;
 import com.rainy.base.service.MenuService;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +59,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    @Cacheable(key = "#permission")
+//    @CacheEvict(key = "#menu.permission")
+    public boolean updateById(Menu menu) {
+        return super.updateById(menu);
+    }
+
+    @Override
+//    @Cacheable(key = "#permission")
     public String getName(String permission) {
         Menu menu = this.lambdaQuery()
                 .select(Menu::getName)

@@ -9,4 +9,5 @@ import com.rainy.base.entity.User;
  */
 public interface UserService extends BaseService<User> {
 
+    boolean save(User user);
 }

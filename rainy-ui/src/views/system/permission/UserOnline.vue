@@ -24,8 +24,9 @@
         {{ appStore.dictItemValue('sys_user_status', record.status) }}
       </template>
       <template #action="{ record }">
-        <a @click="handleDel(record)">下线</a>
-        <a-divider type="vertical"/>
+        <a-popconfirm title="确认下线用户吗？" @confirm="handleDel(record)">
+          <a-button type="link" size="small" danger>下线</a-button>
+        </a-popconfirm>
       </template>
     </b-table>
   </a-card>

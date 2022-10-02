@@ -31,7 +31,7 @@
           :rules="[{ required: true, message: '请输入密码!' }]"
           has-feedback
       >
-        <a-input type="password" v-model:value="form.password" placeholder="请输入密码!" />
+        <a-input type="password" v-model:value="form.password" autocomplete="off" placeholder="请输入密码!" />
       </a-form-item>
       <a-form-item
           name="nickName"
@@ -47,23 +47,23 @@
           :rules="[{ required: true, message: '请输入生日!' }]"
           has-feedback
       >
-        <a-input v-model:value="form.birthday" placeholder="请输入生日!" />
+        <a-date-picker v-model:value="form.birthday" placeholder="请输入生日!" />
       </a-form-item>
       <a-form-item
           name="telephone"
           label="手机号"
-          :rules="[{ required: true, message: '请输入手机号!' }]"
+          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])d{8}$/, required: true, message: '手机号格式不正确!' }]"
           has-feedback
       >
-        <a-input v-model:value="form.telephone" placeholder="请输入手机号!" />
+        <a-input v-model:value="form.telephone" placeholder="请输入正确的11位手机号!" />
       </a-form-item>
       <a-form-item
           name="email"
           label="邮箱"
-          :rules="[{ required: true, message: '请输入邮箱!' }]"
+          :rules="[{ type: 'email', required: true, message: '邮箱格式不正确!' }]"
           has-feedback
       >
-        <a-input v-model:value="form.email" placeholder="请输入邮箱!" />
+        <a-input v-model:value="form.email" placeholder="请输入正确的邮箱格式!" />
       </a-form-item>
       <a-form-item
         name="orgId"
@@ -72,7 +72,7 @@
         has-feedback
       >
         <a-tree-select
-          v-model:value="form.parentId"
+          v-model:value="form.orgId"
           :fieldNames="fieldNames"
           placeholder="请选择组织"
           tree-default-expand-all
@@ -81,19 +81,21 @@
         </a-tree-select>
       </a-form-item>
       <a-form-item
-          name="parentId"
+          name="positionId"
           label="职位"
           :rules="[{ required: true, message: '请输入职位!' }]"
           has-feedback
       >
-        <a-input v-model:value="form.position" placeholder="请输入职位!" />
+        <a-input v-model:value="form.positionId" placeholder="请输入职位!" />
       </a-form-item>
     </a-form>
   </a-modal>
 </template>
 <script setup>
-import { Add, Edit, Tree } from '@/api/org/org'
+import { Tree } from '@/api/org/org'
+import { Add, Edit } from '@/api/permission/user'
 import { message } from 'ant-design-vue'
+import dayjs from 'dayjs'
 
 const labelCol = reactive({ span: 5, offset: 0 })
 const wrapperCol = reactive({ span: 16, offset: 0 })
@@ -126,6 +128,11 @@ const open = (flagValue, record) => {
   visible.value = true
   flag.value = flagValue
   form.value = record
+  if (!flagValue) {
+    form.value.birthday = dayjs(record.birthday)
+  } else {
+    form.value.birthday = dayjs()
+  }
 }
 
 const handleOk = () => {

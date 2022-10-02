@@ -1,7 +1,9 @@
 package com.rainy.base.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rainy.base.common.utils.DateUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.common.validation.unique.NotUnique;
 import lombok.Getter;
@@ -27,12 +29,12 @@ public class User extends BaseEntity {
     @NotNull
     @NotUnique(groups = Group.Add.class, entity = User.class, field = "username")
     private String username;
-    @JsonIgnore
     @NotNull
     private String password;
-    @NotUnique(groups = Group.Add.class, entity = User.class, field = "nickName")
+    @NotUnique(groups = Group.Add.class, entity = User.class, field = "nick_name")
     private String nickName;
     private String avatar;
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD)
     private LocalDate birthday;
     private String email;
     private String telephone;

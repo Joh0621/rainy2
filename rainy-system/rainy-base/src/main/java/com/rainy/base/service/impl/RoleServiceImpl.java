@@ -42,4 +42,11 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
                 .toList();
     }
 
+    @Override
+    public Long getIdByCode(String code) {
+        Role role = this.lambdaQuery()
+                .eq(Role::getCode, code).one();
+        return role == null ? 0 : role.getId();
+    }
+
 }

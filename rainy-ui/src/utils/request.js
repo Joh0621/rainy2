@@ -3,6 +3,7 @@ import { useUserStore } from '@/store/user'
 import { notification } from 'ant-design-vue'
 import { TOKEN_NAME } from '@/utils/constants'
 import { api } from '@/api/login'
+import router from '@/router/index.js'
 
 export const method = {
   GET: 'get',
@@ -52,14 +53,16 @@ instance.interceptors.response.use(
       })
     }
     if (data.code === 401) {
-      notification.error({
-        message: '认证失败',
-        description: data.message
-      })
+      // todo 友好提示登录时报
       if (response.config.url !== api.Login) {
+        notification.error({
+          message: '认证失败',
+          description: data.message
+        })
         const userStore = useUserStore()
         userStore.Logout({}).then(res => {
-          location.reload()
+          router.push('/')
+          // location.reload()
         })
       }
     }
@@ -84,10 +87,11 @@ instance.interceptors.response.use(
     return data
   },
   error => {
+    console.log(error.response.status)
+    console.log(error)
     if (error.response.status === 404) {
       notification.error({
-        message: '请求不存在',
-        description: error.response.message
+        description: '请求不存在'
       })
     }
     return Promise.reject(error)

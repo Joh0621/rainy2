@@ -55,7 +55,6 @@
             >
               <a-tree-select
                   v-model:value="form.parentId"
-                  :treeExpandedKeys="expandedKeys"
                   :fieldNames="fieldNames"
                   placeholder="请选择上级组织"
                   :tree-data="treeData"
@@ -220,7 +219,6 @@ const fieldNames = {
   value: 'id',
   key: 'id'
 }
-const expandedKeys = ref([0])
 const treeData = ref([])
 const loadTree = () => {
   spinning.value = true

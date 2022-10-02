@@ -76,10 +76,19 @@ export const useAppStore = defineStore('app', {
   },
   actions: {
     async Common () {
-      const { data } = await Common()
-      this.dictTree = data.dictTree
-      this.config = data.config
-      return data
+      return new Promise((resolve, reject) => {
+        Common().then((res) => {
+          if (res.success) {
+            this.dictTree = res.data.dictTree
+            this.config = res.data.config
+            resolve(res)
+          } else {
+            reject(res)
+          }
+        }).catch(err => {
+          reject(err)
+        })
+      })
     }
   }
 })

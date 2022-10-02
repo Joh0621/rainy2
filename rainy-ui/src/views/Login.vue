@@ -20,6 +20,7 @@
             <a-tab-pane key="userAccount" tab="账号密码">
               <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
                 <a-form-item name="username" :rules="[{ required: true, message: '请输入账号!' }]">
+                  <a-alert v-if="errMessage" style="margin-bottom: 8px;" :message="errMessage" type="error" show-icon />
                   <a-input v-model:value="form.username" size="large" placeholder="请输入账号!">
                     <template #prefix>
                       <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
@@ -54,7 +55,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store/user'
-import { message, notification } from 'ant-design-vue'
+import { notification } from 'ant-design-vue'
 import { timeFix } from '../utils/Utils'
 import ThreeLogin from './ThreeLogin.vue'
 
@@ -67,21 +68,18 @@ const form = reactive({
   password: ''
 })
 
+const errMessage = ref('')
 const onFinish = (values) => {
   userStore.Login(values).then(res => {
-    if (res.success) {
-      router.replace({ path: '/' })
-      setTimeout(() => {
-        notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      }, 500)
-    } else {
-      message.error(res.message)
-    }
+    router.replace({ path: '/' })
+    setTimeout(() => {
+      notification.success({
+        message: '欢迎',
+        description: `${timeFix()}，欢迎回来`
+      })
+    }, 500)
   }).catch(err => {
-    console.log(err)
+    errMessage.value = err.message
   })
 }
 
