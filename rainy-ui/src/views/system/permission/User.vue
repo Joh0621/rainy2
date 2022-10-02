@@ -18,7 +18,7 @@
         <div class="table-query">
           <a-form layout="inline">
             <a-form-item label="用户名">
-              <a-input v-model:value="queryParam.username" placeholder="请输入用户名!" />
+              <a-input v-model:value="queryParam.username" placeholder="请输入用户名" />
             </a-form-item>
             <a-form-item>
               <a-space>
@@ -165,7 +165,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -175,7 +175,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

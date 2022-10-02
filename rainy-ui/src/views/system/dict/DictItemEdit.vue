@@ -20,10 +20,10 @@
       <a-form-item
           name="dictCode"
           label="所属字典"
-          :rules="[{ required: true, message: '请选择所属字典！' }]"
+          :rules="[{ required: true, message: '请选择所属字典' }]"
           has-feedback
       >
-        <a-select v-model:value="form.dictCode" placeholder="请选择所属字典！">
+        <a-select v-model:value="form.dictCode" placeholder="请选择所属字典">
           <a-select-option
               v-for="item in appStore.dicts()"
               :key="item.dictCode"
@@ -36,22 +36,22 @@
       <a-form-item
         name="code"
         label="字典项编码"
-        :rules="[{ required: true, message: '请输入字典项编码!' }]"
+        :rules="[{ required: true, message: '请输入字典项编码' }]"
         has-feedback
       >
         <a-input
           :disabled="!flag"
           v-model:value="form.code"
-          placeholder="请输入字典项编码！"
+          placeholder="请输入字典项编码"
         />
       </a-form-item>
       <a-form-item
           name="value"
           label="字典项值"
-          :rules="[{ required: true, message: '请输入字典项值!' }]"
+          :rules="[{ required: true, message: '请输入字典项值' }]"
           has-feedback
       >
-        <a-input v-model:value="form.value" placeholder="请输入字典项值!" />
+        <a-input v-model:value="form.value" placeholder="请输入字典项值" />
       </a-form-item>
       <a-form-item
         name="sort"
@@ -64,7 +64,7 @@
         <a-input-number
             style="width: 100%"
           v-model:value="form.sort"
-          placeholder="请输入排序！"
+          placeholder="请输入排序"
         />
       </a-form-item>
       <a-form-item

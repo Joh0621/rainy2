@@ -33,25 +33,25 @@
       <a-form-item
           name="deviceCode"
           label="设备编码"
-          :rules="[{ required: true, message: '请输入设备编码!' }]"
+          :rules="[{ required: true, message: '请输入设备编码' }]"
           has-feedback
       >
         <a-input
             :disabled="!flag"
             v-model:value="form.deviceCode"
-            placeholder="请输入设备编码！"
+            placeholder="请输入设备编码"
         />
       </a-form-item>
       <a-form-item
           name="code"
           label="数据点码"
-          :rules="[{ required: true, message: '请输入数据点码!' }]"
+          :rules="[{ required: true, message: '请输入数据点码' }]"
           has-feedback
       >
         <a-input
             :disabled="!flag"
             v-model:value="form.code"
-            placeholder="请输入数据点码！"
+            placeholder="请输入数据点码"
         />
       </a-form-item>
       <a-form-item

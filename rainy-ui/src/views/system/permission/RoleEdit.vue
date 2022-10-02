@@ -20,28 +20,28 @@
       <a-form-item
         name="name"
         label="角色名称"
-        :rules="[{ required: true, message: '请输入角色名称!' }]"
+        :rules="[{ required: true, message: '请输入角色名称' }]"
         has-feedback
       >
-        <a-input v-model:value="form.name" placeholder="请输入角色名称!" />
+        <a-input v-model:value="form.name" placeholder="请输入角色名称" />
       </a-form-item>
       <a-form-item
         name="code"
         label="唯一编码"
-        :rules="[{ required: true, message: '请输入唯一编码!' }]"
+        :rules="[{ required: true, message: '请输入唯一编码' }]"
         has-feedback
       >
         <a-input
           :disabled="!flag"
           v-model:value="form.code"
-          placeholder="请输入唯一编码！"
+          placeholder="请输入唯一编码"
         />
       </a-form-item>
       <a-form-item
         name="isDefault"
         label="是否默认"
         :rules="[
-          { required: true, message: '请选择！' }
+          { required: true, message: '请选择' }
         ]"
         has-feedback
       >
@@ -64,7 +64,7 @@
         <a-input-number
             style="width: 100%"
           v-model:value="form.sort"
-          placeholder="请输入排序！"
+          placeholder="请输入排序"
         />
       </a-form-item>
       <a-form-item

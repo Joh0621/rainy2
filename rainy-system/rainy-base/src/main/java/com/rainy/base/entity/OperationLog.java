@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rainy.base.common.utils.DateUtils;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +26,7 @@ public class OperationLog {
     private String type;
     private String username;
     @OrderBy
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
     private LocalDateTime datetime;
     private String detail;
 

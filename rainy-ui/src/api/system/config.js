@@ -1,4 +1,4 @@
-import request, { method } from '@/utils/request'
+import request, { method } from '@/utils/request.js'
 
 const api = {
   List: '/configs',

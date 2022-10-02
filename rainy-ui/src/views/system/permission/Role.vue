@@ -3,10 +3,10 @@
     <div class="table-query">
       <a-form layout="inline">
         <a-form-item label="角色名称">
-          <a-input v-model:value="queryParam.name" placeholder="请输入角色名称!" />
+          <a-input v-model:value="queryParam.name" placeholder="请输入角色名称" />
         </a-form-item>
         <a-form-item label="角色编码">
-          <a-input v-model:value="queryParam.code" placeholder="请输唯一编码!" />
+          <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />
         </a-form-item>
         <a-form-item>
           <a-space>
@@ -112,7 +112,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -121,7 +121,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

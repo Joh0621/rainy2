@@ -20,55 +20,55 @@
       <a-form-item
         name="username"
         label="用户名"
-        :rules="[{ required: true, message: '请输入用户名称!' }]"
+        :rules="[{ required: true, message: '请输入用户名' }]"
         has-feedback
       >
-        <a-input v-model:value="form.username" placeholder="请输入用户名称!" />
+        <a-input v-model:value="form.username" placeholder="请输入用户名" />
       </a-form-item>
       <a-form-item
           name="password"
           label="密码"
-          :rules="[{ required: true, message: '请输入密码!' }]"
+          :rules="[{ required: true, message: '请输入密码' }]"
           has-feedback
       >
-        <a-input type="password" v-model:value="form.password" autocomplete="off" placeholder="请输入密码!" />
+        <a-input type="password" v-model:value="form.password" autocomplete="off" placeholder="请输入密码" />
       </a-form-item>
       <a-form-item
           name="nickName"
           label="昵称"
-          :rules="[{ required: true, message: '请输入昵称!' }]"
+          :rules="[{ required: true, message: '请输入昵称' }]"
           has-feedback
       >
-        <a-input v-model:value="form.nickName" placeholder="请输入昵称!" />
+        <a-input v-model:value="form.nickName" placeholder="请输入昵称" />
       </a-form-item>
       <a-form-item
           name="birthday"
           label="生日"
-          :rules="[{ required: true, message: '请输入生日!' }]"
+          :rules="[{ required: true, message: '请输入生日' }]"
           has-feedback
       >
-        <a-date-picker v-model:value="form.birthday" placeholder="请输入生日!" />
+        <a-date-picker v-model:value="form.birthday" placeholder="请输入生日" />
       </a-form-item>
       <a-form-item
           name="telephone"
           label="手机号"
-          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])d{8}$/, required: true, message: '手机号格式不正确!' }]"
+          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
           has-feedback
       >
-        <a-input v-model:value="form.telephone" placeholder="请输入正确的11位手机号!" />
+        <a-input v-model:value="form.telephone" placeholder="请输入正确的11位手机号" />
       </a-form-item>
       <a-form-item
           name="email"
           label="邮箱"
-          :rules="[{ type: 'email', required: true, message: '邮箱格式不正确!' }]"
+          :rules="[{ type: 'email', required: true, message: '请输入正确的邮箱格式' }]"
           has-feedback
       >
-        <a-input v-model:value="form.email" placeholder="请输入正确的邮箱格式!" />
+        <a-input v-model:value="form.email" placeholder="请输入正确的邮箱格式" />
       </a-form-item>
       <a-form-item
         name="orgId"
         label="组织"
-        :rules="[{ required: true, message: '请选择组织!' }]"
+        :rules="[{ required: true, message: '请选择组织' }]"
         has-feedback
       >
         <a-tree-select
@@ -83,10 +83,10 @@
       <a-form-item
           name="positionId"
           label="职位"
-          :rules="[{ required: true, message: '请输入职位!' }]"
+          :rules="[{ required: true, message: '请输入职位' }]"
           has-feedback
       >
-        <a-input v-model:value="form.positionId" placeholder="请输入职位!" />
+        <a-input v-model:value="form.positionId" placeholder="请输入职位" />
       </a-form-item>
     </a-form>
   </a-modal>

@@ -1,15 +1,18 @@
 package com.rainy.base.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
 import com.rainy.base.common.constant.OpType;
 import com.rainy.base.common.param.IdNamesParam;
+import com.rainy.base.common.utils.DateUtils;
 import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.LoginLog;
 import com.rainy.base.service.LoginLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * data-middle-platform
@@ -34,8 +40,13 @@ public class LoginLogController {
     @GetMapping("/loginLogs")
     @SaCheckPermission("loginLog:query")
     @Log(module = "登陆日志管理", type = OpType.QUERY, detail = "'查询了登陆日志列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
-    public Page<LoginLog> list(Page<LoginLog> page, LoginLog param) {
-        return loginLogService.page(page);
+    public Page<LoginLog> list(Page<LoginLog> page, String username,
+                               @DateTimeFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS) LocalDateTime startTime,
+                               @DateTimeFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS) LocalDateTime endTime) {
+        return loginLogService.lambdaQuery()
+                .likeRight(StrUtil.isNotBlank(username), LoginLog::getUsername, username)
+                .between(!Objects.isNull(startTime) && !Objects.isNull(endTime), LoginLog::getDatetime, startTime, endTime)
+                .page(page);
     }
 
     @GetMapping("/loginLogs/export")

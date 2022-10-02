@@ -3,7 +3,7 @@
     <div class="table-query">
       <a-form layout="inline">
         <a-form-item label="菜单名称">
-          <a-input v-model:value="queryParam.name" placeholder="请输入菜单名称!" />
+          <a-input v-model:value="queryParam.name" placeholder="请输入菜单名称" />
         </a-form-item>
         <a-form-item>
           <a-space>
@@ -52,7 +52,7 @@
 import MenuEdit from './MenuEdit.vue'
 import RoleAuthorize from './RoleAuthorize.vue'
 import { useAppStore } from '@/store/app'
-import { Tree, Del, Export } from '@/api/menu'
+import { Tree, Del, Export } from '@/api/system/menu.js'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import { sortValue } from '@/utils/constants'
 import { message } from 'ant-design-vue'
@@ -108,7 +108,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -117,7 +117,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

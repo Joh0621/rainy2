@@ -3,7 +3,6 @@ import { useUserStore } from '@/store/user'
 import { notification } from 'ant-design-vue'
 import { TOKEN_NAME } from '@/utils/constants'
 import { api } from '@/api/login'
-import router from '@/router/index.js'
 
 export const method = {
   GET: 'get',
@@ -61,8 +60,8 @@ instance.interceptors.response.use(
         })
         const userStore = useUserStore()
         userStore.Logout({}).then(res => {
-          router.push('/')
-          // location.reload()
+          // router.push('/')
+          location.reload()
         })
       }
     }

@@ -19,16 +19,16 @@
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane key="userAccount" tab="账号密码">
               <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
-                <a-form-item name="username" :rules="[{ required: true, message: '请输入账号!' }]">
+                <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
                   <a-alert v-if="errMessage" style="margin-bottom: 8px;" :message="errMessage" type="error" show-icon />
-                  <a-input v-model:value="form.username" size="large" placeholder="请输入账号!">
+                  <a-input v-model:value="form.username" size="large" placeholder="请输入用户名">
                     <template #prefix>
                       <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
                     </template>
                   </a-input>
                 </a-form-item>
-                <a-form-item name="password" :rules="[{ required: true, message: '请输入密码!' }]">
-                  <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码!">
+                <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
+                  <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码">
                     <template #prefix>
                       <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
                     </template>

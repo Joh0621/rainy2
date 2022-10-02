@@ -33,30 +33,30 @@
       <a-form-item
         name="name"
         label="设备名称"
-        :rules="[{ required: true, message: '请输入设备名称!' }]"
+        :rules="[{ required: true, message: '请输入设备名称' }]"
         has-feedback
       >
-        <a-input v-model:value="form.name" placeholder="请输入设备名称!" />
+        <a-input v-model:value="form.name" placeholder="请输入设备名称" />
       </a-form-item>
       <a-form-item
         name="code"
         label="唯一编码"
-        :rules="[{ required: true, message: '请输入唯一编码!' }]"
+        :rules="[{ required: true, message: '请输入唯一编码' }]"
         has-feedback
       >
         <a-input
           :disabled="!flag"
           v-model:value="form.code"
-          placeholder="请输入唯一编码！"
+          placeholder="请输入唯一编码"
         />
       </a-form-item>
       <a-form-item
         name="major"
         label="专业"
-        :rules="[{ required: true, message: '请选择专业！' }]"
+        :rules="[{ required: true, message: '请选择专业' }]"
         has-feedback
       >
-        <a-select v-model:value="form.major" placeholder="请选择专业！">
+        <a-select v-model:value="form.major" placeholder="请选择专业">
           <a-select-option
             :key="item.value"
             v-for="item in appStore.dictItems('biz_major')"

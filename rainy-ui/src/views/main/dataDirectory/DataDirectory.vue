@@ -158,7 +158,7 @@ const onDelClick = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       loadTree()
     }
   })
@@ -202,7 +202,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   DelDevice(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -211,7 +211,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   DelDevice(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

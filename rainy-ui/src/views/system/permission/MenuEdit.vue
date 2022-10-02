@@ -24,10 +24,10 @@
             <a-form-item
                 name="name"
                 label="菜单名称"
-                :rules="[{ required: true, message: '请输入菜单名称!' }]"
+                :rules="[{ required: true, message: '请输入菜单名称' }]"
                 has-feedback
             >
-              <a-input v-model:value="form.name" placeholder="请输入菜单名称!" />
+              <a-input v-model:value="form.name" placeholder="请输入菜单名称" />
             </a-form-item>
           </a-col>
           <a-col :span="span">
@@ -50,13 +50,13 @@
             <a-form-item
                 name="parentId"
                 label="上级菜单"
-                :rules="[{ required: true, message: '请选择上级菜单!' }]"
+                :rules="[{ required: true, message: '请选择上级菜单' }]"
                 has-feedback
             >
               <a-tree-select
                   v-model:value="form.parentId"
                   :fieldNames="fieldNames"
-                  placeholder="请选择上级组织"
+                  placeholder="请选择上级菜单"
                   :tree-data="treeData"
               >
               </a-tree-select>
@@ -85,20 +85,20 @@
             <a-form-item
                 name="component"
                 label="前端组件"
-                :rules="[{ required: form.target !== '_blank', message: '请输入组件！' }]"
+                :rules="[{ required: form.target !== '_blank', message: '请输入前端组件' }]"
                 has-feedback
             >
-              <a-input :disabled="form.type === 0 || form.type === 2 || form.target === '_self' || form.target === '_blank'" v-model:value="form.component" placeholder="请输入组件！" />
+              <a-input :disabled="form.type === 0 || form.type === 2 || form.target === '_self' || form.target === '_blank'" v-model:value="form.component" placeholder="请输入前端组件" />
             </a-form-item>
           </a-col>
           <a-col :span="span">
             <a-form-item
                 name="path"
                 label="路由地址"
-                :rules="[{ required: form.type === 1 && form.target !== '_blank', message: '请输入路由地址！' }]"
+                :rules="[{ required: form.type === 1 && form.target !== '_blank', message: '请输入路由地址' }]"
                 has-feedback
             >
-              <a-input :disabled="form.type === 0 || form.target === '_blank'" v-model:value="form.path" placeholder="请输入路由地址！" />
+              <a-input :disabled="form.type === 0 || form.target === '_blank'" v-model:value="form.path" placeholder="请输入路由地址" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -120,10 +120,10 @@
             <a-form-item
                 name="url"
                 label="外链地址"
-                :rules="[{ required: form.target === '_self' || form.target === '_blank', message: '请输入外链地址!' }]"
+                :rules="[{ required: form.target === '_self' || form.target === '_blank', message: '请输入外链地址' }]"
                 has-feedback
             >
-              <a-input :disabled="form.target === '_component' || form.target === '_none'" v-model:value="form.url" placeholder="请输入外链地址！" />
+              <a-input :disabled="form.target === '_component' || form.target === '_none'" v-model:value="form.url" placeholder="请输入外链地址" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -138,7 +138,7 @@
               <a-input-number
                   style="width: 100%"
                   v-model:value="form.sort"
-                  placeholder="请输入排序！"
+                  placeholder="请输入排序"
               />
             </a-form-item>
           </a-col>
@@ -148,7 +148,7 @@
                 label="描述"
                 has-feedback
             >
-              <a-input v-model:value="form.description" placeholder="请输入描述！"/>
+              <a-input v-model:value="form.description" placeholder="请输入描述"/>
             </a-form-item>
           </a-col>
         </a-row>
@@ -157,7 +157,7 @@
             <a-form-item
                 name="show"
                 label="是否显示"
-                :rules="[ { required: true, message: '请选择是否显示！' }]"
+                :rules="[ { required: true, message: '请选择是否显示' }]"
                 has-feedback
             >
               <a-radio-group v-model:value="form.show">
@@ -173,10 +173,10 @@
             <a-form-item
                 name="permission"
                 label="权限码"
-                :rules="[ { required: true, message: '请输入权限码！' }]"
+                :rules="[ { required: true, message: '请输入权限码' }]"
                 has-feedback
             >
-              <a-input v-model:value="form.permission" placeholder="请输入权限码！"/>
+              <a-input v-model:value="form.permission" placeholder="请输入权限码"/>
             </a-form-item>
           </a-col>
         </a-row>
@@ -186,7 +186,7 @@
   <IconSelector ref="iconSelector" @select="handleSelectIcon"></IconSelector>
 </template>
 <script setup>
-import { Tree, Add, Edit } from '@/api/menu'
+import { Tree, Add, Edit } from '@/api/system/menu.js'
 import { message } from 'ant-design-vue'
 import { useAppStore } from '@/store/app'
 import { SettingOutlined } from '@ant-design/icons-vue'

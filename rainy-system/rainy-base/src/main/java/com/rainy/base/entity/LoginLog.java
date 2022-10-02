@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rainy.base.common.utils.DateUtils;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -23,6 +25,7 @@ public class LoginLog {
     private int type;
 
     @OrderBy
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
     private LocalDateTime datetime;
     private String browser;
     private String os;

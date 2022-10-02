@@ -92,8 +92,7 @@ const handlePreview = () => {
 }
 
 const handleSave = () => {
-  message.info('保存成功！')
-  // bpmModeler.value.saveSVG(())
+  message.info('保存成功')
 }
 
 const downloadBpmn = ref()

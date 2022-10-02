@@ -128,7 +128,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -137,7 +137,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

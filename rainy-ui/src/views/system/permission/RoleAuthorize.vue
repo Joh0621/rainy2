@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { Tree, MenuAssign, RoleMenuIds } from '@/api/menu'
+import { Tree, MenuAssign, RoleMenuIds } from '@/api/system/menu.js'
 import { toIdNameParam } from '@/utils/ParamUtils'
 import { message } from 'ant-design-vue'
 
@@ -114,3 +114,8 @@ defineExpose({
   open
 })
 </script>
+<style>
+.ant-modal-body {
+  min-height: 400px;
+}
+</style>

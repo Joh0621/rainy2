@@ -54,7 +54,7 @@
 
 <script setup>
 import { useAppStore } from '@/store/app'
-import { List, Del, Export } from '@/api/config'
+import { List, Del, Export } from '@/api/system/config.js'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import ConfigEdit from './ConfigEdit.vue'
 import { message } from 'ant-design-vue'
@@ -100,7 +100,7 @@ const handleDel = (record) => {
   const idNamesParam = toIdNamesParam(record)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })
@@ -109,7 +109,7 @@ const handleBatchDel = (keys, rows) => {
   const idNamesParam = toIdNamesParam(rows)
   Del(idNamesParam).then((res) => {
     if (res.success) {
-      message.success('删除成功！')
+      message.success(res.message)
       handleOk()
     }
   })

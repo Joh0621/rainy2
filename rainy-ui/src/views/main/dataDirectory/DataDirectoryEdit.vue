@@ -19,7 +19,7 @@
       <a-form-item
           name="orgId"
           label="组织机构"
-          :rules="[{ required: true, message: '请选择组织机构!' }]"
+          :rules="[{ required: true, message: '请选择组织机构' }]"
           has-feedback
       >
         <a-tree-select
@@ -47,14 +47,14 @@
       <a-form-item
         label="目录名称"
         name="name"
-        :rules="[{ required: true, message: '请输入目录名称!' }]"
+        :rules="[{ required: true, message: '请输入目录名称' }]"
         has-feedback>
-        <a-input v-model:value="form.name" placeholder="请输入目录名称！" />
+        <a-input v-model:value="form.name" placeholder="请输入目录名称" />
       </a-form-item>
       <a-form-item
           label="目录类型"
           name="type"
-          :rules="[{ required: true, message: '请选择目录类型!' }]"
+          :rules="[{ required: true, message: '请选择目录类型' }]"
           has-feedback>
         <a-select v-model:value="form.type" placeholder="请选择目录类型">
           <a-select-option v-for="item in appStore.dictItems('biz_data_directory_type')" :key="item.value" :value="item.value">
@@ -73,7 +73,7 @@
         <a-input-number
             style="width: 100%"
             v-model:value="form.sort"
-            placeholder="请输入排序！"
+            placeholder="请输入排序"
         />
       </a-form-item>
       <a-form-item

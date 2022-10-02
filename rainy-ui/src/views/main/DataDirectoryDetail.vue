@@ -61,7 +61,7 @@ const apply = () => {
   console.log(device.value)
   Apply(device.value).then(res => {
     if (res.success) {
-      message.info('申请成功！')
+      message.info('申请成功')
     }
   })
 }
