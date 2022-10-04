@@ -1,13 +1,19 @@
 <template>
   <div style="margin-right: 12px">
     <a-space size="small">
-      <span>
-        <a-badge :count="11" title="title">
-          <bell-outlined style="font-size: 16px; padding: 4px" />
-        </a-badge>
-      </span>
-      <a style="padding: 0 12px; display: inline-block; user-select: none" @click="handleClick"><BgColorsOutlined /></a>
+<!--      <span>-->
+<!--        <a-badge :count="11" title="title">-->
+<!--          <bell-outlined style="font-size: 16px; padding: 4px" />-->
+<!--        </a-badge>-->
+<!--      </span>-->
+      <a style="padding: 0 12px; display: inline-block; user-select: none" @click="handleClick">
+        <BgColorsOutlined />
+      </a>
       <a-dropdown>
+        <span class="ant-pro-account-avatar">
+          <a-avatar size="small" :src="avatar" class="antd-pro-global-header-index-avatar" />
+          <span>{{ nickName }}</span>
+        </span>
         <template #overlay>
           <a-menu>
             <a-menu-item>
@@ -24,17 +30,12 @@
             </a-menu-item>
           </a-menu>
         </template>
-        <span class="ant-pro-account-avatar">
-          <a-avatar size="small" :src="avatar" class="antd-pro-global-header-index-avatar" />
-          <span>{{ nickName }}</span>
-        </span>
       </a-dropdown>
     </a-space>
   </div>
 </template>
 
 <script setup>
-import { SettingOutlined, LogoutOutlined, BgColorsOutlined, BellOutlined } from '@ant-design/icons-vue'
 
 import { apply, randomTheme } from '@/hooks/useTheme'
 import { Modal } from 'ant-design-vue'
@@ -70,8 +71,12 @@ const handleClick = () => {
 }
 </script>
 <style lang="less" scoped>
-.ant-account-avatar {
+.ant-pro-account-avatar {
   cursor: pointer;
-  text-align: center;
+  .antd-pro-global-header-index-avatar {
+    text-align: center;
+    margin-right: 4px;
+    background: rgba(255, 255, 255, 0.85);
+  }
 }
 </style>

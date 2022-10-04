@@ -15,6 +15,9 @@
         <a-radio value="top">
           <img src="https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg" />
         </a-radio>
+<!--        <a-radio value="dark">-->
+<!--          <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" />-->
+<!--        </a-radio>-->
         <!--        <a-radio value="mix">混合菜单布局</a-radio>-->
       </a-radio-group>
       <h4>主题色</h4>
@@ -100,18 +103,6 @@
         </a-col>
       </a-row>
       <a-row style="margin-bottom: 12px">
-        <a-col :span="12">菜单</a-col>
-        <a-col :span="12" style="text-align: right">
-          <a-switch
-            disabled
-            checked-children="开"
-            un-checked-children="关"
-            :checked="modelValue.menu === undefined"
-            @change="checked => updateConf(checked === true && undefined, 'menu')"
-          />
-        </a-col>
-      </a-row>
-      <a-row style="margin-bottom: 12px">
         <a-col :span="12">菜单头</a-col>
         <a-col :span="12" style="text-align: right">
           <a-switch
@@ -137,18 +128,19 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const visible = ref(false)
-const primaryColor = ref('#1890ff')
+const primaryColor = ref(props.modelValue.primaryColor)
+apply(primaryColor.value)
 
 const handleShowDrawer = () => {
   visible.value = !visible.value
 }
 
 const updateConf = (val, type) => {
+  localStorage.setItem(type, val)
   const newVal = {
     ...toRaw(props.modelValue),
     [`${type}`]: val
   }
-  console.log('newConf', newVal)
   emit('update:modelValue', newVal)
 }
 

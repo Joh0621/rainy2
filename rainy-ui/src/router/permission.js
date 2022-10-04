@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
   // 加载基础配置
   if (!appStore.dictTree) {
     appStore.Common().then(() => {
-      next({ path: to.path, replace: true })
+      next({ path: to.path, query: to.query, replace: true })
     }).catch(() => {
       next()
     })

@@ -64,12 +64,13 @@ const state = reactive({
 
 const loading = ref(false)
 const proConfig = ref({
-  layout: defaultConfig.layout,
+  layout: localStorage.getItem('layout') || defaultConfig.layout,
   navTheme: defaultConfig.navTheme,
   fixedHeader: defaultConfig.fixedHeader,
   fixSiderbar: defaultConfig.fixSiderbar,
   splitMenus: defaultConfig.splitMenus,
-  headerHeight: defaultConfig.headerHeight
+  headerHeight: defaultConfig.headerHeight,
+  primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor
 })
 
 const { nickName, avatar } = storeToRefs(store)

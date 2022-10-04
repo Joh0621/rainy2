@@ -1,7 +1,7 @@
 import { onBeforeMount } from 'vue'
 import { ConfigProvider } from 'ant-design-vue'
 
-const LOCAL_THEME = 'local_theme'
+const LOCAL_THEME = 'primaryColor'
 
 export const colors = [
   '#f5222d',
@@ -31,15 +31,11 @@ export const load = () => {
   return localStorage.getItem(LOCAL_THEME) || '#1890ff'
 }
 
-export const save = (color) => {
-  localStorage.setItem(LOCAL_THEME, color)
-}
-
 export const apply = (color) => {
   ConfigProvider.config({
     theme: {
       primaryColor: color
     }
   })
-  save(color)
+  localStorage.setItem(LOCAL_THEME, color)
 }

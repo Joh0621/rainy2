@@ -10,20 +10,21 @@ const routes = [
     name: ROOT_ROUTER_NAME,
     meta: { title: '控制台' },
     component: BasicLayout,
-    redirect: '/user/online',
+    redirect: '/workbench',
     children: [
       {
         path: '/data/:id/detail',
         name: BasicLayout,
         component: () => import('@/views/main/DataDirectoryDetail.vue')
+      },
+      {
+        path: '/404',
+        name: 'Error',
+        component: () => import('@/views/system/Error.vue')
       }
     ]
   },
-  {
-    path: '/404',
-    name: 'Error',
-    component: () => import('@/views/system/Error.vue')
-  },
+
   {
     path: '/login',
     name: BlankLayout,

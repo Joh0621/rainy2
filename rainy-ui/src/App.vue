@@ -6,7 +6,6 @@
 
 <script setup>
 import { ConfigProvider } from 'ant-design-vue'
-import { useUserTheme } from './hooks/useTheme'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import dayjs from 'dayjs'
@@ -18,7 +17,6 @@ watch(locale, val => {
 })
 
 const componentSize = ref('middle')
-useUserTheme()
 </script>
 
 <style>

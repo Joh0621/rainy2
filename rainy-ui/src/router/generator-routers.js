@@ -9,6 +9,12 @@ const constantRouterComponents = {
   PageView: () => import('@/layouts/PageView.vue')
 }
 
+// 前端未找到页面路由（固定不用改）
+export const notFoundRouter = {
+  path: '/:catchAll(.*)', // 不识别的path自动匹配404
+  redirect: '/404'
+}
+
 // export const generatorDynamicRouter = () => {
 //   return new Promise(resolve => {
 //     const routers = generator(menus)
@@ -23,6 +29,7 @@ const constantRouterComponents = {
 export const generatorDynamicRouter = (menus) => {
   return new Promise(resolve => {
     const routers = generator(menus)
+    routers.push(notFoundRouter)
     resolve(routers)
   })
 }

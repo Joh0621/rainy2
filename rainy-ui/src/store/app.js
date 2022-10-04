@@ -80,7 +80,9 @@ export const useAppStore = defineStore('app', {
         Common().then((res) => {
           if (res.success) {
             this.dictTree = res.data.dictTree
-            this.config = res.data.config
+            this.config = {
+              ...res.data.config
+            }
             resolve(res)
           } else {
             reject(res)
