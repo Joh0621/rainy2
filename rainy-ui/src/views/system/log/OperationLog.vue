@@ -61,15 +61,15 @@ const options = {
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '系统模块', dataIndex: 'module' },
-  { title: '用户名', dataIndex: 'username' },
-  { title: '时间', dataIndex: 'datetime' },
-  { title: '详情', dataIndex: 'detail' },
-  { title: '操作地址', dataIndex: 'ip' },
-  { title: '浏览器', dataIndex: 'browser' },
-  { title: '操作系统', dataIndex: 'os' },
-  { title: '是否成功', dataIndex: 'success' },
-  { title: '错误信息', dataIndex: 'errorMessage', ellipsis: true },
+  { title: '系统模块', dataIndex: 'module', width: '80px' },
+  { title: '用户名', dataIndex: 'username', width: '80px' },
+  { title: '时间', dataIndex: 'datetime', width: '170px' },
+  { title: '详情', dataIndex: 'detail', ellipsis: true },
+  // { title: '操作地址', dataIndex: 'remoteIp', width: '80px' },
+  // { title: '浏览器', dataIndex: 'browser', width: '80px' },
+  // { title: '操作系统', dataIndex: 'os', width: '80px' },
+  { title: '是否成功', dataIndex: 'success', width: '80px' },
+  // { title: '错误信息', dataIndex: 'errorMessage', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {

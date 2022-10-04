@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useUserStore } from '@/store/user'
-import { notification, message, Modal } from 'ant-design-vue'
+import { notification, Modal } from 'ant-design-vue'
 import { TOKEN_NAME } from '@/utils/constants'
 import { api } from '@/api/login'
 
@@ -41,11 +41,14 @@ instance.interceptors.response.use(
   (response) => {
     // 配置了blob，不处理直接返回文件流
     if (response.config.responseType === 'blob') {
-      if (response.status === 200) {
-        return response
-      } else {
-        message.warning('文件下载失败或此文件不存在')
+      if (response.data.type === 'application/json') {
+        notification.error({
+          message: '权限不足',
+          description: '您没有导出的权限'
+        })
         return
+      } else {
+        return response
       }
     }
     const data = response.data
@@ -91,13 +94,10 @@ instance.interceptors.response.use(
     return data
   },
   error => {
-    console.log(error.response.status)
-    console.log(error)
-    if (error.response.status === 404) {
-      notification.error({
-        description: '请求不存在'
-      })
-    }
+    notification.error({
+      message: '系统错误',
+      description: error.message
+    })
     return Promise.reject(error)
   }
 )

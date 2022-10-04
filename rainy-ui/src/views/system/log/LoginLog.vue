@@ -55,14 +55,14 @@ const options = {
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '用户名', dataIndex: 'username' },
-  { title: '类型', dataIndex: 'type' },
-  { title: '登录时间', dataIndex: 'datetime' },
-  { title: '登录地址', dataIndex: 'ip' },
-  { title: '浏览器', dataIndex: 'browser' },
-  { title: '操作系统', dataIndex: 'os' },
-  { title: '是否成功', dataIndex: 'success' },
-  { title: '错误信息', dataIndex: 'errorMessage', ellipsis: true },
+  { title: '用户名', dataIndex: 'username', width: '80px' },
+  { title: '登录类型', dataIndex: 'type', width: '80px' },
+  { title: '登录时间', dataIndex: 'datetime', width: '170px' },
+  { title: '登录地址', dataIndex: 'ip', width: '140px' },
+  { title: '浏览器', dataIndex: 'browser', width: '80px' },
+  { title: '操作系统', dataIndex: 'os', width: '80px' },
+  { title: '是否成功', dataIndex: 'success', width: '80px' },
+  { title: '失败原因', dataIndex: 'errorMessage', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
