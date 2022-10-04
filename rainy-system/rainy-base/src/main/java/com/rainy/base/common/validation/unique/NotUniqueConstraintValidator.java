@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * 重复校验器
+ * 唯一性校验器
  *
  * @author Created by renguangli at 2022/9/19 21:40
  */

@@ -51,10 +51,12 @@ const roleMenuIds = () => {
 }
 const checkedNodes = ref([])
 const halfCheckedKeys = ref([])
+const isChecked = ref(false)
 const handleCheck = (keys, e) => {
   checkedKeys.value = keys
   checkedNodes.value = e.checkedNodes
   halfCheckedKeys.value = e.halfCheckedKeys
+  isChecked.value = true
 }
 
 const fieldNames = {
@@ -74,8 +76,13 @@ const menuTree = () => {
 
 const emits = defineEmits(['ok'])
 const menuAssign = () => {
+  if (!isChecked.value) {
+    handleCancel()
+    return
+  }
   confirmLoading.value = true
-  MenuAssign(getParam()).then(res => {
+  const param = getParam()
+  MenuAssign(param).then(res => {
     if (res.success) {
       message.info(res.message)
       handleCancel()
@@ -108,6 +115,8 @@ const handleOk = () => {
 
 const handleCancel = () => {
   visible.value = false
+  isChecked.value = false
+  checkedNodes.value = []
 }
 
 defineExpose({
