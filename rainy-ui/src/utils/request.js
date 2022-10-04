@@ -47,7 +47,7 @@ instance.interceptors.response.use(
     const data = response.data
     if (data.code === 400) {
       notification.error({
-        message: '参数检验失败',
+        message: '操作失败',
         description: data.message
       })
     }

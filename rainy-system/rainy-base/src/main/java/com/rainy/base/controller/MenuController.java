@@ -8,6 +8,7 @@ import com.rainy.base.aop.Log;
 import com.rainy.base.common.constant.OpType;
 import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
+import com.rainy.base.common.utils.ValidateUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.Menu;
 import com.rainy.base.service.MenuService;
@@ -67,6 +68,10 @@ public class MenuController {
     @Log(module = "菜单管理", type = OpType.DEL, detail = "'删除了菜单[' + #param.names + '].'")
     @PostMapping("/menus")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
+        boolean exists = menuService.lambdaQuery()
+                .in(Menu::getParentId, param.getIds())
+                .exists();
+        ValidateUtils.isTrue(exists, "该菜单下有子菜单，请先删除子菜单!");
         return menuService.removeBatchByIds(param.getIds());
     }
 

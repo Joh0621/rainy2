@@ -19,6 +19,7 @@ public class IdNamesParam {
     @NotNull(groups = Group.ASSIGN.class)
     private Long id;
     private String name;
+
     @NotEmpty(groups = {Group.Del.class, Group.ASSIGN.class})
     private List<Long> ids;
     private List<String> names;

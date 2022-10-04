@@ -2,6 +2,7 @@ package com.rainy.base.service;
 
 import com.rainy.base.entity.Dict;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,4 +14,11 @@ public interface DictService extends BaseService<Dict> {
 
     Map<String, Map<String, Object>> getDictTree();
 
+    /**
+     * 删除字典以及字典项
+     *
+     * @param ids ids
+     * @return boolean
+     */
+    boolean removeBatchByIds(List<Long> ids);
 }

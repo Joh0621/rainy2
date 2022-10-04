@@ -7,6 +7,7 @@ import com.rainy.base.service.DictItemService;
 import com.rainy.base.service.DictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -50,6 +51,28 @@ public class DictServiceImpl extends BaseServiceImpl<DictMapper, Dict> implement
                     }
                 });
         return result;
+    }
+
+    /**
+     * 删除字典以及字典项
+     *
+     * @param ids ids
+     * @return boolean
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean removeBatchByIds(List<Long> ids) {
+        List<Dict> list = this.lambdaQuery()
+                .select(Dict::getCode)
+                .in(Dict::getId, ids)
+                .list();
+        List<String> dictCodes = list.stream()
+                .map(Dict::getCode)
+                .toList();
+        dictItemService.lambdaUpdate()
+                .in(DictItem::getDictCode, dictCodes)
+                .remove();
+        return super.removeBatchByIds(ids);
     }
 
 }

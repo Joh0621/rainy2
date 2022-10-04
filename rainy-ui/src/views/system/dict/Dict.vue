@@ -53,7 +53,7 @@
                 <a-button @click="handleEdit(record)" type="link" size="small">编辑</a-button>
               </a-menu-item>
               <a-menu-item>
-                <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
+                <a-popconfirm title="确认删除字典以及字典项吗？" @confirm="handleDel(record)">
                   <a-button type="link" size="small" danger>删除</a-button>
                 </a-popconfirm>
               </a-menu-item>

@@ -7,6 +7,7 @@ import com.rainy.base.aop.Log;
 import com.rainy.base.common.constant.OpType;
 import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
+import com.rainy.base.common.utils.ValidateUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.Org;
 import com.rainy.base.service.OrgService;
@@ -70,14 +71,12 @@ public class OrgController {
     @SaCheckPermission("org:del")
     @Log(module = "组织管理", type = OpType.DEL, detail = "'删除了组织[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
-        // 删除本节点以及下级
-        List<Long> orgIds = new ArrayList<>();
-        param.getIds().forEach(id -> {
-            List<Long> childrenIds = orgService.getChildrenIds(id);
-            orgIds.addAll(childrenIds);
-        });
+        boolean exists = orgService.lambdaQuery()
+                .in(Org::getParentId, param.getIds())
+                .exists();
+        ValidateUtils.isTrue(exists, "该组织下有子组织,请先删除子组织");
         return orgService.lambdaUpdate()
-                .in(Org::getId, orgIds)
+                .in(Org::getId, param.getIds())
                 .set(Org::getDelFlag, true)
                 .update();
     }

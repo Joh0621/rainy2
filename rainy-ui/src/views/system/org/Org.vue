@@ -45,7 +45,7 @@
           <template #action="{ record }">
             <a @click="handleEdit(record)">编辑</a>
             <a-divider type="vertical"/>
-            <a-popconfirm title="确认删除本组织以及下级吗？" @confirm="handleDel(record)">
+            <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
               <a-button type="link" size="small" danger>删除</a-button>
             </a-popconfirm>
           </template>
