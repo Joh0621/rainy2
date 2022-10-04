@@ -12,6 +12,7 @@ import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.User;
+import com.rainy.base.param.user.PasswordUpdateParam;
 import com.rainy.base.service.OrgService;
 import com.rainy.base.service.UserRoleRelService;
 import com.rainy.base.service.UserService;
@@ -77,6 +78,15 @@ public class UserController {
     @Log(module = "用户管理", type = OpType.UPDATE, detail = "'更新了用户[' + #param.username + '].'")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) User param) {
         return userService.updateById(param);
+    }
+
+    @PostMapping("/user/password/reset")
+    @SaCheckPermission("user:resetPassword")
+    @Log(module = "用户管理", type = OpType.ADD, detail = "'重置了用户[' + #param.username + ']的密码'")
+    public Boolean resetPassword(@RequestBody @Validated PasswordUpdateParam param) {
+        return userService.lambdaUpdate()
+                .eq(User::getUsername, param.getUsername())
+                .update(param.convert());
     }
 
     @GetMapping("/user/roleIds")

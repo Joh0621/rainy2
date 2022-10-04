@@ -76,7 +76,7 @@
 
 <script setup>
 import { Tree } from '@/api/org/org'
-import { List, Del, Export } from '@/api/permission/user'
+import { List, Del, ResetPassword, Export } from '@/api/permission/user'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import { sortValue } from '@/utils/constants'
 import UserEdit from './UserEdit.vue'
@@ -145,7 +145,15 @@ const handleAuthorize = (record) => {
 
 //  // 重置密码
 const resetPassword = record => {
-  // 重置密码
+  const param = {
+    username: record.username,
+    password: 'admin'
+  }
+  ResetPassword(param).then(res => {
+    if (res.success) {
+      message.success(res.message)
+    }
+  })
 }
 
 const editor = ref()

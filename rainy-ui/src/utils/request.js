@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useUserStore } from '@/store/user'
-import { notification } from 'ant-design-vue'
+import { notification, message, Modal } from 'ant-design-vue'
 import { TOKEN_NAME } from '@/utils/constants'
 import { api } from '@/api/login'
 
@@ -14,9 +14,7 @@ export const method = {
 /**
  * 创建axios实例
  */
-// const baseURL = import.meta.env.VITE_API_BASE_URL;
-// const baseURL = '/dm-platform/api'
-const baseURL = '/api'
+const baseURL = import.meta.env.VITE_API_BASE_URL
 const instance = axios.create({
   baseURL,
   timeout: 60000
@@ -41,8 +39,14 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   (response) => {
-    if (response.headers['content-disposition']) {
-      return response
+    // 配置了blob，不处理直接返回文件流
+    if (response.config.responseType === 'blob') {
+      if (response.status === 200) {
+        return response
+      } else {
+        message.warning('文件下载失败或此文件不存在')
+        return
+      }
     }
     const data = response.data
     if (data.code === 400) {
@@ -52,18 +56,17 @@ instance.interceptors.response.use(
       })
     }
     if (data.code === 401) {
-      // todo 友好提示登录时报
       if (response.config.url !== api.Login) {
-        notification.error({
-          message: '认证失败',
-          description: data.message
-        })
-        const userStore = useUserStore()
-        userStore.Logout({}).then(res => {
-          // router.push('/')
-          setTimeout(() => {
-            location.reload()
-          }, 500)
+        Modal.error({
+          title: '提示',
+          okText: '重新登录',
+          content: '登录已失效， 请重新登录',
+          onOk: () => {
+            const userStore = useUserStore()
+            userStore.Logout({}).then(res => {
+              location.reload()
+            })
+          }
         })
       }
     }

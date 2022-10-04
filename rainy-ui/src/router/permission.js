@@ -8,7 +8,7 @@ import 'nprogress/nprogress.css'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const loginRoutePath = '/login'
-const allowList = [loginRoutePath] // no redirect allowList
+const allowList = [loginRoutePath, '/password/forget'] // no redirect allowList
 const defaultRoutePath = '/workbench'
 
 router.beforeEach((to, from, next) => {
@@ -37,7 +37,13 @@ router.beforeEach((to, from, next) => {
               store.addRouters.forEach((route) => {
                 router.addRoute(ROOT_ROUTER_NAME, route)
               })
-              next({ path: to.path, replace: true })
+              // 请求带有 redirect 重定向时，自动重定向到该地址
+              const redirect = decodeURIComponent(from.query.redirect || to.path)
+              if (redirect) {
+                next({ path: redirect })
+              } else {
+                next({ path: to.path, replace: true })
+              }
             })
           })
         } else {
@@ -48,7 +54,7 @@ router.beforeEach((to, from, next) => {
       if (allowList.includes(to.path)) {
         next()
       } else {
-        next({ path: loginRoutePath })
+        next({ path: loginRoutePath, query: { redirect: to.fullPath } })
         NProgress.done()
       }
     }

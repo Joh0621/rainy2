@@ -6,6 +6,7 @@ const api = {
   Add: '/user',
   Del: '/users',
   Update: '/user/update',
+  ResetPassword: '/user/password/reset',
   ListRoleIds: '/user/roleIds',
   AssignRoles: '/user/roles/assign',
   ListOnline: '/users/online',
@@ -47,6 +48,14 @@ export function Del (parameter) {
 export function Edit (parameter) {
   return request({
     url: api.Update,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function ResetPassword (parameter) {
+  return request({
+    url: api.ResetPassword,
     method: method.POST,
     data: parameter
   })
