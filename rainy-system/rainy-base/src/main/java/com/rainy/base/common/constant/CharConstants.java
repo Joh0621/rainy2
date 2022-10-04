@@ -16,4 +16,9 @@ public interface CharConstants {
      * 字符串常量：冒号 {@code ':'}
      */
     String COLON = ":";
+
+    /**
+     * 字符串常量：换行符 {@code '\n'}
+     */
+    String LF = "\n";
 }

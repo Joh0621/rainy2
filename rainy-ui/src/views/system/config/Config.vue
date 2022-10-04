@@ -65,8 +65,8 @@ const table = ref()
 const queryParam = ref({})
 const columns = [
   { title: '配置分类', dataIndex: 'categoryCode', width: '100px' },
-  { title: '配置名称', dataIndex: 'name' },
-  { title: '配置编码', dataIndex: 'code' },
+  { title: '配置名称', dataIndex: 'name', ellipsis: true },
+  { title: '配置编码', dataIndex: 'code', ellipsis: true },
   { title: '配置值', dataIndex: 'value' },
   { title: '数据类型', dataIndex: 'dataType' },
   { title: '描述', dataIndex: 'description', ellipsis: true },

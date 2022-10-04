@@ -10,19 +10,26 @@ import com.rainy.base.entity.User;
  */
 public class SaTokenUtils {
 
+    private static final String USERINFO_SESSION_KEY = "userinfo";
+
     public static Long getUserId(){
-        return 1L;
+        return StpUtil.getLoginIdAsLong();
     }
 
     public static String getUsername(){
-        return "admin";
+        return getUserinfo().getUsername();
     }
 
     public static User getUserinfo(){
-        return (User) StpUtil.getSessionByLoginId(StpUtil.getLoginId()).get("userinfo");
+        return getUserinfo(StpUtil.getLoginId());
+    }
+
+    public static User getUserinfo(Object loginId){
+        return (User) StpUtil.getSessionByLoginId(loginId).get(USERINFO_SESSION_KEY);
     }
 
     public static void setUserinfo(User user) {
-        StpUtil.getSessionByLoginId(user.getId()).set("userinfo", user);
+        StpUtil.getSessionByLoginId(user.getId()).set(USERINFO_SESSION_KEY, user);
     }
+
 }

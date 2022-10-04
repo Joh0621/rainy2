@@ -84,8 +84,8 @@ const table = ref()
 const queryParam = ref({})
 const columns = [
   { title: '字典分类', dataIndex: 'categoryCode', width: '100px' },
-  { title: '字典名称', dataIndex: 'name' },
-  { title: '字典编码', dataIndex: 'code' },
+  { title: '字典名称', dataIndex: 'name', ellipsis: true },
+  { title: '字典编码', dataIndex: 'code', ellipsis: true },
   { title: '数据类型', dataIndex: 'dataType' },
   { title: '描述', dataIndex: 'description', ellipsis: true },
   // { title: '排序', dataIndex: 'sort' },

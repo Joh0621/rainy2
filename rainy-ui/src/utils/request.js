@@ -61,7 +61,9 @@ instance.interceptors.response.use(
         const userStore = useUserStore()
         userStore.Logout({}).then(res => {
           // router.push('/')
-          location.reload()
+          setTimeout(() => {
+            location.reload()
+          }, 500)
         })
       }
     }

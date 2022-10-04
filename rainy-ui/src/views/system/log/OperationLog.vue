@@ -69,7 +69,7 @@ const columns = [
   { title: '浏览器', dataIndex: 'browser' },
   { title: '操作系统', dataIndex: 'os' },
   { title: '是否成功', dataIndex: 'success' },
-  { title: '错误信息', dataIndex: 'errorMessage' },
+  { title: '错误信息', dataIndex: 'errorMessage', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {

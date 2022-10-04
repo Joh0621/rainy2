@@ -13,5 +13,5 @@ public interface OrgService extends BaseService<Org> {
 
     List<Org> tree();
 
-    List<Org> list(Org org);
+    List<Long> getChildrenIds(Long id);
 }

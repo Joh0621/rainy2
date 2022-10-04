@@ -1,6 +1,7 @@
 package com.rainy.base.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.rainy.base.aop.Log;
 import com.rainy.base.entity.Org;
 import com.rainy.base.mapper.OrgMapper;
 import com.rainy.base.service.OrgService;
@@ -34,29 +35,27 @@ public class OrgServiceImpl extends BaseServiceImpl<OrgMapper, Org> implements O
 
 
     /**
-     * 获取节点下的所有子节点列表
+     * 获取节点下的所有子节点列表(包含本节点)
      *
-     * @param org org
-     * @return {@link List}<{@link Org}>
+     * @param id id
      */
     @Override
-    public List<Org> list(Org org) {
-        List<Org> orgs = new ArrayList<>();
-        Org one = this.getById(org.getId());
+    public List<Long> getChildrenIds(Long id) {
+        Org one = this.getById(id);
         if (one == null) {
-            return orgs;
+            return List.of();
         }
+        List<Org> orgs = new ArrayList<>();
         // 1.添加当前节点
         orgs.add(one);
         // 2.找出当前节点下的所有子节点
-        List<Org> orgList = this.lambdaQuery().
-                likeRight(StrUtil.isNotBlank(org.getName()), Org::getName, org.getName()).
-                likeRight(StrUtil.isNotBlank(org.getCode()), Org::getCode, org.getCode()).
-                list();
-        List<Org> listById = listById(org.getId(), orgList);
+        List<Org> orgList = this.list();
+        List<Org> listById = listById(id, orgList);
         // 3.添加所有子节点
         orgs.addAll(listById);
-        return orgs;
+        return orgs.stream()
+                .map(Org::getId)
+                .toList();
     }
 
     /**

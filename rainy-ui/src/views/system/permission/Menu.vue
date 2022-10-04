@@ -70,7 +70,7 @@ const columns = [
   { title: '内链Url', dataIndex: 'url' },
   { title: '权限码', dataIndex: 'permission' },
   { title: '排序', dataIndex: 'sort' },
-  { title: '描述', dataIndex: 'description' },
+  { title: '描述', dataIndex: 'description', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {

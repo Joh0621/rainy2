@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * data-middle-platform
  *
- * @author Created by renguangli at 2022/9/20 0020 22:46
+ * @author Created by renguangli at 2022/9/20 22:46
  */
 @EnableWebMvc
 @Configuration

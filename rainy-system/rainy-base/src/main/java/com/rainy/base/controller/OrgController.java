@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,15 +37,9 @@ public class OrgController {
     @SaCheckPermission("org:query")
     @Log(module = "组织管理", type = OpType.QUERY, detail = "'查询了组织列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<Org> list(Page<Org> page, Org param) {
-        // 当查询某个节点下的所有节点时分页大小为total
-        if (param.getId() != null) {
-            List<Org> list = orgService.list(param);
-            page.setRecords(list);
-            page.setTotal(list.size());
-            page.setSize(list.size());
-            return page;
-        }
+        List<Long> orgIds = orgService.getChildrenIds(param.getId());
         return orgService.lambdaQuery()
+                .in(!orgIds.isEmpty(), Org::getId, orgIds)
                 .likeRight(StrUtil.isNotBlank(param.getName()), Org::getName, param.getName())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Org::getCode, param.getCode())
                 .page(page);
@@ -75,8 +70,14 @@ public class OrgController {
     @SaCheckPermission("org:del")
     @Log(module = "组织管理", type = OpType.DEL, detail = "'删除了组织[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
+        // 删除本节点以及下级
+        List<Long> orgIds = new ArrayList<>();
+        param.getIds().forEach(id -> {
+            List<Long> childrenIds = orgService.getChildrenIds(id);
+            orgIds.addAll(childrenIds);
+        });
         return orgService.lambdaUpdate()
-                .in(Org::getId, param.getIds())
+                .in(Org::getId, orgIds)
                 .set(Org::getDelFlag, true)
                 .update();
     }

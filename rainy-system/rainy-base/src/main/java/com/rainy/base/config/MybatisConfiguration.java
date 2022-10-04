@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.rainy.base.common.utils.SaTokenUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +15,7 @@ import java.time.LocalDateTime;
 /**
  * mybatis-plus 配置类
  *
- * @author renguangli
- * @date 2022/9/1 18:06
+ * @author Created by renguangli at 2022/9/20 22:46
  */
 @Configuration
 @MapperScan(value = {"com.**.mapper"})
@@ -46,15 +46,14 @@ public class MybatisConfiguration {
             @Override
             public void insertFill(MetaObject metaObject) {
                 this.setFieldValByName(CREATE_TIME_FIELD, LocalDateTime.now(), metaObject);
-//                this.setFieldValByName(CREATE_BY_FIELD, SaTokenUtils.getUsername(), metaObject);
-
+                this.setFieldValByName(CREATE_BY_FIELD, SaTokenUtils.getUsername(), metaObject);
                 this.updateFill(metaObject);
             }
 
             @Override
             public void updateFill(MetaObject metaObject) {
                 this.setFieldValByName(UPDATE_TIME_FIELD, LocalDateTime.now(), metaObject);
-//                this.setFieldValByName(UPDATE_BY_FIELD, SaTokenUtils.getUsername(), metaObject);
+                this.setFieldValByName(UPDATE_BY_FIELD, SaTokenUtils.getUsername(), metaObject);
             }
         };
     }

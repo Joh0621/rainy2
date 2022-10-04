@@ -57,7 +57,7 @@ public class OperationLogController {
         ExcelUtils.export(response, operationLogs, "operationLogs.xls");
     }
 
-    @Log(module = "操作日志", type = OpType.DEL, detail = "'删除了操作日志[' + #param.names + '].'")
+    @Log(module = "操作日志", type = OpType.DEL, detail = "'删除了操作日志[' + #param.ids + '].'")
     @PostMapping("/operationLogs")
     @SaCheckPermission("operationLog:del")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {

@@ -2,6 +2,8 @@ package com.rainy.base.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rainy.base.common.constant.OpType;
+import com.rainy.base.common.utils.SaTokenUtils;
+import com.rainy.base.common.utils.ThrowableUtils;
 import com.rainy.base.common.utils.WebUtils;
 import com.rainy.base.entity.OperationLog;
 import com.rainy.base.service.OperationLogService;
@@ -48,7 +50,7 @@ public class LogAspect {
         try {
             result = joinPoint.proceed(joinPoint.getArgs());
         } catch (Throwable e) {
-//            log.setErrorMessage(ThrowableUtils.toString(e));
+            log.setErrorMessage(ThrowableUtils.toString(e));
             log.setErrorMessage(e.getMessage());
             throw e;
         } finally {
@@ -68,6 +70,7 @@ public class LogAspect {
             return;
         }
 
+        opLog.setUsername(SaTokenUtils.getUsername());
         opLog.setDatetime(LocalDateTime.now());
         opLog.setModule(sysLog.module());
         opLog.setType(sysLog.type());

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -36,7 +37,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
 
     private static final String INCLUDE_PATH_PATTERN = "/**";
-    private static final String[] UPDATE_METHODS = {"POST"};
     private static final String[] EXCLUDE_PATHS = {
             "/favicon.ico", "/error", "/druid/**"
     };
@@ -74,7 +74,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         // 演示环境无法进行增删改操作
         boolean isDemoDev = configService.getAsBoolean(ConfigConstants.IS_DEMO_DEV);
         if (isDemoDev) {
-            SaRouter.matchMethod(UPDATE_METHODS).check(() -> {
+            SaRouter.matchMethod(HttpMethod.GET.name()).check(() -> {
                 throw new RuntimeException("演示环境, 无法操作！");
             });
         }
