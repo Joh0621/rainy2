@@ -28,6 +28,8 @@
             placeholder="请选择组织机构"
             tree-default-expand-all
             :tree-data="orgTreeData"
+            showSearch
+            treeNodeFilterProp="name"
         >
         </a-tree-select>
       </a-form-item>
@@ -42,6 +44,8 @@
             placeholder="请选择上级目录"
             tree-default-expand-all
             :tree-data="treeData"
+            showSearch
+            treeNodeFilterProp="name"
         ></a-tree-select>
       </a-form-item>
       <a-form-item

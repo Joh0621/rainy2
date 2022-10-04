@@ -28,6 +28,8 @@
             placeholder="请选择数据目录"
             tree-default-expand-all
             :tree-data="treeData"
+            showSearch
+            treeNodeFilterProp="name"
         ></a-tree-select>
       </a-form-item>
       <a-form-item

@@ -58,6 +58,9 @@
                   :fieldNames="fieldNames"
                   placeholder="请选择上级菜单"
                   :tree-data="treeData"
+                  :tree-default-expanded-keys="[0]"
+                  showSearch
+                  treeNodeFilterProp="name"
               >
               </a-tree-select>
             </a-form-item>

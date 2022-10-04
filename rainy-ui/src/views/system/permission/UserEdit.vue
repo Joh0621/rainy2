@@ -23,7 +23,11 @@
         :rules="[{ required: true, message: '请输入用户名' }]"
         has-feedback
       >
-        <a-input v-model:value="form.username" placeholder="请输入用户名" />
+        <a-input :disabled="!flag" v-model:value="form.username" placeholder="请输入用户名" allow-clear>
+          <template #prefix>
+            <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+          </template>
+        </a-input>
       </a-form-item>
       <a-form-item
           name="password"
@@ -31,7 +35,11 @@
           :rules="[{ required: true, message: '请输入密码' }]"
           has-feedback
       >
-        <a-input type="password" v-model:value="form.password" autocomplete="off" placeholder="请输入密码" />
+        <a-input-password type="password" v-model:value="form.password" autocomplete="off" placeholder="请输入密码">
+          <template #prefix>
+            <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
+          </template>
+        </a-input-password>
       </a-form-item>
       <a-form-item
           name="nickName"
@@ -47,12 +55,12 @@
           :rules="[{ required: true, message: '请输入生日' }]"
           has-feedback
       >
-        <a-date-picker v-model:value="form.birthday" placeholder="请输入生日" />
+        <a-date-picker v-model:value="form.birthday" :format="'YYYY-MM-DD'" placeholder="请输入生日" />
       </a-form-item>
       <a-form-item
           name="telephone"
           label="手机号"
-          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
+          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
           has-feedback
       >
         <a-input v-model:value="form.telephone" placeholder="请输入正确的11位手机号" />
@@ -77,13 +85,15 @@
           placeholder="请选择组织"
           tree-default-expand-all
           :tree-data="treeData"
+          showSearch
+          treeNodeFilterProp="name"
         >
         </a-tree-select>
       </a-form-item>
       <a-form-item
           name="positionId"
           label="职位"
-          :rules="[{ required: true, message: '请输入职位' }]"
+          :rules="[{ required: false, message: '请输入职位' }]"
           has-feedback
       >
         <a-input v-model:value="form.positionId" placeholder="请输入职位" />
@@ -111,11 +121,7 @@ const fieldNames = {
 const treeData = ref([])
 onMounted(() => {
   Tree({}).then(res => {
-    treeData.value = [{
-      name: 'root',
-      id: 0,
-      children: res.data
-    }]
+    treeData.value = res.data
   })
 })
 
@@ -140,6 +146,7 @@ const handleOk = () => {
   formRef.value
     .validateFields()
     .then((values) => {
+      values.birthday = values.birthday.format('YYYY-MM-DD')
       if (flag.value) {
         handleAdd(values)
       } else {

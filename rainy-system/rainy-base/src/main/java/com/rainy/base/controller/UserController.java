@@ -3,7 +3,6 @@ package com.rainy.base.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
 import com.rainy.base.common.Result;
@@ -13,6 +12,7 @@ import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
 import com.rainy.base.common.validation.Group;
 import com.rainy.base.entity.User;
+import com.rainy.base.service.OrgService;
 import com.rainy.base.service.UserRoleRelService;
 import com.rainy.base.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +37,15 @@ public class UserController {
 
     private final UserService userService;
     private final UserRoleRelService userRoleRelService;
+    private final OrgService orgService;
 
     @GetMapping("/users")
     @SaCheckPermission("user:query")
     @Log(module = "用户管理", type = OpType.QUERY, detail = "'查询了用户列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<User> list(Page<User> page, User param) {
+        List<Long> orgIds = orgService.getChildrenIds(param.getOrgId());
         return userService.lambdaQuery()
-                .eq(!Objects.isNull(param.getOrgId()), User::getOrgId, param.getOrgId())
+                .in(!orgIds.isEmpty(), User::getOrgId, orgIds)
                 .likeRight(StrUtil.isNotBlank(param.getUsername()), User::getUsername, param.getUsername())
                 .page(page);
     }

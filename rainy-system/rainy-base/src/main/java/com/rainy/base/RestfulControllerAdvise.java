@@ -66,6 +66,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public Result<Object> httpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error(e.getMessage(), e);
         return Result.of(ResultCode.BAD_REQUEST,
                 StrUtil.subBefore(e.getMessage(), CharPool.COLON, false));
     }
@@ -76,7 +77,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
     }
 
     @ExceptionHandler(value = MaxUploadSizeExceededException.class)
-    public Result<Object> illegalArgumentException(MaxUploadSizeExceededException e) {
+    public Result<Object> maxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         long maxUploadSize = e.getMaxUploadSize();
         long mb = maxUploadSize / 1024 / 1024;
         return Result.of(ResultCode.BAD_REQUEST, StrUtil.format("文件最大{}mb!", mb));

@@ -114,8 +114,3 @@ defineExpose({
   open
 })
 </script>
-<style scoped>
-.ant-modal-body {
-  min-height: 400px;
-}
-</style>

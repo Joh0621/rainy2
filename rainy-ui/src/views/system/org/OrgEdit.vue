@@ -38,6 +38,8 @@
               placeholder="请选择上级组织"
               tree-default-expand-all
               :tree-data="treeData"
+              showSearch
+              treeNodeFilterProp="name"
           >
           </a-tree-select>
         </a-form-item>
