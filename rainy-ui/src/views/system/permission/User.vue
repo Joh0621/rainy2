@@ -55,7 +55,9 @@
                     <a-button @click="handleAuthorize(record)" type="link" size="small">分配角色</a-button>
                   </a-menu-item>
                   <a-menu-item>
-                    <a-button @click="resetPassword(record)" type="link" size="small">重置密码</a-button>
+                    <a-popconfirm title="确认重置该用户的密码吗？" @confirm="resetPassword(record)">
+                      <a-button type="link" size="small">重置密码</a-button>
+                    </a-popconfirm>
                   </a-menu-item>
                   <a-menu-item>
                     <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
