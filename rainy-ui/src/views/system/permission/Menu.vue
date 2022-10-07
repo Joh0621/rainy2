@@ -24,6 +24,10 @@
       <template #operation>
         <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
       </template>
+      <template #name="{ record }">
+        <a-icon :type="record.icon" style="font-size: 16px" />
+        {{record.name}}
+      </template>
       <template #type="{ record }">
         <a-tag v-if="record.type === 0" color="#2db7f5">
           {{ appStore.dictItemValue('sys_menu_type', record.type) }}
@@ -62,14 +66,15 @@ const appStore = useAppStore()
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '菜单名称', dataIndex: 'name' },
-  { title: '菜单类型', dataIndex: 'type' },
+  { title: '菜单名称', dataIndex: 'name', width: '180px' },
+  // { title: '图标', dataIndex: 'icon', width: '50px', align: 'center' },
+  { title: '菜单类型', dataIndex: 'type', width: '80px', align: 'center' },
   // { title: '路由名称', dataIndex: 'name' },
   { title: '路由地址', dataIndex: 'path' },
-  { title: '前端组件', dataIndex: 'component' },
-  { title: '内链Url', dataIndex: 'url' },
-  { title: '权限码', dataIndex: 'permission' },
-  { title: '排序', dataIndex: 'sort' },
+  // { title: '前端组件', dataIndex: 'component' },
+  // { title: '内链Url', dataIndex: 'url' },
+  // { title: '权限码', dataIndex: 'permission' },
+  { title: '排序', dataIndex: 'sort', width: '60px', align: 'center' },
   { title: '描述', dataIndex: 'description', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]

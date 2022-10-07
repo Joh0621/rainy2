@@ -113,13 +113,22 @@
           />
         </a-col>
       </a-row>
+      <a-row style="margin-bottom: 12px">
+        <a-col :span="12">多标签</a-col>
+        <a-col :span="12" style="text-align: right">
+          <a-switch
+            checked-children="开"
+            un-checked-children="关"
+            :checked="modelValue.multiTag"
+            @change="checked => updateConf(checked, 'multiTag')"
+          />
+        </a-col>
+      </a-row>
     </div>
   </a-drawer>
 </template>
 
 <script setup>
-import { SettingOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons-vue'
-
 import { apply, colors } from '@/hooks/useTheme'
 
 const props = defineProps({

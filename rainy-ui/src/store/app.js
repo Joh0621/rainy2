@@ -6,7 +6,6 @@ import { Common } from '@/api/system/common.js'
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
-      pageTags: [],
       config: {
         sysTitle: undefined,
         sysLogo: undefined

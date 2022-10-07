@@ -36,6 +36,7 @@
       </router-link>
     </template>
     <setting-drawer v-model="proConfig" />
+    <multi-tag v-if="proConfig.multiTag" style="margin: -16px -16px 16px -16px"/>
     <router-view v-if="!loading" #="{ Component, route }">
       <component :is="Component" :key="route.path" />
     </router-view>
@@ -47,6 +48,7 @@ import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { defaultConfig } from '@/config/defaultConfig'
+import MultiTag from '@/components/MultiTag/MultiTag.vue'
 
 const router = useRouter()
 const store = useUserStore()
@@ -70,7 +72,8 @@ const proConfig = ref({
   fixSiderbar: defaultConfig.fixSiderbar,
   splitMenus: defaultConfig.splitMenus,
   headerHeight: defaultConfig.headerHeight,
-  primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor
+  primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor,
+  multiTag: localStorage.getItem('multiTag') ? localStorage.getItem('multiTag') === 'true' : defaultConfig.multiTag
 })
 
 const { nickName, avatar } = storeToRefs(store)

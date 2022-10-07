@@ -8,10 +8,11 @@ export const defaultConfig = {
   splitMenus: false,
   collapsed: false,
   headerHeight: 55,
+  multiTag: true,
   menu: {
     locale: true
   },
   title: '后台系统',
   logo: '/vite.svg',
-  iconfontUrl: '//at.alicdn.com/t/c/font_3592546_p34zdyw7rg.js'
+  iconfontUrl: '//at.alicdn.com/t/c/font_3592546_fapk7qrp98.js'
 }

@@ -25,7 +25,6 @@
       :columns="columns"
       :row-key="record => record.id"
       :load-data="data"
-      @add="handleAdd"
       @batch-del="handleBatchDel"
     >
       <template #operation>

@@ -1,246 +1,117 @@
 <template>
-  <div class="snowy-tags">
+  <div class="rainy-tags">
     <a-tabs
         v-model:activeKey="activeKey"
         type="editable-card"
-        class="snowy-admin-tabs"
+        class="ant-multi-tabs"
         hide-add
-        @edit="onTabRemove"
-        @tabClick="onTabClick"
+        @edit="handleTabEdit"
+        @tabClick="handleTabClick"
     >
       <template #leftExtra>
-        <div class="snowy-admin-tabs-arrow" @click="scrollLeft">
+        <div class="ant-multi-tabs-arrow" @click="scrollLeft">
           <LeftOutlined />
         </div>
       </template>
       <template #rightExtra>
-        <div class="snowy-admin-tabs-arrow" @click="scrollRight">
+        <div class="ant-multi-tabs-arrow" @click="scrollRight">
           <right-outlined />
         </div>
-
-        <a-dropdown>
-          <div class="snowy-admin-tabs-drop">
-            <DownOutlined />
-          </div>
-          <template #overlay>
-            <a-menu>
-              <a-menu-item>
-                <div class="layout-items-center" @click="refreshTab">
-                  <reload-outlined class="snowy-header-tags-right" />
-                  <div class="pl-3">刷新</div>
-                </div>
-              </a-menu-item>
-              <a-menu-item>
-                <div class="layout-items-center" @click="closeOtherTabs">
-                  <close-outlined class="snowy-header-tags-right" />
-                  <div class="pl-3">关闭其他标签</div>
-                </div>
-              </a-menu-item>
-              <a-menu-item>
-                <div class="layout-items-center" @click="maximize">
-                  <expand-outlined class="snowy-header-tags-right" />
-                  <div class="pl-3">最大化</div>
-                </div>
-              </a-menu-item>
-              <a-menu-item>
-                <div class="layout-items-center" @click="openWindow">
-                  <select-outlined class="snowy-header-tags-right" />
-                  <div class="pl-3">在新的窗口中打开</div>
-                </div>
-              </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
+<!--        <a-dropdown>-->
+<!--          <div class="ant-multi-tabs-drop">-->
+<!--            <DownOutlined />-->
+<!--          </div>-->
+<!--          <template #overlay>-->
+<!--            <a-menu>-->
+<!--              <a-menu-item>-->
+<!--                <reload-outlined  />-->
+<!--              </a-menu-item>-->
+<!--              <a-menu-item>-->
+<!--                关闭其他标签-->
+<!--              </a-menu-item>-->
+<!--              <a-menu-item>-->
+<!--                <expand-outlined />最大化-->
+<!--              </a-menu-item>-->
+<!--              <a-menu-item>-->
+<!--                <select-outlined class="rainy-header-tags-right" />-->
+<!--                在新的窗口中打开-->
+<!--              </a-menu-item>-->
+<!--            </a-menu>-->
+<!--          </template>-->
+<!--        </a-dropdown>-->
       </template>
-      <a-tabs></a-tabs>
-      <a-tab-pane v-for="tag in tagList" :key="tag.fullPath" :tab="tag.meta.title" :closable="!tag.meta.affix">
+      <a-tab-pane
+          v-for="tag in tagList"
+          :key="tag.fullPath"
+          :tab="tag.meta.title"
+          :closable="!tag.meta.affix">
       </a-tab-pane>
     </a-tabs>
   </div>
 </template>
 
-<script>
-import { useAppStore } from '@/store/app'
-import { useUserStore } from '@/store/user'
+<script setup>
 import { useRouter } from 'vue-router'
 
-
-const userStore = useUserStore()
-const appStore = useAppStore()
 const router = useRouter()
-export default {
-  name: 'Tags',
-  props: {},
-  data () {
-    return {
-      tagList: appStore.pageTags,
-      activeKey: router.currentRoute.value.fullPath
-    }
-  },
-  watch: {
-    $route (e) {
-      this.addViewTags(e)
-    }
-  },
-  created () {
-    const module = userStore.getMenus()
-    const indexMenu = '/index'
-    // eslint-disable-next-line eqeqeq
-    const dashboardRoute = this.treeFind(module, (node) => node.path === indexMenu)
-    if (dashboardRoute) {
-      dashboardRoute.fullPath = dashboardRoute.path
-      this.addViewTags(dashboardRoute)
-      this.addViewTags(this.$route)
-    }
-  },
-  methods: {
-    onTabClick (tab) {
-      router.push(tab)
-    },
-    getCurrentTag () {
-      return this.tagList.find((tag) => tag.fullPath === this.activeKey)
-    },
-    onTabRemove (tabKey, action) {
-      if (action === 'remove') {
-        const tag = this.tagList.find((tag) => tag.fullPath === tabKey)
-        this.closeSelectedTag(tag)
-      }
-    },
-    getTabWrapEl () {
-      return document.querySelector('.ant-tabs-nav-wrap')
-    },
-    scrollLeft () {
-      const wrapEl = this.getTabWrapEl()
-      if (wrapEl) {
-        const event = new WheelEvent('wheel', { deltaX: 0, deltaY: -100 })
-        wrapEl.dispatchEvent(event)
-      }
-    },
-    scrollRight () {
-      const wrapEl = this.getTabWrapEl()
-      if (wrapEl) {
-        const event = new WheelEvent('wheel', { deltaX: 0, deltaY: 100 })
-        wrapEl.dispatchEvent(event)
-      }
-    },
-    // 查找树
-    treeFind (tree, func) {
-      for (const data of tree) {
-        if (func(data)) return data
-        if (data.children) {
-          const res = this.treeFind(data.children, func)
-          if (res) return res
-        }
-      }
-      return null
-    },
-    // 增加tag
-    addViewTags (route) {
-      this.activeKey = route.fullPath
-      if (route.name && !route.meta.fullpage) {
-        appStore.pageTags = route
-        // this.$store.commit('pushViewTags', route)
-        // this.$store.commit('pushKeepLive', route.name)
-      }
-    },
-    // 高亮tag
-    isActive (route) {
-      return route.fullPath === router.currentRoute.value.fullPath
-    },
-    // 关闭tag
-    closeSelectedTag (tag, autoPushLatestView = true) {
-      this.$store.commit('removeViewTags', tag)
-      this.$store.commit('removeIframeList', tag)
-      this.$store.commit('removeKeepLive', tag.name)
-      if (autoPushLatestView && this.isActive(tag)) {
-        const latestView = this.tagList.slice(-1)[0]
-        if (latestView) {
-          this.$router.push(latestView)
-        } else {
-          this.$router.push('/')
-        }
-      }
-    },
-    // TAB 刷新
-    refreshTab () {
-      const nowTag = this.getCurrentTag()
-      // 判断是否当前路由，否的话跳转
-      // eslint-disable-next-line eqeqeq
-      if (this.$route.fullPath !== nowTag.fullPath) {
-        this.$router.push({
-          path: nowTag.fullPath,
-          query: nowTag.query
-        })
-      }
-      this.$store.commit('refreshIframe', nowTag)
-      setTimeout(() => {
-        this.$store.commit('removeKeepLive', nowTag.name)
-        this.$store.commit('setRouteShow', false)
-        this.$nextTick(() => {
-          this.$store.commit('pushKeepLive', nowTag.name)
-          this.$store.commit('setRouteShow', true)
-        })
-      }, 0)
-    },
-    // TAB 关闭
-    closeTabs () {
-      const nowTag = this.getCurrentTag()
-      if (!nowTag.meta.affix) {
-        this.closeSelectedTag(nowTag)
-      }
-    },
-    // TAB 关闭其他
-    closeOtherTabs () {
-      const nowTag = this.getCurrentTag()
-      // 判断是否当前路由，否的话跳转
-      // eslint-disable-next-line eqeqeq
-      if (this.$route.fullPath !== nowTag.fullPath) {
-        this.$router.push({
-          path: nowTag.fullPath,
-          query: nowTag.query
-        })
-      }
-      const tags = [...this.tagList]
-      tags.forEach((tag) => {
-        // eslint-disable-next-line eqeqeq
-        if ((tag.meta && tag.meta.affix) || nowTag.fullPath === tag.fullPath) {
-          return true
-        } else {
-          this.closeSelectedTag(tag, false)
-        }
-      })
-    },
-    // TAB 最大化（包括标签栏）
-    maximize () {
-      const nowTag = this.getCurrentTag()
-      // 判断是否当前路由，否的话跳转
-      // eslint-disable-next-line eqeqeq
-      if (this.$route.fullPath !== nowTag.fullPath) {
-        this.$router.push({
-          path: nowTag.fullPath,
-          query: nowTag.query
-        })
-      }
-      document.getElementById('app').classList.add('main-maximize')
-    },
-    // 新窗口打开
-    openWindow () {
-      const nowTag = this.getCurrentTag()
-      const url = nowTag.href || '/'
-      if (!nowTag.meta.affix) {
-        this.closeSelectedTag(nowTag)
-      }
-      window.open(url)
-    }
+
+const tagList = ref([])
+const activeKey = ref()
+
+watch(
+  router.currentRoute,
+  (e) => {
+    addTag(e)
   }
+)
+onMounted(() => {
+  addTag(router.currentRoute.value)
+})
+
+
+const addTag = tag => {
+  const exists = tagList.value.find(r => {
+    return r.fullPath === tag.fullPath
+  })
+  if (!exists) {
+    tagList.value.push(tag)
+  }
+  activeKey.value = tag.fullPath
+}
+
+const handleTabClick = (fullPath) => {
+  router.push(fullPath)
+}
+const handleTabEdit = (fullPath) => {
+  // 只剩下一个标签时，什么都不做
+  if (tagList.value.length === 1) {
+    return
+  }
+  // 找到要删除的标签
+  const removeTag = tagList.value.find(tag => tag.fullPath === fullPath)
+  tagList.value.forEach((item, index) => {
+    if (item.fullPath === removeTag.fullPath) {
+      tagList.value.splice(index, 1)
+    }
+  })
+  // 如果要删除的标签时当前标签，跳转到最后一个标签页
+  if (activeKey.value === fullPath) {
+    const lastTag = tagList.value.slice(-1)[0]
+    router.push(lastTag.fullPath)
+  }
+}
+
+const scrollLeft = () => {
+}
+const scrollRight = () => {
 }
 </script>
 
 <style lang="less">
-.snowy-admin-tabs {
+.ant-multi-tabs {
   &.ant-tabs {
-    background: var(--component-background);
-    box-shadow: var(--header-light-shadow);
+    background: white;
+    box-shadow: var(--ant-primary-color);
     z-index: 99;
     .ant-tabs-nav {
       margin-bottom: 0;
@@ -269,13 +140,13 @@ export default {
           }
         }
         .ant-tabs-tab-active {
-          background: var(--primary-1);
+          background: var(--ant-primary-1);
         }
       }
     }
 
-    .snowy-admin-tabs-drop,
-    .snowy-admin-tabs-arrow,
+    .ant-multi-tabs-drop,
+    .ant-multi-tabs-arrow,
     .ant-tabs-nav-operations .ant-tabs-nav-more {
       padding: 0;
       width: 40px;
@@ -283,10 +154,6 @@ export default {
       line-height: 40px;
       text-align: center;
       cursor: pointer;
-      .anticon {
-        font-size: 12px;
-        vertical-align: -1px;
-      }
     }
   }
 }

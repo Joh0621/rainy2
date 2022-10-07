@@ -13,6 +13,7 @@
     <modules>
         <module>rainy-main</module>
         <module>rainy-system</module>
+        <module>rainy-starter</module>
     </modules>
 
     <properties>
@@ -79,6 +80,11 @@
             <dependency>
                 <groupId>com.renguangli</groupId>
                 <artifactId>rainy-dataway</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.renguangli</groupId>
+                <artifactId>rainy-main</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

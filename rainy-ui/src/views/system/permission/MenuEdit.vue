@@ -114,7 +114,7 @@
             >
               <a-input :disabled="true" v-model:value="form.icon">
                 <template  #addonAfter>
-                  <setting-outlined @click="selectIcon"/>
+                  <setting-outlined @click="visibleIcon = true"/>
                 </template>
               </a-input>
             </a-form-item>
@@ -184,9 +184,19 @@
           </a-col>
         </a-row>
       </a-form>
+      <a-modal
+          :width="850"
+          :visible="visibleIcon"
+          @cancel="visibleIcon = false"
+          footer=""
+          :mask="false"
+          :destroyOnClose="true"
+      >
+        <IconSelector @change="handleSelectIcon"/>
+      </a-modal>
     </a-spin>
   </a-modal>
-  <IconSelector ref="iconSelector" @select="handleSelectIcon"></IconSelector>
+
 </template>
 <script setup>
 import { Tree, Add, Edit } from '@/api/system/menu.js'
@@ -266,13 +276,14 @@ const handleTargetChange = e => {
   }
 }
 
-const iconSelector = ref()
-const selectIcon = () => {
-  iconSelector.value.open(form.value.icon)
-}
+const visibleIcon = ref(false)
+// const selectIcon = () => {
+//   iconSelector.value.open(form.value.icon)
+// }
 
 const handleSelectIcon = icon => {
   form.value.icon = icon
+  visibleIcon.value = false
 }
 
 const handleOk = () => {
