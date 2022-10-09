@@ -21,7 +21,9 @@
 <!--      <a-tooltip title="刷新">-->
 <!--        <redo-outlined style="font-size: 20px;" @click="reload" />-->
 <!--      </a-tooltip>-->
-      {{ router.currentRoute.value.meta.title }}
+<!--      {{ router.currentRoute.value.meta.title }}-->
+      <PageContainer>
+      </PageContainer>
     </template>
     <template #rightContentRender>
       <RightContent :nick-name="nickName" :avatar="avatar" />
@@ -43,6 +45,7 @@
   </pro-layout>
 </template>
 <script setup>
+import { PageContainer } from '@ant-design-vue/pro-layout'
 import { useRouter, RouterView, RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/store/app'
@@ -122,5 +125,9 @@ watch(
 }
 .ant-pro-page-container-children-content {
   margin-top: 16px;
+}
+.ant-page-header.has-breadcrumb {
+   padding-left: 0;
+   padding-top: 16px;
 }
 </style>

@@ -44,7 +44,7 @@
           v-for="tag in tagList"
           :key="tag.fullPath"
           :tab="tag.meta.title"
-          :closable="!tag.meta.affix">
+          :closable="tag.meta.affix">
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -54,6 +54,14 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
+const indexRouter = {
+  fullPath: '/workbench',
+  meta: {
+    title: '首页',
+    affix: false
+  }
+}
 
 const tagList = ref([])
 const activeKey = ref()
@@ -65,6 +73,7 @@ watch(
   }
 )
 onMounted(() => {
+  addTag(indexRouter)
   addTag(router.currentRoute.value)
 })
 

@@ -30,6 +30,11 @@
       <template #success="{ record }">
         {{ appStore.dictItemValue('sys_yes_or_no', record.success) }}
       </template>
+      <template #errorMessage="{ record }">
+        <a-tag v-if="record.errorMessage" color="red">
+          {{ record.errorMessage }}
+        </a-tag>
+      </template>
       <template #action="{ record }">
         <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
           <a-button type="link" size="small" danger>删除</a-button>

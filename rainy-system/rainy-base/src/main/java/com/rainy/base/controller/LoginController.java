@@ -1,10 +1,12 @@
 package com.rainy.base.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.rainy.base.common.Result;
 import com.rainy.base.common.ResultCode;
+import com.rainy.base.common.exception.UnauthorizedException;
 import com.rainy.base.common.utils.SaTokenUtils;
 import com.rainy.base.entity.Menu;
 import com.rainy.base.param.LoginParam;
@@ -45,7 +47,7 @@ public class LoginController {
                 .eq(User::getUsername, param.getUsername())
                 .one();
         if (user == null || !Objects.equals(param.getPassword(), user.getPassword())) {
-            return Result.of(ResultCode.ACCOUNT_PASSWORD_NOT_MATCH);
+            throw new UnauthorizedException(ResultCode.ACCOUNT_PASSWORD_NOT_MATCH);
         }
         // 登录
         StpUtil.login(user.getId());

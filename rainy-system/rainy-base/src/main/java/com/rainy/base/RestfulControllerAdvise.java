@@ -7,6 +7,7 @@ import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
 import com.rainy.base.common.Result;
 import com.rainy.base.common.ResultCode;
+import com.rainy.base.common.exception.UnauthorizedException;
 import com.rainy.base.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,14 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
     public Result<Object> exception(Exception e) {
         log.error(e.getMessage(), e);
         return Result.of(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    /**
+     * 认证失败
+     */
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public Result<Object> unauthorizedException(UnauthorizedException e) {
+        return Result.of(e.getResultCode());
     }
 
     /**
