@@ -54,7 +54,7 @@ const dataSource = ref([])
 const spinning = ref(false)
 const pagination = ref({
   current: 1,
-  pageSize: 8,
+  pageSize: 10,
   total: 0
 })
 

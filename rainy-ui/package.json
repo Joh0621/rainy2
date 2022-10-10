@@ -14,7 +14,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@bpmn-io/properties-panel": "^0.21.0",
     "@rushstack/eslint-patch": "^1.2.0",
-    "ant-design-vue": "^3.2.12",
+    "ant-design-vue": "^3.2.13",
     "antd-less-to-css-variable": "^1.0.5",
     "axios": "^0.27.2",
     "bpmn-js": "^10.0.0",

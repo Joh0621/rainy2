@@ -16,7 +16,7 @@ import java.util.List;
  * @author Created by renguangli at 2022/9/5 19:36
  */
 @Service
-@CacheConfig(cacheNames = "rainy:dictItem")
+@CacheConfig(cacheNames = "rainy:dictItems")
 public class DictItemServiceImpl extends BaseServiceImpl<DictItemMapper, DictItem> implements DictItemService {
 
     @Override

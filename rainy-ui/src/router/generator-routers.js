@@ -44,7 +44,7 @@ export const generatorDynamicRouter = (menus) => {
 export const generator = (menus) => {
   const modules = import.meta.glob('../views/**/*.vue')
   return menus.map((menu) => {
-    const { id, path, name, component, icon, hideInMenu, url, target } = menu
+    const { id, path, name, component, icon, show, url, target } = menu
     const currentRouter = {
       // 如果路由设置了 path，则作为默认 path，
       path: target === '_blank' ? url : encodeURI(path || `/${id}`),
@@ -58,7 +58,7 @@ export const generator = (menus) => {
       meta: {
         title: name,
         icon,
-        hideInMenu: hideInMenu || false,
+        hideInMenu: !show,
         url,
         target: target === '_component' || target === '_self' ? null : target
       },

@@ -1,13 +1,13 @@
 <template>
   <pro-layout
-    v-model:collapsed="state.collapsed"
-    v-model:selectedKeys="state.selectedKeys"
-    v-model:openKeys="state.openKeys"
-    :loading="loading"
-    :menu-data="store.getMenus"
-    :breadcrumb="{ routes: breadcrumb }"
-    :iconfont-url="defaultConfig.iconfontUrl"
-    v-bind="proConfig"
+      v-model:collapsed="state.collapsed"
+      v-model:selectedKeys="state.selectedKeys"
+      v-model:openKeys="state.openKeys"
+      :loading="loading"
+      :menu-data="menus"
+      :breadcrumb="{ routes: breadcrumb }"
+      :iconfont-url="defaultConfig.iconfontUrl"
+      v-bind="proConfig"
   >
     <template #menuHeaderRender>
       <router-link :to="{ path: '/' }">
@@ -45,17 +45,18 @@
   </pro-layout>
 </template>
 <script setup>
-import { PageContainer } from '@ant-design-vue/pro-layout'
-import { useRouter, RouterView, RouterLink } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useAppStore } from '@/store/app'
-import { useUserStore } from '@/store/user'
-import { defaultConfig } from '@/config/defaultConfig'
-import MultiTag from '@/components/MultiTag/MultiTag.vue'
+import {useRouter} from 'vue-router'
+import {storeToRefs} from 'pinia'
+import {useAppStore} from '@/store/app'
+import {useUserStore} from '@/store/user'
+import {defaultConfig} from '@/config/defaultConfig'
+import {clearMenuItem} from '@ant-design-vue/pro-layout'
 
 const router = useRouter()
 const store = useUserStore()
 const appStore = useAppStore()
+
+const menus = clearMenuItem(store.getMenus)
 
 const sys = ref({
   title: appStore.config.sysTitle || defaultConfig.title,
