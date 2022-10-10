@@ -67,7 +67,7 @@ const device = ref({})
 const open = (record) => {
   visible.value = true
   device.value = record
-  queryParam.value.deviceCode = record.deviceCode
+  queryParam.value.deviceCode = record.code
 }
 
 const table = ref()

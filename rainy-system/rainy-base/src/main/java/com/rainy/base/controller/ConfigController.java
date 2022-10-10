@@ -72,7 +72,7 @@ public class ConfigController {
     @SaCheckPermission("config:update")
     @Log(module = "配置管理", type = OpType.UPDATE, detail = "'更新了配置[' + #param.name + '].'")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) Config param) {
-        return configService.updateById(param);
+        return configService.update(param);
     }
 
 }

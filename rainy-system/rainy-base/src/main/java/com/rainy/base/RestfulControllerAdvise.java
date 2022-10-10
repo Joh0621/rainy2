@@ -50,7 +50,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
     }
 
     /**
-     * 认证失败
+     * 权限异常
      */
     @ExceptionHandler(value = UnauthorizedException.class)
     public Result<Object> unauthorizedException(UnauthorizedException e) {

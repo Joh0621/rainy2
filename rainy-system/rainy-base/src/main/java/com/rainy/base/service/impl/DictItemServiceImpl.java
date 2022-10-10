@@ -4,6 +4,7 @@ import com.rainy.base.entity.DictItem;
 import com.rainy.base.mapper.DictItemMapper;
 import com.rainy.base.service.DictItemService;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,11 @@ public class DictItemServiceImpl extends BaseServiceImpl<DictItemMapper, DictIte
     @Cacheable(key = "#dictCode")
     public List<DictItem> listByDictCode(String dictCode) {
         return this.lambdaQuery().eq(DictItem::getDictCode, dictCode).list();
+    }
+
+    @Override
+    @CacheEvict(key = "#dictItem.dictCode")
+    public boolean updateById(DictItem dictItem) {
+        return super.updateById(dictItem);
     }
 }

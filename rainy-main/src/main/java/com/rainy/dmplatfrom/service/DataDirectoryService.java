@@ -3,6 +3,7 @@ package com.rainy.dmplatfrom.service;
 import com.rainy.base.service.BaseService;
 import com.rainy.dmplatfrom.entity.DataDirectory;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ public interface DataDirectoryService extends BaseService<DataDirectory> {
 
     List<DataDirectory> tree();
 
+    boolean removeBatchByIds(List<Long> ids);
 }

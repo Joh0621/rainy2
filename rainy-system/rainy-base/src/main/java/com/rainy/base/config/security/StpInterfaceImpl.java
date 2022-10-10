@@ -1,4 +1,4 @@
-package com.rainy.base.config.secuity;
+package com.rainy.base.config.security;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
@@ -20,13 +20,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StpInterfaceImpl implements StpInterface {
 
+    private static final String PERMISSION_KEY = "permissions";
+    private static final String ROLE_KEY = "roles";
+
     private final UserRoleRelService userRoleRelService;
     private final RoleMenuRelService roleMenuRelService;
     private final MenuService menuService;
     private final RoleService roleService;
-//
-//    private static final String PERMISSION_KEY = "permissions";
-//    private static final String ROLE_KEY = "roles";
+
 
     /**
      * 返回指定账号id所拥有的权限码集合
@@ -37,18 +38,21 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-       // 1.查询拥有的角色
-       List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(loginId);
-       if (roleIds.isEmpty()) {
-           return List.of();
-       }
-       // 2.查询角色拥有的菜单id列表（按钮）
-       List<Long> menuIds = roleMenuRelService.listMenuIdsInRoleId(roleIds);
-       if (menuIds.isEmpty()) {
-           return List.of();
-       }
-       // 3.查询菜单（按钮）权限码
-       return menuService.listPermissionsInId(menuIds);
+        // 缓存权限信息，更新权限信息时需要重新登录
+        return StpUtil.getSessionByLoginId(StpUtil.getLoginId()).get(PERMISSION_KEY, () -> {
+            // 1.查询拥有的角色
+            List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(loginId);
+            if (roleIds.isEmpty()) {
+                return List.of();
+            }
+            // 2.查询角色拥有的菜单id列表（按钮）
+            List<Long> menuIds = roleMenuRelService.listMenuIdsInRoleId(roleIds);
+            if (menuIds.isEmpty()) {
+                return List.of();
+            }
+            // 3.查询菜单（按钮）权限码
+            return menuService.listPermissionsInId(menuIds);
+        });
     }
 
     /**
@@ -60,11 +64,14 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        // 1.查询拥有的角色
-        List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(loginId);
-        if (roleIds.isEmpty()) {
-            return List.of();
-        }
-        return roleService.listCodesInId(roleIds);
+        // 缓存角色信息，更新角色信时是需要重新登录
+        return StpUtil.getSessionByLoginId(StpUtil.getLoginId()).get(ROLE_KEY, () -> {
+            // 1.查询拥有的角色
+            List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(loginId);
+            if (roleIds.isEmpty()) {
+                return List.of();
+            }
+            return roleService.listCodesInId(roleIds);
+        });
     }
 }

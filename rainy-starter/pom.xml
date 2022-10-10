@@ -20,7 +20,7 @@
             <artifactId>rainy-workflow</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rainy</groupId>
+            <groupId>com.renguangli</groupId>
             <artifactId>rainy-dataway</artifactId>
         </dependency>
         <dependency>

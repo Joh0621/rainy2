@@ -7,6 +7,7 @@ import com.rainy.base.entity.User;
 import com.rainy.base.service.OrgService;
 import com.rainy.base.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.Group;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import java.util.Objects;
  *
  * @author Created by renguangli at 2022/9/18 15:30
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserSyncTask {
@@ -40,6 +42,7 @@ public class UserSyncTask {
 
     @PostConstruct
     public void execute() {
+        log.info("同步用户至 camunda ...");
         List<Org> orgList = orgService.list();
         for (Org org : orgList) {
             // 1.同步用户组
@@ -51,17 +54,7 @@ public class UserSyncTask {
             // 2.同步用户以及用户组
             this.syncUserAndShip(org);
         }
-
-        // 将所有用户分配给 APPROVAL_ALL_GROUP 用户组
-//        identityService.deleteGroup(APPROVAL_ALL_GROUP);
-//        Group group = identityService.newGroup(APPROVAL_ALL_GROUP);
-//        group.setName(APPROVAL_ALL_GROUP);
-//        group.setType(appName);
-//        identityService.saveGroup(group);
-//        List<User> users = userService.list();
-//        users.forEach(user -> {
-//            identityService.createMembership(user.getUsername(), APPROVAL_ALL_GROUP);
-//        });
+        log.info("同步用户至 camunda 完成 ...");
     }
 
     private void syncUserAndShip(Org org) {

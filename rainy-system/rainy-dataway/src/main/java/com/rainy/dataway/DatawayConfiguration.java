@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableHasor    // 在Spring 中启用 Hasor
 @EnableHasorWeb(path = {"/interface-ui/**", "/**"})
 @Configuration
-public class DatawayConfig {
+public class DatawayConfiguration {
 
 }

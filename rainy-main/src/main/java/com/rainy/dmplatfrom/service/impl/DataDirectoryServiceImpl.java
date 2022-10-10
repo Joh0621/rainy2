@@ -2,10 +2,16 @@ package com.rainy.dmplatfrom.service.impl;
 
 import com.rainy.base.service.impl.BaseServiceImpl;
 import com.rainy.dmplatfrom.entity.DataDirectory;
+import com.rainy.dmplatfrom.entity.Device;
+import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.mapper.DataDirectoryMapper;
 import com.rainy.dmplatfrom.service.DataDirectoryService;
+import com.rainy.dmplatfrom.service.DeviceService;
+import com.rainy.dmplatfrom.service.PointService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +21,11 @@ import java.util.Objects;
  * @author Created by renguangli at 2022/9/15 10:28
  */
 @Service
+@RequiredArgsConstructor
 public class DataDirectoryServiceImpl extends BaseServiceImpl<DataDirectoryMapper, DataDirectory> implements DataDirectoryService {
+
+    private final DeviceService deviceService;
+    private final PointService pointService;
 
     @Override
     public List<DataDirectory> tree() {
@@ -29,6 +39,18 @@ public class DataDirectoryServiceImpl extends BaseServiceImpl<DataDirectoryMappe
             parent.setChildren(getChildren(parent.getId(), dataDirectories));
         });
         return parents;
+    }
+
+    @Override
+    public boolean removeBatchByIds(List<Long> ids) {
+        // 1.删除数据目录
+        super.removeBatchByIds(ids);
+        // 2.删除目录下所有设备
+        deviceService.lambdaUpdate()
+                .in(Device::getDataDirectoryId, ids)
+                .remove();
+        // 3.删除点码 todo
+        return true;
     }
 
     private List<DataDirectory> getChildren(Long id, List<DataDirectory> dataDirectories) {

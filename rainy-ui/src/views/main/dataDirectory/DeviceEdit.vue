@@ -53,6 +53,22 @@
         />
       </a-form-item>
       <a-form-item
+          name="updateFrequency"
+          label="更新频率"
+          :rules="[{ required: true, message: '请输入更新频率' }]"
+          has-feedback
+      >
+        <a-select v-model:value="form.updateFrequency" placeholder="请输入更新频率">
+          <a-select-option
+              :key="item.value"
+              v-for="item in appStore.dictItems('biz_data_update_frequency')"
+              :value="item.value"
+          >
+            {{ item.name }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item
         name="major"
         label="专业"
         :rules="[{ required: true, message: '请选择专业' }]"
@@ -67,6 +83,21 @@
             {{ item.name }}
           </a-select-option>
         </a-select>
+      </a-form-item>
+      <a-form-item
+          label="责任部门"
+          name="orgId"
+          :rules="[{ required: true, message: '请选择责任部门' }]"
+          has-feedback>
+        <a-tree-select
+            v-model:value="form.orgId"
+            :fieldNames="fieldNames"
+            placeholder="请选择责任部门"
+            tree-default-expand-all
+            :tree-data="orgTree"
+            showSearch
+            treeNodeFilterProp="name"
+        ></a-tree-select>
       </a-form-item>
       <a-form-item
         name="responsible"
@@ -90,6 +121,7 @@ import { Add, Edit } from '@/api/main/device'
 import { message } from 'ant-design-vue'
 import { useAppStore } from '@/store/app'
 import { Tree } from '@/api/main/dataDirectory'
+import { Tree as OrgTree } from '@/api/org/org'
 
 const appStore = useAppStore()
 
@@ -109,18 +141,22 @@ const confirmLoading = ref(false)
 const form = ref({})
 const formRef = ref()
 const treeData = ref([])
+const orgTree = ref([])
 
 onMounted(() => {
   loadTree()
+  loadOrgTree()
 })
+
+const loadOrgTree = () => {
+  OrgTree({}).then(res => {
+    orgTree.value = res.data
+  })
+}
 
 const loadTree = () => {
   Tree({}).then(res => {
-    treeData.value = [{
-      name: 'root',
-      id: 0,
-      children: res.data
-    }]
+    treeData.value = res.data
   })
 }
 const open = (flagValue, record) => {

@@ -4,8 +4,11 @@
     <a-tabs style="margin-top: 10px" v-model:activeKey="activeKey">
       <a-tab-pane key="0" tab="基本信息">
         <basic :device="device"/>
+        <div>
+          <a-button @click="confirm" type="primary" primary>一键申请</a-button>
+        </div>
       </a-tab-pane>
-      <a-tab-pane key="1" tab="数据点码">
+      <a-tab-pane key="1" tab="测点描述">
         <point />
       </a-tab-pane>
       <a-tab-pane key="2" tab="数据预览" force-render>
@@ -14,10 +17,11 @@
       <a-tab-pane key="3" tab="血缘关系">
         <blood-rel />
       </a-tab-pane>
+      <a-tab-pane key="4" tab="接口文档">
+        <api-doc />
+      </a-tab-pane>
     </a-tabs>
-    <div>
-      <a-button @click="confirm" type="primary" primary>一键申请</a-button>
-    </div>
+
   </a-card>
 </template>
 <script setup>
@@ -25,6 +29,7 @@ import Basic from './Basic.vue'
 import Point from './Point.vue'
 import PointPreview from './PointPreview.vue'
 import BloodRel from './BloodRel.vue'
+import ApiDoc from './ApiDoc.vue'
 import { Apply } from '@/api/main/dataApply'
 import { Detail } from '@/api/main/device'
 import { useRouter } from 'vue-router'

@@ -12,4 +12,5 @@ import java.util.List;
 public interface DictItemService extends BaseService<DictItem> {
 
     List<DictItem> listByDictCode(String dictCode);
+    boolean updateById(DictItem dictItem);
 }

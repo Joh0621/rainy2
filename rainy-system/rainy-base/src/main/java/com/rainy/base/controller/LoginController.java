@@ -1,7 +1,6 @@
 package com.rainy.base.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.rainy.base.common.Result;
@@ -46,11 +45,14 @@ public class LoginController {
         User user = userService.lambdaQuery()
                 .eq(User::getUsername, param.getUsername())
                 .one();
+        // 校验账号密码是否正确
         if (user == null || !Objects.equals(param.getPassword(), user.getPassword())) {
             throw new UnauthorizedException(ResultCode.ACCOUNT_PASSWORD_NOT_MATCH);
         }
+        // 检查账号是否被封禁
+        StpUtil.checkDisable(user.getId());
         // 登录
-        StpUtil.login(user.getId());
+        StpUtil.login(user.getId(), param.getRememberMe() != null && param.getRememberMe());
         // 缓存用户信息
         SaTokenUtils.setUserinfo(user);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();

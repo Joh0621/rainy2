@@ -1,16 +1,23 @@
 package com.rainy.base.common.utils;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.ContentType;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.rainy.base.common.constant.CharConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +35,8 @@ public final class WebUtils {
     private static final String IPV4_LOCAL_IP = "127.0.0.1";
     private static final String IPV6_LOCAL_IP = "0:0:0:0:0:0:0:1";
     private static final List<String> ipHeaders = Arrays.asList("X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP");
+
+    private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename={}";
 
     private static final String USER_INFO_KEY = "userinfo";
 
@@ -129,6 +138,15 @@ public final class WebUtils {
             throw new RuntimeException("非 web 上下文，无法获取 Request.");
         }
         return servletRequestAttributes.getResponse();
+    }
+
+    public static void download(HttpServletResponse response, String fileName, byte[] content) throws IOException {
+        String name = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+        response.setContentType(ContentType.OCTET_STREAM.getValue());
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, StrUtil.format(CONTENT_DISPOSITION_VALUE, name));
+        try (ServletOutputStream out = response.getOutputStream()) {
+            out.write(content);
+        }
     }
 
 }

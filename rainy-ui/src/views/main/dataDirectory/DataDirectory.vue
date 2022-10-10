@@ -59,19 +59,22 @@
           <template #major="{ record }">
             {{ appStore.dictItemValue('biz_major', record.major) }}
           </template>
+          <template #updateFrequency="{ record }">
+            {{ appStore.dictItemValue('biz_data_update_frequency', record.updateFrequency) }}
+          </template>
           <template #operation>
             <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
             <a-button type="dashed">
               <import-outlined />
               批量导入
             </a-button>
-            <a-button type="dashed">
-              <download-outlined />
+            <a-button @click="downloadTemplate" type="dashed">
+              <download-outlined/>
               模版下载
             </a-button>
           </template>
           <template #action="{ record }">
-            <a @click="handlePoint(record)">数据点码</a>
+            <a @click="handlePoint(record)">测点描述</a>
             <a-divider type="vertical"/>
             <a-dropdown>
               <a class="ant-dropdown-link" @click.prevent>
@@ -121,7 +124,7 @@ const searchValue = ref('')
 const treeData = ref([])
 const point = ref()
 const handlePoint = record => {
-  point.value.open()
+  point.value.open(record)
 }
 watch(searchValue, value => {
 })
@@ -170,6 +173,7 @@ const columns = [
   { title: '设备名称', dataIndex: 'name' },
   { title: '设备编码', dataIndex: 'code' },
   { title: '专业', dataIndex: 'major' },
+  { title: '更新频率', dataIndex: 'updateFrequency' },
   { title: '责任人', dataIndex: 'responsible' },
   { title: '描述', dataIndex: 'description', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
@@ -222,6 +226,10 @@ const handleExportExcel = () => {
   Export().then(res => {
     downloader.value.download(res)
   })
+}
+const baseURL = import.meta.env.VITE_API_BASE_URL
+const downloadTemplate = () => {
+  location.href = baseURL + '/file/download?fileName=模版.xlsx'
 }
 </script>
 <style scoped>

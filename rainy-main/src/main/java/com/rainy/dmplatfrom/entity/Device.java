@@ -28,6 +28,10 @@ public class Device extends BaseEntity {
     private String name;
     @NotBlank
     private String code;
+    @NotNull
+    private Integer updateFrequency;
+    @NotNull
+    private Long OrgId;
     @NotBlank
     private String responsible;
     @PositiveOrZero

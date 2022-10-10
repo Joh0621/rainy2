@@ -1,8 +1,12 @@
 package com.rainy.dmplatfrom.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.base.aop.Log;
+import com.rainy.base.common.Result;
 import com.rainy.base.common.constant.OpType;
 import com.rainy.base.common.param.IdNamesParam;
 import com.rainy.base.common.utils.ExcelUtils;
@@ -12,6 +16,7 @@ import com.rainy.dmplatfrom.service.DeviceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,6 +53,14 @@ public class DeviceController {
     public void export(HttpServletResponse response) throws IOException {
         List<Device> devices = deviceService.list();
         ExcelUtils.export(response, devices, "devices.xls");
+    }
+
+    @SaIgnore
+//    @Log(module = "设备管理", type = OpType.EXPORT, detail = "导入了设备列表")
+    @PostMapping("/devices/import")
+    public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
+        return reader.read(0);
     }
 
     @Log(module = "设备管理", type = OpType.ADD, detail = "'新增了设备[' + #param.name + '].'")
