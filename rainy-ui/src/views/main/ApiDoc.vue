@@ -1,6 +1,6 @@
 <template>
   <div style="margin-bottom: 8px;">
-    <a href="/接口文档.pdf">文档下载</a>
+    <a @click="downloadDoc">文档下载</a>
   </div>
   <a-collapse v-model:activeKey="activeKey">
     <a-collapse-panel key="1" header="实时数据接口">
@@ -14,24 +14,18 @@
   </a-collapse>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+<script setup>
+const text = 'A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.'
+const activeKey = ref(['1'])
 
-export default defineComponent({
-  setup () {
-    const text = 'A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.'
-    const activeKey = ref(['1'])
-
-    watch(activeKey, val => {
-      console.log(val)
-    })
-
-    return {
-      text,
-      activeKey
-    }
-  }
+watch(activeKey, val => {
+  console.log(val)
 })
+
+const baseURL = import.meta.env.VITE_API_BASE_URL
+const downloadDoc = () => {
+  location.href = baseURL + '/file/download?fileName=接口文档.pdf'
+}
 </script>
 
 <style scoped>
