@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/19 17:51
  */

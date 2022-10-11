@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rainy.system.service.BaseService;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/5 17:10
  */

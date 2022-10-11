@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/28 0028 22:56
  */

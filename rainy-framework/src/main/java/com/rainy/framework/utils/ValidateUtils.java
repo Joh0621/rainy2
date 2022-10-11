@@ -3,7 +3,7 @@ package com.rainy.framework.utils;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/19 21:11
  */

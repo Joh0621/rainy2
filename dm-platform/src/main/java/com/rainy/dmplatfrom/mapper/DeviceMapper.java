@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rainy.dmplatfrom.entity.Device;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/20 11:22
  */

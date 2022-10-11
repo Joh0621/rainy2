@@ -5,7 +5,7 @@ import net.hasor.spring.boot.EnableHasorWeb;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/20 0020 22:28
  */

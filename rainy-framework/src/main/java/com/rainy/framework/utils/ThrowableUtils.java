@@ -3,7 +3,7 @@ package com.rainy.framework.utils;
 import com.rainy.framework.constant.CharConstants;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/10/4 19:43
  */

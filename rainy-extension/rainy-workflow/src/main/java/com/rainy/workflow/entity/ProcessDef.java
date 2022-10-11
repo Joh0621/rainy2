@@ -3,7 +3,7 @@ package com.rainy.workflow.entity;
 import lombok.Data;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/28 16:52
  */

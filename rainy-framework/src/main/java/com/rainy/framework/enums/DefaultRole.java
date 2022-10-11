@@ -1,7 +1,7 @@
 package com.rainy.framework.enums;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/10/2 21:48
  */

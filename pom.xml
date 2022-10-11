@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.renguangli</groupId>
-    <artifactId>data-middle-platform</artifactId>
+    <groupId>com.rainy</groupId>
+    <artifactId>rainy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>data-middle-platform</name>
-    <description>data-middle-platform</description>
+    <name>rainy</name>
+    <description>rainy</description>
 
     <modules>
         <module>rainy-framework</module>
@@ -70,32 +70,32 @@
                 <type>pom</type>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>rainy-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>rainy-system</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>rainy-task</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>rainy-workflow</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>rainy-dataway</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renguangli</groupId>
+                <groupId>com.rainy</groupId>
                 <artifactId>dm-platform</artifactId>
                 <version>${project.version}</version>
             </dependency>

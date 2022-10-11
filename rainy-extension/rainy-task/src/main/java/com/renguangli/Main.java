@@ -1,4 +1,4 @@
-package com.renguangli;
+package com.rainy;
 
 /**
  * ${PROJECT_NAME}

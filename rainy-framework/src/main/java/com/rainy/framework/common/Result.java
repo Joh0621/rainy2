@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author created by renguangli at 2022/9/1 17:43
  */

@@ -7,7 +7,7 @@ import com.rainy.dmplatfrom.service.DeviceService;
 import org.springframework.stereotype.Service;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/20 11:22
  */

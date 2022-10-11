@@ -6,8 +6,8 @@
     <artifactId>rainy-framework</artifactId>
 
     <parent>
-        <artifactId>data-middle-platform</artifactId>
-        <groupId>com.renguangli</groupId>
+        <artifactId>rainy</artifactId>
+        <groupId>com.rainy</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

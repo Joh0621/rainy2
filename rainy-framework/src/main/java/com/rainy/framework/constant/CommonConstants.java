@@ -1,7 +1,7 @@
 package com.rainy.framework.constant;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/9/20 23:17
  */

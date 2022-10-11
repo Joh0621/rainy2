@@ -6,7 +6,7 @@ import com.rainy.system.entity.Menu;
 import java.util.List;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author @author Created by renguangli at 2022/9/1 17:40
  */

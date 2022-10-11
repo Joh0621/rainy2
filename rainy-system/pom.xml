@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rainy-system</artifactId>
     <parent>
-        <groupId>com.renguangli</groupId>
-        <artifactId>data-middle-platform</artifactId>
+        <groupId>com.rainy</groupId>
+        <artifactId>rainy</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-framework</artifactId>
         </dependency>
         <dependency>

@@ -4,7 +4,7 @@ import com.rainy.framework.common.ResultCode;
 import lombok.Getter;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/10/9 18:36
  */

@@ -5,26 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>start</artifactId>
     <parent>
-        <artifactId>data-middle-platform</artifactId>
-        <groupId>com.renguangli</groupId>
+        <artifactId>rainy</artifactId>
+        <groupId>com.rainy</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-system</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-workflow</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-dataway</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>dm-platform</artifactId>
         </dependency>
     </dependencies>

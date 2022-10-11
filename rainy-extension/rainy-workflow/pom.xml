@@ -6,7 +6,7 @@
     <artifactId>rainy-workflow</artifactId>
 
     <parent>
-        <groupId>com.renguangli</groupId>
+        <groupId>com.rainy</groupId>
         <artifactId>rainy-extension</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.renguangli</groupId>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-system</artifactId>
         </dependency>
 

@@ -4,7 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.rainy.framework.common.Userinfo;
 
 /**
- * data-middle-platform
+ * rainy
  *
  * @author Created by renguangli at 2022/10/11 16:35
  */
