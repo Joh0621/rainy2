@@ -45,12 +45,12 @@
   </pro-layout>
 </template>
 <script setup>
-import {useRouter} from 'vue-router'
-import {storeToRefs} from 'pinia'
-import {useAppStore} from '@/store/app'
-import {useUserStore} from '@/store/user'
-import {defaultConfig} from '@/config/defaultConfig'
-import {clearMenuItem} from '@ant-design-vue/pro-layout'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/store/app'
+import { useUserStore } from '@/store/user'
+import { defaultConfig } from '@/config/defaultConfig'
+import { clearMenuItem } from '@ant-design-vue/pro-layout'
 
 const router = useRouter()
 const store = useUserStore()

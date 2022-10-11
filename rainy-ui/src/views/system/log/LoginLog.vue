@@ -45,10 +45,10 @@
 </template>
 
 <script setup>
-import {useAppStore} from '@/store/app'
-import {Del, Export, List} from '@/api/log/loginLog'
-import {toIdNamesParam} from '@/utils/ParamUtils'
-import {message} from 'ant-design-vue'
+import { useAppStore } from '@/store/app'
+import { Del, Export, List } from '@/api/log/loginLog'
+import { toIdNamesParam } from '@/utils/ParamUtils'
+import { message } from 'ant-design-vue'
 
 const appStore = useAppStore()
 
@@ -59,15 +59,15 @@ const options = {
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  {title: '用户名', dataIndex: 'username', width: '80px'},
-  {title: '登录类型', dataIndex: 'type', width: '80px'},
-  {title: '登录时间', dataIndex: 'datetime', width: '170px'},
-  {title: '登录地址', dataIndex: 'ip', width: '140px'},
-  {title: '浏览器', dataIndex: 'browser', width: '80px'},
-  {title: '操作系统', dataIndex: 'os'},
-  {title: '是否成功', dataIndex: 'success', width: '80px'},
-  {title: '失败原因', dataIndex: 'errorMessage', ellipsis: true},
-  {title: '操作', dataIndex: 'action', width: '150px'}
+  { title: '用户名', dataIndex: 'username', width: '80px' },
+  { title: '登录类型', dataIndex: 'type', width: '80px' },
+  { title: '登录时间', dataIndex: 'datetime', width: '170px' },
+  { title: '登录地址', dataIndex: 'ip', width: '140px' },
+  { title: '浏览器', dataIndex: 'browser', width: '80px' },
+  { title: '操作系统', dataIndex: 'os' },
+  { title: '是否成功', dataIndex: 'success', width: '80px' },
+  { title: '失败原因', dataIndex: 'errorMessage', ellipsis: true },
+  { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
   return List(Object.assign(parameter, queryParam.value)).then(res => {

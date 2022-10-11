@@ -9,7 +9,8 @@
               :show-icon="true"
               :tree-data="treeData"
               :selectedKeys="[queryParam.dataDirectoryId]"
-              @select="handleTreeSelect">
+              @select="handleTreeSelect"
+              defaultExpandAll>
             <template #title="record">
               <a-dropdown :trigger="['contextmenu']">
                 <span>{{ record.name }}</span>

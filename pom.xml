@@ -11,9 +11,11 @@
     <description>data-middle-platform</description>
 
     <modules>
-        <module>rainy-main</module>
+        <module>rainy-framework</module>
         <module>rainy-system</module>
-        <module>rainy-starter</module>
+        <module>rainy-extension</module>
+        <module>dm-platform</module>
+        <module>start</module>
     </modules>
 
     <properties>
@@ -22,7 +24,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-        <spring-boot.version>2.6.11</spring-boot.version>
+        <spring-boot.version>2.6.12</spring-boot.version>
         <mybatis-plus.vserion>3.5.2</mybatis-plus.vserion>
         <sa-token.version>1.31.0</sa-token.version>
         <hutool.version>5.7.22</hutool.version>
@@ -69,7 +71,17 @@
             </dependency>
             <dependency>
                 <groupId>com.renguangli</groupId>
-                <artifactId>rainy-base</artifactId>
+                <artifactId>rainy-framework</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.renguangli</groupId>
+                <artifactId>rainy-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.renguangli</groupId>
+                <artifactId>rainy-task</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -84,7 +96,7 @@
             </dependency>
             <dependency>
                 <groupId>com.renguangli</groupId>
-                <artifactId>rainy-main</artifactId>
+                <artifactId>dm-platform</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
