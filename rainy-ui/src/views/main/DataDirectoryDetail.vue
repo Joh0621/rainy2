@@ -9,7 +9,7 @@
         </div>
       </a-tab-pane>
       <a-tab-pane key="1" tab="测点描述">
-        <point />
+        <point :device-code="deviceCode" />
       </a-tab-pane>
       <a-tab-pane key="2" tab="数据预览" force-render>
         <point-preview />
@@ -39,11 +39,10 @@ const router = useRouter()
 onMounted(() => {
   detail()
 })
-
-const id = router.currentRoute.value.params.id
+const deviceCode = router.currentRoute.value.params.deviceCode
 const device = ref({})
 const detail = () => {
-  Detail(id).then(res => {
+  Detail(deviceCode).then(res => {
     device.value = res.data
   })
 }

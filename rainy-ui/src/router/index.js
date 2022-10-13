@@ -13,7 +13,7 @@ const routes = [
     redirect: '/workbench',
     children: [
       {
-        path: '/data/:id/detail',
+        path: '/device/:deviceCode',
         name: BasicLayout,
         component: () => import('@/views/main/DataDirectoryDetail.vue')
       },

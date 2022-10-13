@@ -12,17 +12,25 @@
 <script setup>
 import { List } from '@/api/main/point'
 
+const props = defineProps({
+  deviceCode: {
+    type: String
+  }
+})
+
 const options = {
   showAdd: false,
   showBatchDel: false
 }
 const columns = [
-  { title: '编号', dataIndex: 'id', width: '50px' },
-  { title: '设备编码', dataIndex: 'deviceCode', width: '80px' },
-  { title: '点码', dataIndex: 'code', width: '200px' },
-  { title: '点名', dataIndex: 'name', ellipsis: true }
+  { title: '设备名称', dataIndex: 'deviceName', width: '80px' },
+  { title: '设备编码', dataIndex: 'deviceCode', width: '140px' },
+  { title: '测点点码', dataIndex: 'code', width: '200px' },
+  { title: '测点描述', dataIndex: 'name', ellipsis: true }
 ]
-const queryParam = ref({})
+const queryParam = ref({
+  deviceCode: props.deviceCode
+})
 const data = (parameter) => {
   return List(Object.assign(parameter, queryParam.value)).then(res => {
     return res.data

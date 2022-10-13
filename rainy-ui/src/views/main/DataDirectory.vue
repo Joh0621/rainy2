@@ -8,7 +8,8 @@
               :show-icon="true"
               :tree-data="treeData"
               :selectedKeys="[queryParam.dataDirectoryId]"
-              @select="handleTreeSelect">
+              @select="handleTreeSelect"
+              defaultExpandAll>
           </a-directory-tree>
         </a-skeleton>
       </a-card>
@@ -32,14 +33,18 @@
           </a-form>
         </div>
         <a-skeleton :loading="dataLoading">
-          <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+          <a-list item-layout="vertical" size="large" :pagination="pagination" @change="handleChange" :data-source="listData">
             <template #renderItem="{ item }">
               <a-list-item :key="item.id">
                 <a-list-item-meta :description="item.description">
                   <template #title>
-                    <router-link :to="`/data/${item.id}/detail`">
+                    <router-link :to="`/device/${item.code}`">
                       <a class="data-title">{{ item.name }}</a>
                     </router-link>
+                    <a-divider type="vertical"/>
+                    <a-tag color="orange">
+                      {{ appStore.dictItemValue('biz_major', item.major ) }}
+                    </a-tag>
                   </template>
                 </a-list-item-meta>
                 {{ item.content }}
@@ -55,6 +60,8 @@
 import { Tree } from '@/api/main/dataDirectory'
 import { List as ListDevices } from '@/api/main/device'
 // import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue'
+import { useAppStore } from '@/store/app'
+const appStore = useAppStore()
 
 const fieldNames = {
   key: 'id',
@@ -97,18 +104,27 @@ const dataLoading = ref(false)
 const queryParam = ref({})
 const listData = ref([])
 const pagination = {
-  onChange: page => {
-    listDevices(page)
+  onChange: (page, size) => {
+    listDevices(page, size)
   },
-  pageSize: 4
+  current: 1,
+  pageSize: 4,
+  total: 0
 }
 
-const listDevices = (current) => {
+const handleChange = p => {
+  console.log(p)
+}
+
+const listDevices = (current, size) => {
   queryParam.value.current = current
-  queryParam.value.size = pagination.pageSize
+  queryParam.value.size = size
   dataLoading.value = true
   ListDevices(queryParam.value).then(res => {
     listData.value = res.data.records
+    pagination.current = res.data.current
+    pagination.pageSize = res.data.size
+    pagination.total = res.data.total
   }).finally(() => {
     setTimeout(() => {
       dataLoading.value = false

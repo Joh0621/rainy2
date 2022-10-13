@@ -7,6 +7,19 @@ package com.rainy.framework.constant;
  */
 public interface DictConstants {
 
+    // 业务相关字典编码 //
+    /**
+     * 数据专业字典编码
+     */
+    String BIZ_MAJOR_CODE = "biz_major";
+    /**
+     * 数据更新频率字典编码
+     */
+    String BIZ_DATA_UPDATE_FREQUENCY_CODE = "biz_data_update_frequency";
+
+
+    // 系统相关字典编码 //
+
     /**
      * 系统配置分类
      */

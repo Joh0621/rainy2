@@ -1,7 +1,7 @@
 <template>
   <a-modal
       v-model:visible="visible"
-      :width="800"
+      :width="1000"
       :title="'任务跟踪'"
       :confirm-loading="confirmLoading"
       :destroyOnClose="false"
@@ -11,21 +11,27 @@
       @cancel="handleCancel"
   >
     <div>
-      <div ref="container" style="height: 300px">
-        <div ref="canvas"></div>
+      <div ref="container" style="width: 600px;height: 220px">
+        <div ref="canvas" style="margin-left: 100px"></div>
+      </div>
+      <div>
+        <h3>审批记录</h3>
+        <a-table :dataSource="dataSource" :columns="columns" />
       </div>
     </div>
   </a-modal>
 </template>
 <script setup>
 import BpmnViewer from 'bpmn-js'
-import { ProcessBpmn20xml } from '@/api/workflow/workflow'
+import { ListActivities, ProcessBpmn20xml } from '@/api/workflow/workflow'
 
 const visible = ref(false)
 const confirmLoading = ref(false)
-
-const open = (record) => {
+const record = ref({})
+const open = (recordValue) => {
   visible.value = true
+  record.value = recordValue
+  loadData(record.value.processInstanceId)
   processBpmn20xml()
 }
 
@@ -54,6 +60,22 @@ const preview = () => {
   })
 }
 
+const columns = [
+  { title: '节点名称', dataIndex: 'name', width: '140px' },
+  { title: '时间', dataIndex: 'datetime', width: '200px' },
+  { title: '操作人', dataIndex: 'assignee', width: '80px' },
+  { title: '审批意见', dataIndex: 'remarks' }
+]
+const dataSource = ref([])
+const loadData = (id) => {
+  const param = {
+    processInstanceId: id
+  }
+  ListActivities(param).then(res => {
+    dataSource.value = res.data
+  })
+}
+
 const handleOk = () => {
   handleCancel()
 }
@@ -67,3 +89,8 @@ defineExpose({
   open
 })
 </script>
+<style>
+.bjs-container {
+  margin-left: 100px;
+}
+</style>

@@ -11,6 +11,7 @@ public interface OpType {
     String DEL = "delete";
     String UPDATE = "update";
     String QUERY = "query";
+    String IMPORT = "import";
     String EXPORT = "export";
     String DOWNLOAD = "download";
 

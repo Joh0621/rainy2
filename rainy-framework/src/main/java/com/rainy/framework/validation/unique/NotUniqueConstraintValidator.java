@@ -35,10 +35,10 @@ public class NotUniqueConstraintValidator implements ConstraintValidator<NotUniq
         Object id = WebUtils.getRequest().getAttribute(CommonConstants.ID);
         if (id != null) {
             String sql = StrUtil.format(UNIQUE_SQL_EXCLUDE_SELF, tableName, field);
-            return SqlRunner.DEFAULT.selectCount(sql, value, id) <= 0;
+            return SqlRunner.db().selectCount(sql, value, id) <= 0;
         }
         String sql = StrUtil.format(UNIQUE_SQL, tableName, field);
-        long count = SqlRunner.DEFAULT.selectCount(sql, value);
+        long count = SqlRunner.db().selectCount(sql, value);
         return count <= 0;
     }
 

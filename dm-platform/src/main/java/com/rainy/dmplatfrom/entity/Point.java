@@ -20,6 +20,7 @@ public class Point {
     private Long id;
     @NotBlank
     private String deviceCode;
+    private String deviceName;
     @NotBlank
     private String code;
     @NotBlank

@@ -26,4 +26,9 @@ public interface CharConstants {
      * 字符串常量：换行符 {@code '\n'}
      */
     String LF = "\n";
+
+    /**
+     * 字符串常量：横岗 {@code '-'}
+     */
+    String RUNG = "-";
 }

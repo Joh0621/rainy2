@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.constant.CharConstants;
+import com.rainy.workflow.entity.Activity;
 import com.rainy.workflow.entity.ProcessDef;
 import com.rainy.workflow.entity.WorkflowTask;
 import com.rainy.workflow.service.WorkflowService;
@@ -12,6 +13,7 @@ import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.camunda.bpm.engine.history.HistoricVariableInstance;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -124,6 +127,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         List<WorkflowTask> workflowTasks = tasks.stream().map(task -> {
             WorkflowTask workflowTask = new WorkflowTask();
             workflowTask.setId(task.getId());
+            workflowTask.setProcessInstanceId(task.getProcessInstanceId());
             workflowTask.setName(task.getName());
             workflowTask.setStartTime(task.getCreateTime());
             workflowTask.setDueDate(task.getDueDate());
@@ -163,6 +167,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         List<WorkflowTask> workflowTasks = historyTasks.stream().map(task -> {
             WorkflowTask workflowTask = new WorkflowTask();
             workflowTask.setId(task.getId());
+            workflowTask.setProcessInstanceId(task.getProcessInstanceId());
             workflowTask.setName(task.getName());
             workflowTask.setStartTime(task.getStartTime());
             workflowTask.setEndTime(task.getEndTime());
@@ -193,6 +198,24 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Override
     public void complete(String taskId, Map<String, Object> variables) {
         taskService.complete(taskId, variables);
+    }
+
+    @Override
+    public List<Activity> listActivities(String processInstanceId) {
+        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .orderByHistoricActivityInstanceEndTime().asc()
+                .list();
+
+        List<Activity> activities = new ArrayList<>();
+        list.forEach(active -> {
+            Activity act = new Activity();
+            act.setName(active.getActivityName());
+            act.setAssignee(active.getAssignee());
+            act.setDatetime(active.getEndTime());
+            activities.add(act);
+        });
+        return activities;
     }
 
 }

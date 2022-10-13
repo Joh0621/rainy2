@@ -5,6 +5,7 @@ const api = {
   ProcessBpmn20xml: '/workflow/process/bpmn20xml',
   ListTasks: '/workflow/tasks',
   ListHistoryTasks: '/workflow/historyTasks',
+  ListActivities: '/workflow/activities',
   CompleteTask: '/workflow/task/complete'
 }
 
@@ -35,6 +36,15 @@ export function ListTasks (parameter) {
 export function ListHistoryTasks (parameter) {
   return request({
     url: api.ListHistoryTasks,
+    method: method.GET,
+    params: parameter
+  })
+}
+
+
+export function ListActivities (parameter) {
+  return request({
+    url: api.ListActivities,
     method: method.GET,
     params: parameter
   })

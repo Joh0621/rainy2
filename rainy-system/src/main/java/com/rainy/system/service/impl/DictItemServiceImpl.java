@@ -30,4 +30,14 @@ public class DictItemServiceImpl extends BaseServiceImpl<DictItemMapper, DictIte
     public boolean updateById(DictItem dictItem) {
         return super.updateById(dictItem);
     }
+
+    @Override
+    public String getCodeByDictCodeAndValue(String dictCode, String value) {
+        DictItem dictItem = this.lambdaQuery()
+                .eq(DictItem::getDictCode, dictCode)
+                .eq(DictItem::getValue, value)
+                .one();
+
+        return dictItem == null ? null : dictItem.getCode();
+    }
 }

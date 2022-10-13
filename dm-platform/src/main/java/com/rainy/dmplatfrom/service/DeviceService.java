@@ -3,6 +3,8 @@ package com.rainy.dmplatfrom.service;
 import com.rainy.system.service.BaseService;
 import com.rainy.dmplatfrom.entity.Device;
 
+import java.util.List;
+
 /**
  * rainy
  *
@@ -10,4 +12,5 @@ import com.rainy.dmplatfrom.entity.Device;
  */
 public interface DeviceService extends BaseService<Device> {
 
+    boolean removeBatchByIds(List<Long> ids);
 }

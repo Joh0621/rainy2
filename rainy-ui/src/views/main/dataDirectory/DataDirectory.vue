@@ -65,10 +65,18 @@
           </template>
           <template #operation>
             <a-download ref="downloader" title="导出" description="导出全部数据" @dl="handleExportExcel"></a-download>
-            <a-button type="dashed">
-              <import-outlined />
-              批量导入
-            </a-button>
+            <a-upload
+                name="file"
+                v-model:file-list="fileList"
+                :action="uploadUrl"
+                :headers="headers"
+                @change="handleChange"
+            >
+              <a-button type="dashed">
+                <import-outlined />
+                批量导入
+              </a-button>
+            </a-upload>
             <a-button @click="downloadTemplate" type="dashed">
               <download-outlined/>
               模版下载
@@ -111,11 +119,12 @@ import Point from './Point.vue'
 import DeviceEdit from './DeviceEdit.vue'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import { message } from 'ant-design-vue'
-import { DownOutlined, ImportOutlined, DownloadOutlined } from '@ant-design/icons-vue'
-
 import { useAppStore } from '@/store/app'
-import { sortValue } from '@/utils/constants.js'
+import { sortValue, TOKEN_NAME } from '@/utils/constants'
+
 const appStore = useAppStore()
+const baseURL = import.meta.env.VITE_API_BASE_URL
+
 
 const fieldNames = {
   key: 'id',
@@ -167,14 +176,36 @@ const onDelClick = (record) => {
     }
   })
 }
+const fileList = ref([])
+const uploadUrl = baseURL + '/devices/import'
+const headers = {}
+headers[TOKEN_NAME] = localStorage.getItem(TOKEN_NAME)
 
+const handleChange = (info) => {
+  if (info.file.status !== 'uploading') {
+    // console.log(info.file, info.fileList)
+  }
+  if (info.file.status === 'done') {
+    if (info.file.response.code === 200) {
+      message.success(`${info.file.name}导入成功`)
+    } else {
+      message.error(`${info.file.name}导入失败：${info.file.response.message}`)
+    }
+    fileList.value = []
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} file upload failed.`)
+  }
+}
+
+console.log(headers)
 const table = ref()
 const queryParam = ref({})
 const columns = [
   { title: '设备名称', dataIndex: 'name' },
-  { title: '设备编码', dataIndex: 'code' },
+  { title: '所属场站', dataIndex: 'dataDirectoryName' },
   { title: '专业', dataIndex: 'major' },
   { title: '更新频率', dataIndex: 'updateFrequency' },
+  { title: '责任部门', dataIndex: 'orgName' },
   { title: '责任人', dataIndex: 'responsible' },
   { title: '描述', dataIndex: 'description', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
@@ -228,7 +259,6 @@ const handleExportExcel = () => {
     downloader.value.download(res)
   })
 }
-const baseURL = import.meta.env.VITE_API_BASE_URL
 const downloadTemplate = () => {
   location.href = baseURL + '/file/download?fileName=模版.xlsx'
 }

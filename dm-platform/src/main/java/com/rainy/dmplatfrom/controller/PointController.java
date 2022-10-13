@@ -34,6 +34,7 @@ public class PointController {
     @GetMapping("/points")
     public Page<Point> list(Page<Point> page, Point param) {
         return pointService.lambdaQuery()
+                .eq(Point::getDeviceCode, param.getDeviceCode())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Point::getCode, param.getCode())
                 .likeRight(StrUtil.isNotBlank(param.getName()), Point::getName, param.getName())
                 .page(page);

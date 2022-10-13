@@ -71,7 +71,7 @@ const columns = [
   { title: '菜单类型', dataIndex: 'type', width: '80px', align: 'center' },
   // { title: '路由名称', dataIndex: 'name' },
   { title: '路由地址', dataIndex: 'path' },
-  // { title: '前端组件', dataIndex: 'component' },
+  { title: '前端组件', dataIndex: 'component' },
   // { title: '内链Url', dataIndex: 'url' },
   // { title: '权限码', dataIndex: 'permission' },
   { title: '排序', dataIndex: 'sort', width: '60px', align: 'center' },

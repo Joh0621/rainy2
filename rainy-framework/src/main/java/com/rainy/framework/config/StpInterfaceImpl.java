@@ -1,4 +1,4 @@
-package com.rainy.framework.satoken;
+package com.rainy.framework.config;
 
 import cn.dev33.satoken.stp.StpInterface;
 import com.rainy.framework.utils.SecurityUtils;

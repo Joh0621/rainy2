@@ -11,6 +11,22 @@
       @ok="handleCancel"
       @cancel="handleCancel"
   >
+    <div class="table-query">
+      <a-form layout="inline">
+        <a-form-item label="测点点码">
+          <a-input v-model:value="queryParam.code" placeholder="请输入点码" />
+        </a-form-item>
+        <a-form-item label="测定描述">
+          <a-input v-model:value="queryParam.name" placeholder="请输测点描述" />
+        </a-form-item>
+        <a-form-item>
+          <a-space>
+            <a-button type="primary" @click="handleOk">查询</a-button>
+            <a-button @click="handleReset">重置</a-button>
+          </a-space>
+        </a-form-item>
+      </a-form>
+    </div>
     <b-table
         ref="table"
         :options="options"
@@ -50,10 +66,10 @@ const options = {
   showBatchDel: true
 }
 const columns = [
-  { title: '编号', dataIndex: 'id' },
+  { title: '设备名称', dataIndex: 'deviceName' },
   { title: '设备编码', dataIndex: 'deviceCode' },
-  { title: '点码', dataIndex: 'code' },
-  { title: '点名', dataIndex: 'name', ellipsis: true },
+  { title: '测点点码', dataIndex: 'code' },
+  { title: '测点描述', dataIndex: 'name', ellipsis: true },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const queryParam = ref({})
@@ -68,11 +84,18 @@ const open = (record) => {
   visible.value = true
   device.value = record
   queryParam.value.deviceCode = record.code
+  table.value.refresh()
 }
 
 const table = ref()
 const handleOk = () => {
   table.value.refresh()
+}
+
+const handleReset = () => {
+  queryParam.value.code = ''
+  queryParam.value.name = ''
+  handleOk()
 }
 
 const handleDel = (record) => {
@@ -97,7 +120,10 @@ const handleBatchDel = (keys, rows) => {
 
 const editor = ref()
 const handleAdd = () => {
-  editor.value.open(true, {})
+  editor.value.open(true, {
+    deviceCode: device.value.code,
+    deviceName: device.value.name
+  })
 }
 
 const handleEdit = record => {

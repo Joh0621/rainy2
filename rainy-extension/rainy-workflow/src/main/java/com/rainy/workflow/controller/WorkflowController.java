@@ -1,10 +1,12 @@
 package com.rainy.workflow.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.common.Result;
 import com.rainy.framework.utils.SecurityUtils;
+import com.rainy.workflow.entity.Activity;
 import com.rainy.workflow.entity.ProcessDef;
 import com.rainy.workflow.entity.WorkflowTask;
 import com.rainy.workflow.param.ApproveParam;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,8 +35,6 @@ import java.util.Map;
 public class WorkflowController {
 
     private final WorkflowService workflowService;
-    private final RepositoryService repositoryService;
-    private final TaskService taskService;
 
     String processKey = "process-data-apply";
     String businessKey = "data-apply";
@@ -75,6 +76,16 @@ public class WorkflowController {
         return Result.ok(workflowService.startProcess(processKey, businessKey, variables));
     }
 
+
+    @PostMapping("/task/complete")
+    public Result<String> complete(@RequestBody ApproveParam param) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("approved", param.getApproved());
+        variables.put("remarks", param.getRemarks());
+        workflowService.complete(param.getTaskId(), variables);
+        return Result.ok();
+    }
+
     @GetMapping("/tasks")
     public Page<WorkflowTask> listTasks(Page<WorkflowTask> page, String processName,String startBy) {
         return workflowService.listTasks(SecurityUtils.getUsername(), processName, startBy, page);
@@ -85,13 +96,11 @@ public class WorkflowController {
         return workflowService.listHistoryTasks(SecurityUtils.getUsername(), startBy, finished, page);
     }
 
-    @PostMapping("/task/complete")
-    public Result<String> complete(@RequestBody ApproveParam param) {
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("approved", param.getApproved());
-        variables.put("remarks", param.getRemarks());
-        workflowService.complete(param.getTaskId(), variables);
-        return Result.ok();
+    @SaIgnore
+    @GetMapping("/activities")
+    public List<Activity> listActivities(String processInstanceId) {
+        return workflowService.listActivities(processInstanceId);
     }
+
 
 }

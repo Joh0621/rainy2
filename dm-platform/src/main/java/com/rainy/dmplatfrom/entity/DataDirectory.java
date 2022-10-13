@@ -26,6 +26,7 @@ public class DataDirectory extends BaseEntity {
 
     @NotNull
     private Long orgId;
+    private String orgName;
     @NotNull
     private Long parentId;
     @NotBlank

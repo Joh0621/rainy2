@@ -60,7 +60,7 @@ const options = {
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '系统模块', dataIndex: 'module', width: '80px' },
+  { title: '系统模块', dataIndex: 'module', width: '100px' },
   { title: '用户名', dataIndex: 'username', width: '80px' },
   { title: '时间', dataIndex: 'datetime', width: '170px' },
   { title: '详情', dataIndex: 'detail', ellipsis: true },

@@ -13,4 +13,6 @@ public interface DictItemService extends BaseService<DictItem> {
 
     List<DictItem> listByDictCode(String dictCode);
     boolean updateById(DictItem dictItem);
+
+    String getCodeByDictCodeAndValue(String dictCode, String value);
 }

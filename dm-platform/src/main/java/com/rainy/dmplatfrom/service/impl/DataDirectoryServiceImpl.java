@@ -23,7 +23,6 @@ import java.util.Objects;
 public class DataDirectoryServiceImpl extends BaseServiceImpl<DataDirectoryMapper, DataDirectory> implements DataDirectoryService {
 
     private final DeviceService deviceService;
-    private final PointService pointService;
 
     @Override
     public List<DataDirectory> tree() {
