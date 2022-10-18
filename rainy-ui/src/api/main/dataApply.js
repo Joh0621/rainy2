@@ -16,7 +16,7 @@ export function Apply (parameter) {
 export function List (parameter) {
   return request({
     url: api.List,
-    method: method.POST,
+    method: method.GET,
     params: parameter
   })
 }
