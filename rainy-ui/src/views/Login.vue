@@ -43,6 +43,35 @@
               </a-form>
             </a-tab-pane>
             <a-tab-pane key="userSms" :tab="'手机号登录'" force-render>
+              <a-form ref="phoneLoginFormRef">
+                <a-form-item name="phone">
+                  <a-input  placeholder="请输入手机号" size="large">
+                    <template #prefix>
+                      <mobile-outlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input>
+                </a-form-item>
+                <a-form-item name="phoneValidCode">
+                  <a-row :gutter="8">
+                    <a-col :span="17">
+                      <a-input
+                          placeholder="请输入验证码"
+                          size="large"
+                      >
+                        <template #prefix>
+                          <mail-outlined style="color: rgba(0, 0, 0, 0.25)" />
+                        </template>
+                      </a-input>
+                    </a-col>
+                    <a-col :span="7">
+                      <a-button size="large" style="width: 100%">获取验证码</a-button>
+                    </a-col>
+                  </a-row>
+                </a-form-item>
+                <a-form-item>
+                  <a-button type="primary" style="width: 100%" :loading="false" round size="large">登录</a-button>
+                </a-form-item>
+              </a-form>
             </a-tab-pane>
           </a-tabs>
           <three-login/>

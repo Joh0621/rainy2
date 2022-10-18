@@ -25,6 +25,10 @@ public class WorkflowTask {
      */
     private String processInstanceId;
     /**
+     * 流程定义id
+     */
+    private String processDefinitionId;
+    /**
      * 流程名称
      */
     private String processName;

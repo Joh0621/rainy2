@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public List<String> listPermission(Long userId) {
+    public List<String> listPermissions(Long userId) {
         // 1.查询拥有的角色
         List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(userId);
         if (roleIds.isEmpty()) {

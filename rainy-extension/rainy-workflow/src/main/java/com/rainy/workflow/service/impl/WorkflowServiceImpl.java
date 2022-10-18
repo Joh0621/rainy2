@@ -4,15 +4,13 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.constant.CharConstants;
+import com.rainy.workflow.constant.VariableNames;
 import com.rainy.workflow.entity.Activity;
 import com.rainy.workflow.entity.ProcessDef;
 import com.rainy.workflow.entity.WorkflowTask;
 import com.rainy.workflow.service.WorkflowService;
 import lombok.RequiredArgsConstructor;
-import org.camunda.bpm.engine.HistoryService;
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstanceQuery;
@@ -21,15 +19,15 @@ import org.camunda.bpm.engine.repository.Deployment;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Comment;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * rainy
@@ -99,6 +97,12 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
+    public Map<String, Object> getVariablesByTaskId(String taskId) {
+
+        return null;
+    }
+
+    @Override
     public ProcessInstance startProcess(String processDefinitionKey, Map<String, Object> variables) {
         return runtimeService.startProcessInstanceByKey(processDefinitionKey, variables);
     }
@@ -117,7 +121,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             taskQuery.processDefinitionNameLike(processName);
         }
         if (StrUtil.isNotBlank(startBy)) {
-            taskQuery.processVariableValueLike("startBy", startBy);
+            taskQuery.processVariableValueLike(VariableNames.START_BY, startBy);
         }
         List<Task> tasks = taskQuery
                 .taskAssignee(assignee)
@@ -136,7 +140,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             workflowTask.setProcessName(name);
 
             Map<String, Object> variables = taskService.getVariables(task.getId());
-            workflowTask.setStartBy((String)variables.get("startBy"));
+            workflowTask.setStartBy((String) variables.get(VariableNames.START_BY));
             workflowTask.setVariables(variables);
             return workflowTask;
         }).toList();
@@ -155,7 +159,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             query.taskAssignee(assignee);
         }
         if (StrUtil.isNotBlank(startBy)) {
-            query.processVariableValueLike("startBy", startBy);
+            query.processVariableValueLike(VariableNames.START_BY, startBy);
         }
         if (finished != null && finished) {
             query.finished();
@@ -167,6 +171,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         List<WorkflowTask> workflowTasks = historyTasks.stream().map(task -> {
             WorkflowTask workflowTask = new WorkflowTask();
             workflowTask.setId(task.getId());
+            workflowTask.setProcessDefinitionId(task.getProcessDefinitionId());
             workflowTask.setProcessInstanceId(task.getProcessInstanceId());
             workflowTask.setName(task.getName());
             workflowTask.setStartTime(task.getStartTime());
@@ -180,12 +185,15 @@ public class WorkflowServiceImpl implements WorkflowService {
             workflowTask.setProcessName(name);
             workflowTask.setAssignee(task.getAssignee());
 
-            HistoricVariableInstance startByVar = historyService.createHistoricVariableInstanceQuery()
+            List<HistoricVariableInstance> list = historyService.createHistoricVariableInstanceQuery()
                     .processInstanceId(task.getProcessInstanceId())
-                    .variableName("startBy")
-                    .singleResult();
-            workflowTask.setStartBy(startByVar.getValue().toString());
-////            workflowTask.setVariables(variables);
+                    .list();
+            Map<String, Object> variables = new LinkedHashMap<>();
+            list.forEach(v -> {
+                variables.put(v.getName(), v.getValue());
+            });
+            workflowTask.setStartBy(variables.get(VariableNames.START_BY).toString());
+            workflowTask.setVariables(variables);
             return workflowTask;
         }).toList();
         // 3.查询总数量
@@ -201,21 +209,40 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
+    public void complete(String taskId, Map<String, Object> variables, String... comments) {
+        Task task = taskService.createTaskQuery()
+                .taskId(taskId)
+                .singleResult();
+        for (String comment : comments) {
+            taskService.createComment(taskId, task.getProcessInstanceId(), comment);
+        }
+        taskService.complete(taskId, variables);
+    }
+
+    @Override
     public List<Activity> listActivities(String processInstanceId) {
-        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery()
+        List<HistoricActivityInstance> activityInstances = historyService.createHistoricActivityInstanceQuery()
                 .processInstanceId(processInstanceId)
                 .orderByHistoricActivityInstanceEndTime().asc()
                 .list();
-
-        List<Activity> activities = new ArrayList<>();
-        list.forEach(active -> {
-            Activity act = new Activity();
-            act.setName(active.getActivityName());
-            act.setAssignee(active.getAssignee());
-            act.setDatetime(active.getEndTime());
-            activities.add(act);
-        });
-        return activities;
+        return activityInstances.stream()
+                .filter(active -> ActivityTypes.TASK_USER_TASK.equals(active.getActivityType())
+                        || ActivityTypes.END_EVENT_NONE.equals(active.getActivityType()))
+                .map(active -> {
+                    Activity act = new Activity();
+                    act.setName(active.getActivityName());
+                    act.setAssignee(active.getAssignee());
+                    act.setStartTime(active.getStartTime());
+                    act.setEndTime(active.getEndTime());
+                    List<Comment> taskComments = taskService.getTaskComments(active.getTaskId());
+                    for (Comment comment : taskComments) {
+                        act.setRemarks(comment.getFullMessage());
+                    }
+                    if (active.getActivityType().equals(ActivityTypes.END_EVENT_NONE)) {
+                        act.setRemarks("结束");
+                    }
+                    return act;
+                }).toList();
     }
 
 }

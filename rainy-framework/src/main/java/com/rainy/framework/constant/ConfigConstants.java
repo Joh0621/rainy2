@@ -13,26 +13,15 @@ public interface ConfigConstants {
     String SYS_FILE_STORAGE_PATH = "sys_file_storage_path";
 
     /**
-     * 头像上传路径
-     */
-    String AVATAR_UPLOAD_PATH = "avatar_upload_path";
-
-    /**
-     * 头像上传路径
-     */
-    String SYS_ADMIN_USERNAME = "sys_admin_username";
-    /**
      * 重置密码
      */
     String RESET_PASSWORD = "reset_password";
-    /**
-     * mail
-     */
-    String MAIL_CONFIG = "mail_config";
+
     /**
      * 日志保留天数
      */
     String LOG_RETENTION_DAYS = "log_retention_days";
+
     /**
      * 算法 sm4 密钥
      */

@@ -13,7 +13,7 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
     List<Menu> tree(Menu menu);
-    List<Menu> treeInMenuId(List<Long> menuIds);
+    List<Menu> treeByUserId(Long userId);
     List<String> listPermissionsInId(List<Long> menuIds);
 
     String getName(String permission);

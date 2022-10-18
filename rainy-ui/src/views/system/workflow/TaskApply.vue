@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ListHistoryTasks } from '@/api/workflow/workflow'
+import { List } from '@/api/main/dataApply'
 import TaskComplete from './TaskComplete.vue'
 import TaskTrack from './TaskTrack.vue'
 import { useAppStore } from '@/store/app'
@@ -64,7 +64,7 @@ const columns = [
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
-  return ListHistoryTasks(Object.assign(parameter, queryParam.value)).then(res => {
+  return List(Object.assign(parameter, queryParam.value)).then(res => {
     return res.data
   })
 }

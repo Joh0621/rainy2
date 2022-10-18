@@ -1,5 +1,6 @@
 package com.rainy.system.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,6 +8,9 @@ import com.rainy.framework.constant.DictConstants;
 import com.rainy.system.entity.Menu;
 import com.rainy.system.mapper.MenuMapper;
 import com.rainy.system.service.MenuService;
+import com.rainy.system.service.RoleMenuRelService;
+import com.rainy.system.service.UserRoleRelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +25,11 @@ import java.util.Objects;
  */
 @Service
 @CacheConfig(cacheNames = "rainy:menu")
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    private final UserRoleRelService userRoleRelService;
+    private final RoleMenuRelService roleMenuRelService;
 
     @Override
     public List<Menu> tree(Menu menu) {
@@ -32,7 +40,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public List<Menu> treeInMenuId(List<Long> menuIds) {
+    public List<Menu> treeByUserId(Long userId) {
+        List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(StpUtil.getLoginId());
+        List<Long> menuIds = roleMenuRelService.listMenuIdsInRoleId(roleIds);
         List<Menu> menus = this.lambdaQuery()
                 .in(Menu::getType, DictConstants.MENU_TYPE_DIRECTORY_CODE, DictConstants.MENU_TYPE_MENU_CODE)
                 .in(menuIds != null, Menu::getId, menuIds)

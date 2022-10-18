@@ -20,7 +20,9 @@
               <template #icon>
                 <SettingOutlined />
               </template>
-              <span>个人设置</span>
+              <router-link :to="'/account/center'">
+                <span>个人设置</span>
+              </router-link>
             </a-menu-item>
             <a-menu-item>
               <template #icon>

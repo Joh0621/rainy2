@@ -9,9 +9,12 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AAlert: typeof import('ant-design-vue/es')['Alert']
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    ABadge: typeof import('ant-design-vue/es')['Badge']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
     ACardMeta: typeof import('ant-design-vue/es')['CardMeta']
+    ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
+    ACheckboxGroup: typeof import('ant-design-vue/es')['CheckboxGroup']
     ACol: typeof import('ant-design-vue/es')['Col']
     ACollapse: typeof import('ant-design-vue/es')['Collapse']
     ACollapsePanel: typeof import('ant-design-vue/es')['CollapsePanel']
@@ -58,6 +61,7 @@ declare module '@vue/runtime-core' {
     ATree: typeof import('ant-design-vue/es')['Tree']
     ATreeSelect: typeof import('ant-design-vue/es')['TreeSelect']
     AUpload: typeof import('ant-design-vue/es')['Upload']
+    BellOutlined: typeof import('@ant-design/icons-vue')['BellOutlined']
     BgColorsOutlined: typeof import('@ant-design/icons-vue')['BgColorsOutlined']
     BTable: typeof import('./components/BTable/BTable.vue')['default']
     CheckOutlined: typeof import('@ant-design/icons-vue')['CheckOutlined']
@@ -72,6 +76,8 @@ declare module '@vue/runtime-core' {
     LeftOutlined: typeof import('@ant-design/icons-vue')['LeftOutlined']
     LockOutlined: typeof import('@ant-design/icons-vue')['LockOutlined']
     LogoutOutlined: typeof import('@ant-design/icons-vue')['LogoutOutlined']
+    MailOutlined: typeof import('@ant-design/icons-vue')['MailOutlined']
+    MobileOutlined: typeof import('@ant-design/icons-vue')['MobileOutlined']
     MonacoEditor: typeof import('./components/Editor/MonacoEditor.vue')['default']
     MultiTag: typeof import('./components/MultiTag/MultiTag.vue')['default']
     PlusOutlined: typeof import('@ant-design/icons-vue')['PlusOutlined']
@@ -81,6 +87,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SettingDrawer: typeof import('./components/SettingDrawer/SettingDrawer.vue')['default']
     SettingOutlined: typeof import('@ant-design/icons-vue')['SettingOutlined']
+    UploadOutlined: typeof import('@ant-design/icons-vue')['UploadOutlined']
     UserOutlined: typeof import('@ant-design/icons-vue')['UserOutlined']
   }
 }

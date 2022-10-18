@@ -18,6 +18,11 @@ const routes = [
         component: () => import('@/views/main/DataDirectoryDetail.vue')
       },
       {
+        path: '/account/center',
+        name: BasicLayout,
+        component: () => import('@/views/system/account/Center.vue')
+      },
+      {
         path: '/404',
         name: 'Error',
         component: () => import('@/views/system/Error.vue')

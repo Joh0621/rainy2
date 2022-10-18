@@ -2,7 +2,7 @@
   <a-modal
       v-model:visible="visible"
       :width="1000"
-      :title="'任务跟踪'"
+      :title="'任务详情'"
       :confirm-loading="confirmLoading"
       :destroyOnClose="false"
       :maskClosable="false"
@@ -62,9 +62,10 @@ const preview = () => {
 
 const columns = [
   { title: '节点名称', dataIndex: 'name', width: '140px' },
+  { title: '开始时间', dataIndex: 'startTime', width: '200px' },
+  { title: '结束时间', dataIndex: 'endTime', width: '200px' },
   { title: '操作人', dataIndex: 'assignee', width: '80px' },
-  { title: '操作时间', dataIndex: 'endTime', width: '200px' },
-  { title: '留言', dataIndex: 'remarks' }
+  { title: '审批意见', dataIndex: 'remarks' }
 ]
 const dataSource = ref([])
 const loadData = (id) => {

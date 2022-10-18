@@ -9,12 +9,10 @@ import com.rainy.framework.common.Userinfo;
 import com.rainy.framework.exception.UnauthorizedException;
 import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.system.entity.Menu;
+import com.rainy.system.entity.Org;
 import com.rainy.system.entity.User;
 import com.rainy.system.param.LoginParam;
-import com.rainy.system.service.MenuService;
-import com.rainy.system.service.RoleMenuRelService;
-import com.rainy.system.service.UserRoleRelService;
-import com.rainy.system.service.UserService;
+import com.rainy.system.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +34,9 @@ import java.util.Objects;
 public class LoginController {
 
     private final UserService userService;
-    private final UserRoleRelService userRoleRelService;
-    private final RoleMenuRelService roleMenuRelService;
+
     private final MenuService menuService;
+    private final OrgService orgService;
 
     @SaIgnore
     @PostMapping("/login")
@@ -57,23 +55,20 @@ public class LoginController {
 
         // 缓存用户信息
         Userinfo userinfo = user.userinfo();
+        Org org = orgService.getById(userinfo.getOrgId());
+        userinfo.setOrg(org.getName());
         userinfo.setRoles(userService.listRoles(user.getId()));
-        userinfo.setPermissions(userService.listPermission(user.getId()));
+        userinfo.setPermissions(userService.listPermissions(user.getId()));
+        List<Menu> menus = menuService.treeByUserId(SecurityUtils.getUserId());
+        userinfo.setMenus(menus);
         SecurityUtils.setUserinfo(userinfo);
         // 返回 token
         return StpUtil.getTokenInfo();
     }
 
     @GetMapping("/userinfo")
-    public Map<String, Object> userinfo() {
-        Map<String, Object> userinfo = new HashMap<>();
-        userinfo.put("userinfo", SecurityUtils.getUserinfo());
-        userinfo.put("permissions", StpUtil.getPermissionList());
-        List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(StpUtil.getLoginId());
-        List<Long> menuIds = roleMenuRelService.listMenuIdsInRoleId(roleIds);
-        List<Menu> menus = menuService.treeInMenuId(menuIds);
-        userinfo.put("menus", menus);
-        return userinfo;
+    public Userinfo userinfo() {
+        return SecurityUtils.getUserinfo();
     }
 
     @SaIgnore

@@ -2,7 +2,7 @@ import request, { method } from '@/utils/request'
 
 const api = {
   Apply: '/data/apply',
-  List: '/data/applys'
+  List: '/applies'
 }
 
 export function Apply (parameter) {

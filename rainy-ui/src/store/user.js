@@ -36,9 +36,9 @@ export const useUserStore = defineStore('user', {
       return new Promise((resolve, reject) => {
         Userinfo().then((res) => {
           if (res.success) {
-            this.nickName = res.data.userinfo.nickName
-            this.avatar = res.data.userinfo.avatar
-            this.userinfo = res.data.userinfo
+            this.nickName = res.data.nickName
+            this.avatar = res.data.avatar
+            this.userinfo = res.data
             // this.addRouters = res.data.menus
             resolve(res)
           } else {

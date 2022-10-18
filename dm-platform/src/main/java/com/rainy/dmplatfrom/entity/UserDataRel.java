@@ -24,7 +24,7 @@ public class UserDataRel {
     private Long dataId;
     private String applyUsername;
     private LocalDateTime applyTime;
-    private int approved;
+    private Integer approved;
     private LocalDateTime approvedTime;
     private String approvedUsername;
 

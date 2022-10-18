@@ -2,6 +2,7 @@
   <a-modal
     v-model:visible="visible"
     :title="'任务审批'"
+    :width="600"
     :confirm-loading="confirmLoading"
     :destroyOnClose="false"
     :maskClosable="false"
@@ -9,6 +10,14 @@
     @ok="handleOk"
     @cancel="handleCancel"
   >
+    <a-descriptions style="margin-left: 12px;" title="设备信息">
+      <a-descriptions-item label="设备名称">{{ record.name }}</a-descriptions-item>
+      <a-descriptions-item label="所属场站">{{ record.dataDirectoryName }}</a-descriptions-item>
+      <a-descriptions-item label="测点数量">{{ record.pointCount }}</a-descriptions-item>
+      <a-descriptions-item label="申请人">{{ record.startBy }}</a-descriptions-item>
+      <a-descriptions-item label="描述">{{ record.description }}</a-descriptions-item>
+    </a-descriptions>
+    <a-divider/>
     <a-form
       ref="formRef"
       layout="horizontal"
@@ -48,18 +57,21 @@
 import { CompleteTask } from '@/api/workflow/workflow'
 import { message } from 'ant-design-vue'
 
-const labelCol = reactive({ span: 5, offset: 0 })
+const labelCol = reactive({ span: 4, offset: 0 })
 const wrapperCol = reactive({ span: 16, offset: 0 })
 const formRef = ref()
 
 const visible = ref(false)
 const confirmLoading = ref(false)
 const form = ref({})
+const record = ref({})
 
-const open = (record) => {
+const open = (recordValue) => {
   visible.value = true
-  form.value.taskId = record.id
+  form.value.taskId = recordValue.id
   form.value.approved = true
+  record.value = recordValue.variables
+  record.value.username = recordValue.startBy
 }
 
 const handleOk = () => {
@@ -98,3 +110,8 @@ defineExpose({
   open
 })
 </script>
+<style lang="less" scoped>
+.ant-divider-horizontal {
+  margin-top: 12px
+}
+</style>

@@ -22,13 +22,18 @@ public interface WorkflowService {
     Deployment deployProcess(String resourceName, InputStream inputStream);
     String processDefinitionBpmn20xml(String processDefinitionId);
     InputStream getProcessDiagram(String processDefinitionId);
+
+    Map<String, Object> getVariablesByTaskId(String taskId);
     ProcessInstance startProcess(String processDefinitionKey, Map<String, Object> variables);
     ProcessInstance startProcess(String processDefinitionKey, String businessKey, Map<String, Object> variables);
 
     Page<WorkflowTask> listTasks(String assignee, String processName, String startBy, Page<WorkflowTask> page);
     Page<WorkflowTask> listHistoryTasks(String assignee, String startBy, Boolean finished, Page<WorkflowTask> page);
     void complete(String taskId, Map<String, Object> variables);
+    void complete(String taskId, Map<String, Object> variables, String... comments);
 
     List<Activity> listActivities(String processInstanceId);
+
+
 
 }

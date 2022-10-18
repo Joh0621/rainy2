@@ -14,5 +14,5 @@ public interface UserService extends BaseService<User> {
     boolean save(User user);
 
     List<String> listRoles(Long userId);
-    List<String> listPermission(Long userId);
+    List<String> listPermissions(Long userId);
 }
