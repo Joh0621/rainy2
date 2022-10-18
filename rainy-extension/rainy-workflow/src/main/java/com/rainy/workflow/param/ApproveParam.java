@@ -15,8 +15,12 @@ public class ApproveParam {
 
     @NotBlank
     private String taskId;
+    /**
+     * 1.审批通过
+     * 2.审批未通过
+     */
     @NotNull
-    private Boolean approved;
+    private Integer approved;
     @NotBlank
     private String remarks;
 }

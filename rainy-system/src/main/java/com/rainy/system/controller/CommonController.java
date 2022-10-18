@@ -35,7 +35,7 @@ public class CommonController {
         // 2.系统配置
         Map<String, Object> config = new HashMap<>();
         List<Config> configs = configService.lambdaQuery()
-                .eq(Config::getCategoryCode, DictConstants.CONFIG_CATEGORY_SYSTEM)
+                .eq(Config::getCategoryCode, DictConstants.CONFIG_CATEGORY_SYSTEM_CODE)
                 .list();
         configs.forEach(v -> config.put(v.getCode(), v.getValue()));
         data.put("config", config);

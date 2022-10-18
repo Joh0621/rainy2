@@ -23,10 +23,23 @@
       <template #finished="{ record }">
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
+      <template #approved="{ record }">
+        <a-tag v-if="record.approved === 0" color="#2db7f5">
+           {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
+        </a-tag>
+        <a-tag v-if="record.approved === 1" color="#87d068">
+          {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
+        </a-tag>
+        <a-tag v-if="record.approved === 2" color="#108ee9">
+          {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
+        </a-tag>
+      </template>
       <template #action="{ record }">
-        <a @click="handleDetail(record)">详情</a>
-        <a-divider type="vertical"/>
         <a @click="() => { taskTrack.open(record) }">跟踪</a>
+        <a-divider type="vertical"/>
+        <a @click="handleDetail(record)">下载点码</a>
+<!--        <a-divider type="vertical"/>-->
+<!--        <a @click="handleDetail(record)">删除</a>-->
       </template>
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
@@ -52,15 +65,12 @@ const taskTrack = ref()
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '流程名称', dataIndex: 'processName', width: '120px', ellipsis: true },
-  { title: '发起人', dataIndex: 'startBy', width: '100px' },
-  // { title: '任务编号', dataIndex: 'id', ellipsis: true },
-  // { title: '任务节点', dataIndex: 'name', width: '120px' },
-  { title: '开始时间', dataIndex: 'startTime' },
-  { title: '结束时间', dataIndex: 'endTime' },
-  // { title: '截止时间', dataIndex: 'dueDate' },
-  { title: '是否结束', dataIndex: 'finished', align: 'center' },
-  // { title: '审批人', dataIndex: 'assignee' },
+  { title: '设备名称', dataIndex: 'dataName', width: '120px', ellipsis: true },
+  { title: '数据目录', dataIndex: 'dataDirectionName' },
+  { title: '责任部门', dataIndex: 'orgName' },
+  { title: '申请人', dataIndex: 'applyUsername' },
+  { title: '申请时间', dataIndex: 'applyTime', width: '180px' },
+  { title: '审批状态', dataIndex: 'approved' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {

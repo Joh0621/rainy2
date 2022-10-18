@@ -23,12 +23,7 @@ public interface DictConstants {
     /**
      * 系统配置分类
      */
-    String CONFIG_CATEGORY_SYSTEM = "system";
-
-    /**
-     * 响应头
-     */
-    String CODE_RESPONSE_HEADER = "sys_response_header";
+    String CONFIG_CATEGORY_SYSTEM_CODE = "system";
 
     /**
      * 目录
@@ -44,5 +39,18 @@ public interface DictConstants {
      * 按钮
      */
     int MENU_TYPE_BUTTON_CODE = 2;
+
+    /**
+     * 审批中
+     */
+    int APPROVE_STATUS_0 = 0;
+    /**
+     * 审批通过
+     */
+    int APPROVE_STATUS_1 = 1;
+    /**
+     * 未通过
+     */
+    int APPROVE_STATUS_2 = 2;
 
 }

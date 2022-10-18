@@ -5,8 +5,9 @@
       <a-tab-pane key="0" tab="基本信息">
         <basic :device="device"/>
         <div>
-          <a-button @click="confirm" type="primary" primary>一键申请</a-button>
+          <a-button @click="handleApply" type="primary" primary>一键申请</a-button>
         </div>
+        <ApplyData ref="applyData"/>
       </a-tab-pane>
       <a-tab-pane key="1" tab="测点描述">
         <point :device-code="deviceCode" />
@@ -21,7 +22,6 @@
         <api-doc />
       </a-tab-pane>
     </a-tabs>
-
   </a-card>
 </template>
 <script setup>
@@ -30,10 +30,9 @@ import Point from './Point.vue'
 import PointPreview from './PointPreview.vue'
 import BloodRel from './BloodRel.vue'
 import ApiDoc from './ApiDoc.vue'
-import { Apply } from '@/api/main/dataApply'
+import ApplyData from './ApplyData.vue'
 import { Detail } from '@/api/main/device'
 import { useRouter } from 'vue-router'
-import { message, Modal } from 'ant-design-vue'
 
 const router = useRouter()
 onMounted(() => {
@@ -48,26 +47,9 @@ const detail = () => {
 }
 const activeKey = ref('0')
 
-const confirm = () => {
-  Modal.confirm({
-    title: '一键申请',
-    content: `确认申请该设备[${device.value.name}]数据吗?`,
-    okText: '确认',
-    cancelText: '取消',
-    onOk () {
-      apply()
-    },
-    onCancel () {}
-  })
-}
-
-const apply = () => {
-  console.log(device.value)
-  Apply(device.value).then(res => {
-    if (res.success) {
-      message.info('申请成功')
-    }
-  })
+const applyData = ref()
+const handleApply = () => {
+  applyData.value.open(device.value)
 }
 </script>
 <style scoped>

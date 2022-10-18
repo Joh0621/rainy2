@@ -2,6 +2,7 @@ import request, { method } from '@/utils/request'
 
 const api = {
   List: '/devices',
+  Detail: '/device',
   Export: '/devices/export',
   Add: '/device',
   Del: '/devices',
@@ -16,9 +17,16 @@ export function List (parameter) {
   })
 }
 
-export function Detail (id) {
+export function DetailById (id) {
   return request({
-    url: `${api.List}/${id}`,
+    url: `${api.Detail}/${id}`,
+    method: method.GET
+  })
+}
+
+export function Detail (deviceCode) {
+  return request({
+    url: `${api.List}/${deviceCode}`,
     method: method.GET
   })
 }

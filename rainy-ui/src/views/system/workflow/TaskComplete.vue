@@ -36,8 +36,8 @@
       >
         <a-radio-group
           v-model:value="form.approved">
-          <a-radio :value="true">同意</a-radio>
-          <a-radio :value="false">不同意</a-radio>
+          <a-radio :value="1">同意</a-radio>
+          <a-radio :value="2">不同意</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item
@@ -55,6 +55,7 @@
 </template>
 <script setup>
 import { CompleteTask } from '@/api/workflow/workflow'
+import { DetailById } from '@/api/main/device'
 import { message } from 'ant-design-vue'
 
 const labelCol = reactive({ span: 4, offset: 0 })
@@ -69,9 +70,13 @@ const record = ref({})
 const open = (recordValue) => {
   visible.value = true
   form.value.taskId = recordValue.id
-  form.value.approved = true
-  record.value = recordValue.variables
-  record.value.username = recordValue.startBy
+  form.value.approved = 1
+  if (recordValue.variables.dataType === 0) {
+    DetailById(recordValue.variables.dataId).then(res => {
+      record.value = res.data
+      record.value.startBy = recordValue.startBy
+    })
+  }
 }
 
 const handleOk = () => {
@@ -103,6 +108,7 @@ const completeTask = (values) => {
 
 const handleCancel = () => {
   visible.value = false
+  form.value = {}
   emits('ok')
 }
 

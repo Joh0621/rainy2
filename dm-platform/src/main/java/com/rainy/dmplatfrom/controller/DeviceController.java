@@ -55,8 +55,13 @@ public class DeviceController {
                 .page(page);
     }
 
+    @GetMapping("/device/{id}")
+    public Device detailById(@PathVariable Long id) {
+        return deviceService.getById(id);
+    }
+
     @GetMapping("/devices/{deviceCode}")
-    public Device detail(@PathVariable String deviceCode) {
+    public Device detailByCode(@PathVariable String deviceCode) {
         return deviceService.lambdaQuery()
                 .eq(Device::getCode, deviceCode)
                 .one();
