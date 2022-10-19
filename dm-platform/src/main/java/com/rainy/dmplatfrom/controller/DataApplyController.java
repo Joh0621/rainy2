@@ -1,5 +1,6 @@
 package com.rainy.dmplatfrom.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.dmplatfrom.entity.DataDirectory;
 import com.rainy.dmplatfrom.entity.Device;
@@ -114,7 +115,8 @@ public class DataApplyController {
             List<Point> list = pointService.lambdaQuery()
                     .eq(Point::getDeviceCode, userDataRel.getDataCode())
                     .list();
-            WebUtils.exportExcel(response, list, "point.xls");
+            String fileName = StrUtil.format("{}-{}.xls", userDataRel.getDataDirectionName(), userDataRel.getDataName());
+            WebUtils.exportExcel(response, list, fileName);
         }
     }
 

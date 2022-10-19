@@ -127,10 +127,9 @@ public final class WebUtils {
 
     public static <T> void exportExcel(HttpServletResponse response, List<T> records, String fileName) throws IOException {
         response.setContentType(EXCEL_CONTENT_TYPE);
-        // utf-8 编码
-        String fn = new String(fileName.getBytes(StandardCharsets.UTF_8));
+        String name = URLEncoder.encode(fileName, StandardCharsets.UTF_8);        // utf-8 编码
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, StrUtil.format(CONTENT_DISPOSITION_VALUE, fn));
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, StrUtil.format(CONTENT_DISPOSITION_VALUE, name));
         try (ExcelWriter writer = ExcelUtil.getWriter(); ServletOutputStream out = response.getOutputStream()) {
             writer.write(records, true);
             writer.flush(out, true);
