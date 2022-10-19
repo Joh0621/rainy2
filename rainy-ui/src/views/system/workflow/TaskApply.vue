@@ -14,18 +14,18 @@
       </a-form>
     </div>
     <b-table
-      ref="table"
-      :options="options"
-      :columns="columns"
-      :row-key="record => record.id"
-      :load-data="data"
+        ref="table"
+        :options="options"
+        :columns="columns"
+        :row-key="record => record.id"
+        :load-data="data"
     >
       <template #finished="{ record }">
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
       <template #approved="{ record }">
         <a-tag v-if="record.approved === 0" color="#2db7f5">
-           {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
+          {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
         </a-tag>
         <a-tag v-if="record.approved === 1" color="#87d068">
           {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
@@ -38,8 +38,8 @@
         <a @click="() => { taskTrack.open(record) }">跟踪</a>
         <a-divider type="vertical"/>
         <a @click="handleDetail(record)">下载点码</a>
-<!--        <a-divider type="vertical"/>-->
-<!--        <a @click="handleDetail(record)">删除</a>-->
+        <!--        <a-divider type="vertical"/>-->
+        <!--        <a @click="handleDetail(record)">删除</a>-->
       </template>
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
