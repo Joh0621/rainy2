@@ -37,9 +37,23 @@
       <template #action="{ record }">
         <a @click="() => { taskTrack.open(record) }">跟踪</a>
         <a-divider type="vertical"/>
-        <a @click="handleDetail(record)">下载点码</a>
-        <!--        <a-divider type="vertical"/>-->
-        <!--        <a @click="handleDetail(record)">删除</a>-->
+        <a-dropdown>
+          <a class="ant-dropdown-link" @click.prevent>
+            更多  <DownOutlined />
+          </a>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a-button @click="downloadPointCode(record)" type="link" size="small">下载点码</a-button>
+              </a-menu-item>
+              <a-menu-item>
+                <a-popconfirm title="确认取消申请吗？" @confirm="handleCancelApply(record)">
+                  <a-button type="link" size="small" danger>取消申请</a-button>
+                </a-popconfirm>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
       </template>
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
@@ -48,11 +62,12 @@
 </template>
 
 <script setup>
-import { List } from '@/api/main/dataApply'
-import TaskComplete from './TaskComplete.vue'
-import TaskTrack from './TaskTrack.vue'
+import { List, CancelApply, PointDownload } from '@/api/main/dataApply'
+import TaskComplete from '../system/workflow/TaskComplete.vue'
+import TaskTrack from '../system/workflow/TaskTrack.vue'
 import { useAppStore } from '@/store/app'
 import { message } from 'ant-design-vue'
+import { download } from '@/utils/Utils'
 
 const appStore = useAppStore()
 
@@ -79,6 +94,29 @@ const data = (parameter) => {
   })
 }
 
+const downloadPointCode = record => {
+  const param = {
+    id: record.id,
+    name: record.dataName
+  }
+  PointDownload(param).then(res => {
+    download(res)
+  })
+}
+
+const handleCancelApply = record => {
+  const param = {
+    id: record.id,
+    name: record.dataName
+  }
+  CancelApply(param).then(res => {
+    if (res.success) {
+      message.info(res.message)
+      handleOk()
+    }
+  })
+}
+
 const handleOk = () => {
   table.value.refresh()
 }
@@ -86,10 +124,4 @@ const handleReset = () => {
   queryParam.value = {}
   handleOk()
 }
-
-const taskComplete = ref()
-const handleDetail = (record) => {
-  message.info('开发中....')
-}
-
 </script>

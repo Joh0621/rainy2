@@ -27,6 +27,7 @@ public class UserDataRel {
      */
     private Integer dataType;
     private String dataName;
+    private String dataCode;
     private Long orgId;
     private String orgName;
     private Long dataDirectionId;

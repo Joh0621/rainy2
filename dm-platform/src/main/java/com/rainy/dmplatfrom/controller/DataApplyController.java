@@ -3,14 +3,21 @@ package com.rainy.dmplatfrom.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.dmplatfrom.entity.DataDirectory;
 import com.rainy.dmplatfrom.entity.Device;
+import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.entity.UserDataRel;
 import com.rainy.dmplatfrom.param.ApplyParam;
 import com.rainy.dmplatfrom.service.DataDirectoryService;
+import com.rainy.dmplatfrom.service.DeviceService;
+import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.dmplatfrom.service.UserDataRelService;
+import com.rainy.framework.annotation.Log;
+import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
 import com.rainy.framework.constant.DictConstants;
+import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.framework.utils.ValidateUtils;
+import com.rainy.framework.utils.WebUtils;
 import com.rainy.workflow.constant.VariableNames;
 import com.rainy.workflow.service.WorkflowService;
 import com.rainy.workflow.service.WorkflowTaskService;
@@ -22,8 +29,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,8 +51,9 @@ public class DataApplyController {
     private final WorkflowService workflowService;
     private final WorkflowTaskService workflowTaskService;
     private final UserDataRelService userDataRelService;
-    private final DataDirectoryService dataDirectoryService;
+    private final PointService pointService;
 
+    @Log(module = "数据申请", type = OpType.DEL, detail = "'申请了数据[' + #param.device.name + '].'")
     @PostMapping("/data/apply")
     public Result<Object> apply(@RequestBody ApplyParam param) {
         Device device = param.getDevice();
@@ -63,6 +74,7 @@ public class DataApplyController {
         userDataRel.setDataId(device.getId());
         userDataRel.setDataType(param.getDataType());
         userDataRel.setDataName(device.getName());
+        userDataRel.setDataCode(device.getCode());
         userDataRel.setDataDirectionId(device.getDataDirectoryId());
         userDataRel.setDataDirectionName(device.getDataDirectoryName());
         userDataRel.setOrgId(device.getOrgId());
@@ -91,6 +103,28 @@ public class DataApplyController {
         return userDataRelService.lambdaQuery()
                 .eq(UserDataRel::getApplyUserId, SecurityUtils.getUserId())
                 .page(page);
+    }
+
+    @GetMapping("/data/point/download")
+    @Log(module = "数据申请", type = OpType.DEL, detail = "'下载了设备[' + #param.name + ']测点点码.'")
+    public void downloadPointCode(HttpServletResponse response, IdNamesParam param) throws IOException {
+        UserDataRel userDataRel = userDataRelService.getById(param.getId());
+        Integer dataType = userDataRel.getDataType();
+        if (dataType == 0) {
+            List<Point> list = pointService.lambdaQuery()
+                    .eq(Point::getDeviceCode, userDataRel.getDataCode())
+                    .list();
+            WebUtils.exportExcel(response, list, "point.xls");
+        }
+    }
+
+
+    @PostMapping("/data/apply/cancel")
+    @Log(module = "数据申请", type = OpType.DEL, detail = "'取消了申请[' + #param.name + '].'")
+    public boolean apply(@RequestBody IdNamesParam param) {
+        return userDataRelService.lambdaUpdate()
+                .eq(UserDataRel::getId, param.getId())
+                .remove();
     }
 
 }
