@@ -62,7 +62,7 @@
       </template>
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
-    <TaskTrack ref="taskTrack" @ok="handleOk"></TaskTrack>
+    <TaskTrack ref="taskTrack"></TaskTrack>
   </a-card>
 </template>
 

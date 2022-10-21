@@ -23,7 +23,7 @@
           :key="item.fullPath"
           :closable="item.meta.affix">
         <template #tab>
-          <a-dropdown :trigger="['contextmenu']">
+          <a-dropdown v-if="activeKey === item.fullPath" :trigger="['contextmenu']">
             <div>
               {{item.meta.title}}
             </div>
@@ -43,6 +43,11 @@
               </a-menu>
             </template>
           </a-dropdown>
+          <span v-else>
+            <div>
+              {{item.meta.title}}
+            </div>
+          </span>
         </template>
       </a-tab-pane>
     </a-tabs>
@@ -51,8 +56,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useAppStore } from '@/store/app'
 
 const router = useRouter()
+const appStore = useAppStore()
 
 const indexRouter = {
   fullPath: '/workbench',
@@ -62,7 +69,7 @@ const indexRouter = {
   }
 }
 
-const tagList = ref([])
+const tagList = ref(appStore.tagList)
 const activeKey = ref()
 
 watch(
@@ -109,11 +116,21 @@ const handleTabEdit = (fullPath) => {
   }
 }
 
+const reload = () => {
+  appStore.reload = true
+  nextTick(() => {
+    setTimeout(() => {
+      appStore.reload = false
+    }, 100)
+  })
+}
+
 const scrollLeft = () => {
 }
 const scrollRight = () => {
 }
 const refresh = () => {
+  reload()
 }
 const closeAll = () => {
 }

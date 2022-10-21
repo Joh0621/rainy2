@@ -3,7 +3,7 @@
       v-model:collapsed="state.collapsed"
       v-model:selectedKeys="state.selectedKeys"
       v-model:openKeys="state.openKeys"
-      :loading="loading"
+      :loading="appStore.reload"
       :menu-data="menus"
       :breadcrumb="{ routes: breadcrumb }"
       :iconfont-url="defaultConfig.iconfontUrl"
@@ -26,7 +26,7 @@
       </PageContainer>
     </template>
     <template #rightContentRender>
-      <RightContent :nick-name="nickName" :avatar="avatar" />
+      <RightContent />
     </template>
     <!-- custom breadcrumb itemRender  -->
     <template #breadcrumbRender="{ route, params, routes }">
@@ -39,14 +39,13 @@
     </template>
     <setting-drawer v-model="proConfig" />
     <multi-tab v-if="proConfig.multiTab" style="margin: -16px -16px 16px -16px"/>
-    <router-view v-if="!loading" #="{ Component, route }">
+    <router-view v-if="!appStore.reload" #="{ Component, route }">
       <component :is="Component" :key="route.path" />
     </router-view>
   </pro-layout>
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { defaultConfig } from '@/config/defaultConfig'
@@ -68,7 +67,6 @@ const state = reactive({
   selectedKeys: [] // default selectedKeys
 })
 
-const loading = ref(false)
 const proConfig = ref({
   layout: localStorage.getItem('layout') || defaultConfig.layout,
   navTheme: defaultConfig.navTheme,
@@ -79,8 +77,6 @@ const proConfig = ref({
   primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor,
   multiTab: localStorage.getItem('multiTab') ? localStorage.getItem('multiTab') === 'true' : defaultConfig.multiTab
 })
-
-const { nickName, avatar } = storeToRefs(store)
 
 const breadcrumb = computed(() =>
   router.currentRoute.value.matched.concat().map(item => {
@@ -100,10 +96,10 @@ provide('reload', () => {
 })
 
 const reload = () => {
-  loading.value = true
+  appStore.reload = true
   nextTick(() => {
     setTimeout(() => {
-      loading.value = false
+      appStore.reload = false
     }, 100)
   })
 }

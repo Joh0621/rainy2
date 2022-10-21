@@ -6,6 +6,9 @@ import { Common } from '@/api/system/common.js'
 export const useAppStore = defineStore('app', {
   state: () => {
     return {
+      // 刷新页面
+      tagList: [],
+      reload: false,
       config: {
         sysTitle: undefined,
         sysLogo: undefined

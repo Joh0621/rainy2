@@ -51,8 +51,6 @@ let bpmnViewer = null
 const preview = () => {
   bpmnViewer = new BpmnViewer({ container: container.value })
   bpmnViewer.importXML(bpmn20xml.value).then(res => {
-    const { warnings } = res
-    console.log(warnings)
     const canvas = bpmnViewer.get('canvas')
     canvas.zoom('fit-viewport')
   }).catch(err => {

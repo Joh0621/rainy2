@@ -14,13 +14,19 @@ const routes = [
     children: [
       {
         path: '/device/:deviceCode',
-        name: BasicLayout,
-        component: () => import('@/views/main/DataDirectoryDetail.vue')
+        name: '设备详情',
+        component: () => import('@/views/main/DataDirectoryDetail.vue'),
+        meta: {
+          title: '设备详情'
+        }
       },
       {
         path: '/account/center',
-        name: BasicLayout,
-        component: () => import('@/views/system/account/Center.vue')
+        name: '个人设置',
+        component: () => import('@/views/system/account/Center.vue'),
+        meta: {
+          title: '个人设置'
+        }
       },
       {
         path: '/404',
