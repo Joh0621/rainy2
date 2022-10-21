@@ -44,11 +44,16 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <a-button @click="downloadPointCode(record)" type="link" size="small">下载点码</a-button>
+                <a-button :disabled="record.approved !== 1" @click="downloadPointCode(record)" type="link" size="small">下载点码</a-button>
               </a-menu-item>
               <a-menu-item>
-                <a-popconfirm title="确认取消申请吗？" @confirm="handleCancelApply(record)">
-                  <a-button type="link" size="small" danger>取消申请</a-button>
+                <a-popconfirm :disabled="record.approved !== 1" title="确认取消申请吗？" @confirm="handleCancelApply(record)">
+                  <a-button :disabled="record.approved !== 1" type="link" size="small" danger>取消申请</a-button>
+                </a-popconfirm>
+              </a-menu-item>
+              <a-menu-item>
+                <a-popconfirm :disabled="record.approved !== 2" title="确认删除吗？" @confirm="handleCancelApply(record)">
+                  <a-button :disabled="record.approved !== 2" type="link" size="small" danger>删除</a-button>
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>

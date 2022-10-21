@@ -18,11 +18,16 @@
       <a-card>
         <div class="table-query">
           <a-form layout="inline">
-            <a-form-item label="设备名称">
-              <a-input v-model:value="queryParam.name" placeholder="请输入设备名称" />
+<!--            <a-form-item label="设备名称">-->
+<!--              <a-input v-model:value="queryParam.name" placeholder="请输入设备名称" />-->
+<!--            </a-form-item>-->
+<!--            <a-form-item label="设备编码">-->
+<!--              <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />-->
+<!--            </a-form-item>-->
+            <a-form-item>
+              <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入设备名称/设备编码/测点名称" />
             </a-form-item>
-            <a-form-item label="设备编码">
-              <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />
+            <a-form-item>
             </a-form-item>
             <a-form-item>
               <a-space>
@@ -31,8 +36,16 @@
               </a-space>
             </a-form-item>
           </a-form>
+          <div style="margin-top: 12px">
+            专业：
+            <a-radio-group size="default" v-model:value="queryParam.major" @change="handleOk">
+              <a-radio-button :key="item.value" v-for="item in appStore.dictItems('biz_major')" :value="item.value">
+                {{item.name}}
+              </a-radio-button>
+            </a-radio-group>
+          </div>
         </div>
-        <a-skeleton :loading="dataLoading">
+        <a-spin :spinning="dataLoading">
           <a-list item-layout="vertical" size="large" :pagination="pagination" @change="handleChange" :data-source="listData">
             <template #renderItem="{ item }">
               <a-list-item :key="item.id">
@@ -51,7 +64,7 @@
               </a-list-item>
             </template>
           </a-list>
-        </a-skeleton>
+        </a-spin>
       </a-card>
     </a-col>
   </a-row>

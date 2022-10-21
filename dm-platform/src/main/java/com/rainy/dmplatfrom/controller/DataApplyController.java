@@ -14,8 +14,10 @@ import com.rainy.dmplatfrom.service.UserDataRelService;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
+import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.constant.DictConstants;
 import com.rainy.framework.constant.OpType;
+import com.rainy.framework.exception.BizException;
 import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.framework.utils.ValidateUtils;
 import com.rainy.framework.utils.WebUtils;
@@ -92,8 +94,9 @@ public class DataApplyController {
         variables.put("dataType", param.getDataType());
         variables.put("dataId", param.getDevice().getId());
         // 是否申请本部门数据
-        boolean equals = Objects.equals(device.getOrgId(), SecurityUtils.getUserinfo().getOrgId());
-        variables.put("flag", Objects.equals(device.getOrgId(), SecurityUtils.getUserinfo().getOrgId()));
+        boolean flag = Objects.equals(device.getOrgId(), SecurityUtils.getUserinfo().getOrgId());
+        variables.put(VariableNames.APPROVED, DictConstants.APPROVE_STATUS_1);
+        variables.put("flag", flag);
         Task task = workflowTaskService.getTaskByProcessInstanceId(processInstance.getProcessInstanceId());
         workflowService.complete(task.getId(), variables, param.getRemarks());
         return Result.ok();

@@ -20,9 +20,13 @@ public class Userinfo {
     private String avatar;
     private String telephone;
     private String email;
-    private Long orgId;
-    private String org;
     private String position;
+    private String org;
+    /**
+     * 本部门以及子部门id
+     */
+    private Long orgId;
+    private List<Long> orgIds;
     private List<String> roles;
     private List<String> permissions;
     private List<?> menus;

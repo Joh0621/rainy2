@@ -44,6 +44,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(EXCLUDE_PATHS);
     }
 
+    /**
+     * 自定义参数校验期
+     *
+     * @return {@link Validator}
+     */
     @Override
     public Validator getValidator() {
         return validator();

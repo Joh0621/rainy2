@@ -13,6 +13,11 @@ public interface CharConstants {
     String EMPTY = "";
 
     /**
+     * 字符串常量：点 {@code '.'}
+     */
+    String DOT = ".";
+
+    /**
      * 字符串常量：逗号 {@code ','}
      */
     String COMMA = ",";

@@ -179,7 +179,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             if (task.getEndTime() != null) {
                 workflowTask.setFinished(true);
             }
-            workflowTask.setDurationInMillis(task.getDurationInMillis());
+            workflowTask.setDurationInMillis(task.getDurationInMillis() < 0 ? 0L : task.getDurationInMillis() / 1000);
             workflowTask.setDueDate(task.getDueDate());
             String name = repositoryService.getProcessDefinition(task.getProcessDefinitionId()).getName();
             workflowTask.setProcessName(name);

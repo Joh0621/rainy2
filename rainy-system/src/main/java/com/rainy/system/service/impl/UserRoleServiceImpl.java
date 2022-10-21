@@ -1,8 +1,8 @@
 package com.rainy.system.service.impl;
 
-import com.rainy.system.entity.UserRoleRel;
+import com.rainy.system.entity.UserRole;
 import com.rainy.system.mapper.UserRoleRelMapper;
-import com.rainy.system.service.UserRoleRelService;
+import com.rainy.system.service.UserRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Created by renguangli at 2022/9/19 17:53
  */
 @Service
-public class UserRoleRelServiceImpl extends BaseServiceImpl<UserRoleRelMapper, UserRoleRel> implements UserRoleRelService {
+public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRelMapper, UserRole> implements UserRoleService {
 
     /**
      * 根据用户id查询角色id列表
@@ -24,11 +24,11 @@ public class UserRoleRelServiceImpl extends BaseServiceImpl<UserRoleRelMapper, U
      */
     @Override
     public List<Long> listRoleIdsByUserId(Object userId) {
-        List<UserRoleRel> userRoleRelList = this.lambdaQuery()
-                .eq(UserRoleRel::getUserId, userId)
+        List<UserRole> userRoleList = this.lambdaQuery()
+                .eq(UserRole::getUserId, userId)
                 .list();
-        return userRoleRelList.stream()
-                .map(UserRoleRel::getRoleId)
+        return userRoleList.stream()
+                .map(UserRole::getRoleId)
                 .toList();
     }
 
@@ -44,13 +44,13 @@ public class UserRoleRelServiceImpl extends BaseServiceImpl<UserRoleRelMapper, U
     public Boolean assignRoles(Long userId, List<Long> roleIds) {
         // 1.先删除之前的关系
         this.lambdaUpdate()
-                .eq(UserRoleRel::getUserId, userId)
+                .eq(UserRole::getUserId, userId)
                 .remove();
         // 2.给用户分配角色
-        List<UserRoleRel> userRoleRels = roleIds.stream()
-                .map(roleId -> new UserRoleRel(userId, roleId))
+        List<UserRole> userRoles = roleIds.stream()
+                .map(roleId -> new UserRole(userId, roleId))
                 .toList();
-        return this.saveBatch(userRoleRels);
+        return this.saveBatch(userRoles);
     }
 
 }

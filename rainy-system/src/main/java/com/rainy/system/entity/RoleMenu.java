@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @TableName("t_role_menu_rel")
-public class RoleMenuRel {
+public class RoleMenu {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -25,7 +25,7 @@ public class RoleMenuRel {
      */
     private Boolean half;
 
-    public RoleMenuRel(Long roleId, Long menuId, Boolean half) {
+    public RoleMenu(Long roleId, Long menuId, Boolean half) {
         this.roleId = roleId;
         this.menuId = menuId;
         this.half = half;

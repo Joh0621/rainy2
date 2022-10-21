@@ -1,9 +1,9 @@
 package com.rainy.system.service.impl;
 
 import com.rainy.system.entity.Role;
-import com.rainy.system.entity.RoleMenuRel;
+import com.rainy.system.entity.RoleMenu;
 import com.rainy.system.mapper.RoleMapper;
-import com.rainy.system.service.RoleMenuRelService;
+import com.rainy.system.service.RoleMenuService;
 import com.rainy.system.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implements RoleService {
 
-    private final RoleMenuRelService roleMenuRelService;
+    private final RoleMenuService roleMenuService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean assignMenus(Long roleId, List<RoleMenuRel> roleMenuRelList) {
-        roleMenuRelService.lambdaUpdate()
-                .eq(RoleMenuRel::getRoleId, roleId)
+    public Boolean assignMenus(Long roleId, List<RoleMenu> roleMenuList) {
+        roleMenuService.lambdaUpdate()
+                .eq(RoleMenu::getRoleId, roleId)
                 .remove();
-        return roleMenuRelService.saveBatch(roleMenuRelList);
+        return roleMenuService.saveBatch(roleMenuList);
     }
 
     @Override

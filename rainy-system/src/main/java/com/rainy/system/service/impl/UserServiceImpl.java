@@ -2,7 +2,7 @@ package com.rainy.system.service.impl;
 
 import com.rainy.framework.enums.DefaultRole;
 import com.rainy.system.entity.User;
-import com.rainy.system.entity.UserRoleRel;
+import com.rainy.system.entity.UserRole;
 import com.rainy.system.mapper.UserMapper;
 import com.rainy.system.service.*;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +21,9 @@ import java.util.List;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
     private final RoleService roleService;
-    private final RoleMenuRelService roleMenuRelService;
-    private final UserRoleRelService userRoleRelService;
     private final MenuService menuService;
+    private final RoleMenuService roleMenuService;
+    private final UserRoleService userRoleService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -32,13 +32,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         super.save(user);
         // 2.添加默认角色
         Long roleId = roleService.getIdByCode(DefaultRole.DEFAULT.getCode());
-        return userRoleRelService.save(new UserRoleRel(user.getId(), roleId));
+        return userRoleService.save(new UserRole(user.getId(), roleId));
     }
 
     @Override
     public List<String> listRoles(Long userId) {
         // 1.查询拥有的角色
-        List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(userId);
+        List<Long> roleIds = userRoleService.listRoleIdsByUserId(userId);
         if (roleIds.isEmpty()) {
             return List.of();
         }
@@ -48,12 +48,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public List<String> listPermissions(Long userId) {
         // 1.查询拥有的角色
-        List<Long> roleIds = userRoleRelService.listRoleIdsByUserId(userId);
+        List<Long> roleIds = userRoleService.listRoleIdsByUserId(userId);
         if (roleIds.isEmpty()) {
             return List.of();
         }
         // 2.查询角色拥有的菜单id列表（按钮）
-        List<Long> menuIds = roleMenuRelService.listMenuIdsInRoleId(roleIds);
+        List<Long> menuIds = roleMenuService.listMenuIdsInRoleId(roleIds);
         if (menuIds.isEmpty()) {
             return List.of();
         }

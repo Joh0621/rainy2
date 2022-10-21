@@ -10,4 +10,6 @@ import com.rainy.system.entity.Config;
  */
 public interface ConfigMapper extends BaseMapper<Config> {
 
+
+
 }

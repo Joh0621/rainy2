@@ -34,9 +34,8 @@ import java.util.Objects;
 public class LoginController {
 
     private final UserService userService;
-
-    private final MenuService menuService;
     private final OrgService orgService;
+    private final MenuService menuService;
 
     @SaIgnore
     @PostMapping("/login")
@@ -56,19 +55,14 @@ public class LoginController {
         // 缓存用户信息
         Userinfo userinfo = user.userinfo();
         Org org = orgService.getById(userinfo.getOrgId());
+        List<Long> orgIds = orgService.getChildrenIds(org.getId());
+        userinfo.setOrgIds(orgIds);
         userinfo.setOrg(org.getName());
         userinfo.setRoles(userService.listRoles(user.getId()));
         userinfo.setPermissions(userService.listPermissions(user.getId()));
-        List<Menu> menus = menuService.treeByUserId(SecurityUtils.getUserId());
-        userinfo.setMenus(menus);
         SecurityUtils.setUserinfo(userinfo);
         // 返回 token
         return StpUtil.getTokenInfo();
-    }
-
-    @GetMapping("/userinfo")
-    public Userinfo userinfo() {
-        return SecurityUtils.getUserinfo();
     }
 
     @SaIgnore
@@ -77,4 +71,13 @@ public class LoginController {
         StpUtil.logout();
         return Result.ok();
     }
+
+    @GetMapping("/userinfo")
+    public Userinfo userinfo() {
+        Userinfo userinfo = SecurityUtils.getUserinfo();
+        List<Menu> menus = menuService.treeByUserId(SecurityUtils.getUserId());
+        userinfo.setMenus(menus);
+        return userinfo;
+    }
+
 }

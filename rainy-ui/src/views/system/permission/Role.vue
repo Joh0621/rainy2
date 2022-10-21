@@ -43,6 +43,9 @@
                 <a-button @click="handleAuthorize(record)" type="link" size="small">分配菜单</a-button>
               </a-menu-item>
               <a-menu-item>
+                <a-button @click="handleAssignDataPermission(record)" type="link" size="small">分配数据权限</a-button>
+              </a-menu-item>
+              <a-menu-item>
                 <a-popconfirm :disabled="record.isDefault" title="确认删除吗？" @confirm="handleDel(record)">
                   <a-button type="link" size="small" :disabled="record.isDefault" danger>删除</a-button>
                 </a-popconfirm>
@@ -54,6 +57,7 @@
     </b-table>
     <role-edit ref="editor" @ok="handleOk"></role-edit>
     <role-authorize ref="authorizer" @ok="handleOk"></role-authorize>
+    <role-data-permission ref="dataPermission" @ok="handleOk"></role-data-permission>
   </a-card>
 </template>
 
@@ -63,6 +67,7 @@ import { List, Del, Export } from '@/api/permission/Role'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import RoleEdit from './RoleEdit.vue'
 import RoleAuthorize from './RoleAuthorize.vue'
+import RoleDataPermission from './RoleDataPermission.vue'
 import { message } from 'ant-design-vue'
 import { DownOutlined } from '@ant-design/icons-vue'
 
@@ -102,6 +107,10 @@ const handleAdd = () => {
 const authorizer = ref()
 const handleAuthorize = (record) => {
   authorizer.value.open(record)
+}
+const dataPermission = ref()
+const handleAssignDataPermission = (record) => {
+  dataPermission.value.open(record)
 }
 const handleEdit = (record) => {
   // 转化为 string

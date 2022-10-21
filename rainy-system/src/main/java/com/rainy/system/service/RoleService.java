@@ -1,7 +1,7 @@
 package com.rainy.system.service;
 
 import com.rainy.system.entity.Role;
-import com.rainy.system.entity.RoleMenuRel;
+import com.rainy.system.entity.RoleMenu;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface RoleService extends BaseService<Role> {
 
-    Boolean assignMenus(Long id, List<RoleMenuRel> roleMenuRelList);
+    Boolean assignMenus(Long id, List<RoleMenu> roleMenuList);
 
     List<String> listRolesInId(List<Long> roleIds);
 

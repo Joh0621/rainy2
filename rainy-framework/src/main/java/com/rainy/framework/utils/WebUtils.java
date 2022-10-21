@@ -1,5 +1,6 @@
 package com.rainy.framework.utils;
 
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.useragent.UserAgent;
@@ -9,8 +10,6 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.rainy.framework.constant.CharConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -99,7 +98,19 @@ public final class WebUtils {
      * @return HttpServletRequest
      */
     public static HttpServletRequest getRequest() {
-        return getAttributes().getRequest();
+        return SpringMVCUtil.getRequest();
+    }
+
+    public static String getRequestURI() {
+        return getRequest().getRequestURI();
+    }
+
+    public static String getServletPath() {
+        return getRequest().getServletPath();
+    }
+
+    public static String getRequestMethod() {
+        return getRequest().getMethod();
     }
 
     /**
@@ -108,21 +119,7 @@ public final class WebUtils {
      * @return HttpServletRequest
      */
     public static HttpServletResponse getResponse() {
-        return getAttributes().getResponse();
-    }
-
-    /**
-     * 从上下文中获取 servletRequestAttributes
-     *
-     * @return servletRequestAttributes
-     */
-    public static ServletRequestAttributes getAttributes() {
-        // 获取 servletRequestAttributes
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes == null) {
-            throw new RuntimeException("非 web 上下文，无法获取 Request.");
-        }
-        return servletRequestAttributes;
+        return SpringMVCUtil.getResponse();
     }
 
     public static <T> void exportExcel(HttpServletResponse response, List<T> records, String fileName) throws IOException {
@@ -145,11 +142,5 @@ public final class WebUtils {
         }
     }
 
-    public static String getRequestURI() {
-        return getRequest().getRequestURI();
-    }
 
-    public static String getRequestMethod() {
-        return getRequest().getMethod();
-    }
 }

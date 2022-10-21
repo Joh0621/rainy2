@@ -12,14 +12,4 @@ import com.rainy.system.service.BaseService;
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 
-    @Override
-    public boolean exists(SFunction<T, ?> sFunction, Object value) {
-
-        return this.lambdaQuery().eq(sFunction, value).one() == null;
-    }
-
-    @Override
-    public boolean exists(Integer id, String column, Object value) {
-        return false;
-    }
 }

@@ -9,8 +9,8 @@ import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
 import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.Role;
-import com.rainy.system.entity.RoleMenuRel;
-import com.rainy.system.service.RoleMenuRelService;
+import com.rainy.system.entity.RoleMenu;
+import com.rainy.system.service.RoleMenuService;
 import com.rainy.system.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -34,10 +34,10 @@ import java.util.List;
 public class RoleController {
 
     private final RoleService roleService;
-    private final RoleMenuRelService roleMenuRelService;
+    private final RoleMenuService roleMenuService;
 
     @GetMapping("/roles")
-//    @SaCheckPermission("role:query")
+    @SaCheckPermission("role:query")
     @Log(module = "角色管理", type = OpType.QUERY, detail = "'查询了角色列表第' + #page.current + '页,每页' + #page.size + '条数据'", resSaved = false)
     public Page<Role> list(Page<Role> page, Role param) {
         return roleService.lambdaQuery()
@@ -47,7 +47,7 @@ public class RoleController {
     }
 
     @GetMapping("/roles/export")
-//    @SaCheckPermission("role:export")
+    @SaCheckPermission("role:export")
     @Log(module = "角色管理", type = OpType.EXPORT, detail = "导出了角色列表")
     public void export(HttpServletResponse response) throws IOException {
         List<Role> roles = roleService.list();
@@ -55,14 +55,14 @@ public class RoleController {
     }
 
     @PostMapping("/role")
-//    @SaCheckPermission("role:add")
+    @SaCheckPermission("role:add")
     @Log(module = "角色管理", type = OpType.ADD, detail = "'新增了角色[' + #param.name + '].'")
     public Boolean save(@RequestBody @Validated(Group.Add.class) Role param) {
         return roleService.save(param);
     }
 
     @PostMapping("/roles")
-//    @SaCheckPermission("role:del")
+    @SaCheckPermission("role:del")
     @Log(module = "角色管理", type = OpType.DEL, detail = "'删除了角色[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
         return roleService.removeBatchByIds(param.getIds());
@@ -76,31 +76,60 @@ public class RoleController {
     }
 
     @PostMapping("/role/menus/assign")
-//    @SaCheckPermission("role:assignMenus")
+    @SaCheckPermission("role:assignMenus")
     @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了菜单[' + #param.names + ']'")
     public Boolean assignMenus(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
-        List<RoleMenuRel> roleMenuRelList = new ArrayList<>();
-        List<RoleMenuRel> roleMenuRels = param.getIds().stream()
-                .map(menuId -> new RoleMenuRel(param.getId(), menuId, false))
+        List<RoleMenu> roleMenuList = new ArrayList<>();
+        List<RoleMenu> roleMenus = param.getIds().stream()
+                .map(menuId -> new RoleMenu(param.getId(), menuId, false))
                 .toList();
-        List<RoleMenuRel> halfRoleMenuRels = param.getHalfIds().stream()
-                .map(menuId -> new RoleMenuRel(param.getId(), menuId, true))
+        List<RoleMenu> halfRoleMenus = param.getHalfIds().stream()
+                .map(menuId -> new RoleMenu(param.getId(), menuId, true))
                 .toList();
-        roleMenuRelList.addAll(roleMenuRels);
-        roleMenuRelList.addAll(halfRoleMenuRels);
-        return roleService.assignMenus(param.getId(), roleMenuRelList);
+        roleMenuList.addAll(roleMenus);
+        roleMenuList.addAll(halfRoleMenus);
+        return roleService.assignMenus(param.getId(), roleMenuList);
     }
 
     @GetMapping("/role/menuIds")
     @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的菜单id列表'")
     public List<Long> getMenuIdsByRoleId(IdNamesParam param) {
-        List<RoleMenuRel> roleMenuRels = roleMenuRelService.lambdaQuery()
-                .select(RoleMenuRel::getMenuId)
-                .eq(RoleMenuRel::getRoleId, param.getId())
-                .eq(RoleMenuRel::getHalf, false)
+        List<RoleMenu> roleMenus = roleMenuService.lambdaQuery()
+                .select(RoleMenu::getMenuId)
+                .eq(RoleMenu::getRoleId, param.getId())
+                .eq(RoleMenu::getHalf, false)
                 .list();
-        return roleMenuRels.stream()
-                .map(RoleMenuRel::getMenuId)
+        return roleMenus.stream()
+                .map(RoleMenu::getMenuId)
+                .toList();
+    }
+
+    @PostMapping("/role/dataPermissions/assign")
+    @SaCheckPermission("role:assignDataPermissions")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了数据权限[' + #param.names + ']'")
+    public Boolean assignDataPermission(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
+        List<RoleMenu> roleMenuList = new ArrayList<>();
+        List<RoleMenu> roleMenus = param.getIds().stream()
+                .map(menuId -> new RoleMenu(param.getId(), menuId, false))
+                .toList();
+        List<RoleMenu> halfRoleMenus = param.getHalfIds().stream()
+                .map(menuId -> new RoleMenu(param.getId(), menuId, true))
+                .toList();
+        roleMenuList.addAll(roleMenus);
+        roleMenuList.addAll(halfRoleMenus);
+        return roleService.assignMenus(param.getId(), roleMenuList);
+    }
+
+    @GetMapping("/role/menuIds")
+    @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的数据权限列表'")
+    public List<Long> getOrgIdsByRoleId(IdNamesParam param) {
+        List<RoleMenu> roleMenus = roleMenuService.lambdaQuery()
+                .select(RoleMenu::getMenuId)
+                .eq(RoleMenu::getRoleId, param.getId())
+                .eq(RoleMenu::getHalf, false)
+                .list();
+        return roleMenus.stream()
+                .map(RoleMenu::getMenuId)
                 .toList();
     }
 

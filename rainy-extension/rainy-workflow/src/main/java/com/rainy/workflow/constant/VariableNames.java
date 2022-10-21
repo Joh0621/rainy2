@@ -8,11 +8,6 @@ package com.rainy.workflow.constant;
 public interface VariableNames {
 
     /**
-     * 审批意见
-     */
-    String REMARKS = "remarks";
-
-    /**
      * 审批是否通过
      */
     String APPROVED = "approved";

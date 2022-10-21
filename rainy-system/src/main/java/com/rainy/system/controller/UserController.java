@@ -14,7 +14,7 @@ import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.User;
 import com.rainy.system.param.user.PasswordUpdateParam;
 import com.rainy.system.service.OrgService;
-import com.rainy.system.service.UserRoleRelService;
+import com.rainy.system.service.UserRoleService;
 import com.rainy.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +38,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRoleRelService userRoleRelService;
+    private final UserRoleService userRoleService;
     private final OrgService orgService;
 
     @GetMapping("/users")
@@ -93,14 +93,14 @@ public class UserController {
     @GetMapping("/user/roleIds")
     @Log(module = "用户管理", type = OpType.QUERY, detail = "'查询了用户[' + #param.name + ']拥有的角色列表'")
     public List<Long> listRoleIdsByUserId(IdNamesParam param) {
-        return userRoleRelService.listRoleIdsByUserId(param.getId());
+        return userRoleService.listRoleIdsByUserId(param.getId());
     }
 
     @PostMapping("/user/roles/assign")
     @SaCheckPermission("user:assignRole")
     @Log(module = "用户管理", type = OpType.ADD, detail = "'给用户[' + #param.name + ']分配了角色[' + #param.names + '].'")
     public Boolean assignRoles(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
-        return userRoleRelService.assignRoles(param.getId(), param.getIds());
+        return userRoleService.assignRoles(param.getId(), param.getIds());
     }
 
     @GetMapping("/users/online")

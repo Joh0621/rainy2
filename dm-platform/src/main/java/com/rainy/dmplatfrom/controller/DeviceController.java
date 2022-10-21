@@ -50,6 +50,7 @@ public class DeviceController {
     public Page<Device> list(Page<Device> page, Device param) {
         return deviceService.lambdaQuery()
                 .eq(!Objects.isNull(param.getDataDirectoryId()), Device::getDataDirectoryId, param.getDataDirectoryId())
+                .eq(Objects.nonNull(param.getMajor()), Device::getMajor, param.getMajor())
                 .likeRight(StrUtil.isNotBlank(param.getName()), Device::getName, param.getName())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Device::getCode, param.getCode())
                 .page(page);

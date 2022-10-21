@@ -54,7 +54,7 @@ const columns = [
   // { title: '任务编号', dataIndex: 'id', ellipsis: true },
   { title: '开始时间', dataIndex: 'startTime' },
   { title: '结束时间', dataIndex: 'endTime' },
-  { title: '任务耗时(ms)', dataIndex: 'durationInMillis' },
+  { title: '任务耗时(s)', dataIndex: 'durationInMillis' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {

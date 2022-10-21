@@ -1,9 +1,12 @@
-package com.rainy.framework.config;
+package com.rainy.framework.config.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.DataPermissionHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.rainy.framework.config.mybatis.plus.DataPermissionHandlerImpl;
 import com.rainy.framework.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,13 +16,13 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDateTime;
 
 /**
- * mybatis-plus 配置类
+ * mybatis 配置类
  *
  * @author Created by renguangli at 2022/9/20 22:46
  */
 @Configuration
 @MapperScan(value = {"com.rainy.**.mapper"})
-public class MybatisPlusConfig {
+public class MybatisConfig {
 
     private static final String CREATE_BY_FIELD = "createBy";
     private static final String CREATE_TIME_FIELD = "createTime";
@@ -33,10 +36,16 @@ public class MybatisPlusConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         // 多租户插件
-
+        // 数据权限插件
+        interceptor.addInnerInterceptor(new DataPermissionInterceptor(dataPermissionHandler()));
         //  分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
+    }
+
+    @Bean
+    public DataPermissionHandler dataPermissionHandler(){
+        return new DataPermissionHandlerImpl();
     }
 
     /**

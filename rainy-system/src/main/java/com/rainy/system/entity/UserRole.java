@@ -12,14 +12,14 @@ import lombok.Data;
  */
 @Data
 @TableName("t_user_role_rel")
-public class UserRoleRel {
+public class UserRole {
 
     @TableId(type = IdType.AUTO)
     private Long id;
     private Long userId;
     private Long roleId;
 
-    public UserRoleRel(Long userId, Long roleId) {
+    public UserRole(Long userId, Long roleId) {
         this.userId = userId;
         this.roleId = roleId;
     }

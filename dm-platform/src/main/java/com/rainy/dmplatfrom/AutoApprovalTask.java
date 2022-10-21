@@ -9,6 +9,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -34,6 +35,7 @@ public class AutoApprovalTask implements JavaDelegate {
                 .eq(UserDataRel::getDataType, dataType)
                 .eq(UserDataRel::getDataId, dataId)
                 .set(UserDataRel::getApproved, approved)
+                .set(UserDataRel::getApplyTime, LocalDateTime.now())
                 .update();
     }
 

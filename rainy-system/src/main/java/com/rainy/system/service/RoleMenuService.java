@@ -1,6 +1,6 @@
 package com.rainy.system.service;
 
-import com.rainy.system.entity.RoleMenuRel;
+import com.rainy.system.entity.RoleMenu;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Created by renguangli at 2022/9/28 0028 22:59
  */
-public interface RoleMenuRelService extends BaseService<RoleMenuRel> {
+public interface RoleMenuService extends BaseService<RoleMenu> {
 
     List<Long> listMenuIdsInRoleId(List<Long> roleIds);
 }

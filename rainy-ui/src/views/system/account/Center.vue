@@ -1,16 +1,12 @@
 <template>
-  <a-row :gutter="24">
-    <a-col :md="24" :lg="7" style="padding-right: 0">
+  <a-row :gutter="16">
+    <a-col :span="6">
       <a-card :bordered="false">
         <div class="account-center-avatarHolder">
           <div class="avatar">
-            <img :src="userStore.avatar" />
-            <a>
-              <div class="mask"><upload-outlined /></div>
-            </a>
+            <a-avatar :size="72" style="background-color: #f56a00">{{ userStore.userinfo.username }}</a-avatar>
           </div>
-          <div class="username">{{ userStore.userinfo.username }}</div>
-<!--          <div class="bio">{{ userStore.nickName }}</div>-->
+          <div class="username">{{ userStore.userinfo.nickName }}</div>
         </div>
         <div class="account-center-detail">
           <p><i class="title"></i>{{ userStore.nickName }}</p>
@@ -23,16 +19,19 @@
       </a-card>
     </a-col>
 
-    <a-col :md="24" :lg="17">
+    <a-col :span="18">
       <a-card
           :bordered="false"
           style="width: 100%"
           :tab-list="tabs"
           :active-tab-key="activeKey"
-          @tabChange="(key) => handleTabChange(key)"
+          @tabChange="(key) => onTabChange(key)"
       >
         <p v-if="activeKey === 'basic'">
           <Basic/>
+        </p>
+        <p v-if="activeKey === 'account'">
+          <a-button type="primary">修改密码</a-button>
         </p>
       </a-card>
     </a-col>
@@ -56,7 +55,7 @@ const tabs = [
   }
 ]
 const activeKey = ref('basic')
-const handleTabChange = key => {
+const onTabChange = key => {
   activeKey.value = key
 }
 </script>
@@ -67,32 +66,13 @@ const handleTabChange = key => {
   margin-bottom: 24px;
   & > .avatar {
     margin: 0 auto;
-    width: 104px;
-    height: 104px;
-    margin-bottom: 20px;
+    height: 84px;
     border-radius: 50%;
     overflow: hidden;
     img {
       height: 100%;
       width: 100%;
     }
-  }
-  .mask {
-    border-radius: 50%;
-    position: absolute;
-    margin-top: -104px;
-    width: 104px;
-    height: 104px;
-    background: rgba(101, 101, 101, 0.6);
-    color: #ffffff;
-    opacity: 0;
-    font-size: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .avatar a:hover .mask {
-    opacity: 1;
   }
   .username {
     font-size: 20px;

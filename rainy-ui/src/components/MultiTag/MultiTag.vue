@@ -1,5 +1,5 @@
 <template>
-  <div class="rainy-tags">
+  <div class="multi-tags">
     <a-tabs
         v-model:activeKey="activeKey"
         type="editable-card"

@@ -16,29 +16,65 @@
               <component :is="'user-outlined'" class="xn-icons" />
             </div>
           </div>
-          <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
-            <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
-              <a-alert v-if="errMessage" style="margin-bottom: 8px;" :message="errMessage" type="error" show-icon />
-              <a-input v-model:value="form.username" size="large" placeholder="请输入用户名">
-                <template #prefix>
-                  <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
-              <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码">
-                <template #prefix>
-                  <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
-                </template>
-              </a-input-password>
-            </a-form-item>
-            <a-form-item>
-              <a href="/" style="color: #0d84ff">忘记密码?</a>
-            </a-form-item>
-            <a-form-item>
-              <a-button style="width: 100%" size="large" type="primary" html-type="submit">登录</a-button>
-            </a-form-item>
-          </a-form>
+          <a-tabs v-model:activeKey="activeKey">
+            <a-tab-pane key="userAccount" tab="账号密码">
+              <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
+                <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
+                  <a-alert v-if="errMessage" style="margin-bottom: 8px;" :message="errMessage" type="error" show-icon />
+                  <a-input v-model:value="form.username" size="large" placeholder="请输入用户名">
+                    <template #prefix>
+                      <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input>
+                </a-form-item>
+                <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
+                  <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码">
+                    <template #prefix>
+                      <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input-password>
+                </a-form-item>
+                <a-form-item>
+                  <a href="/" style="color: #0d84ff">忘记密码?</a>
+                </a-form-item>
+                <a-form-item>
+                  <a-button style="width: 100%" size="large" type="primary" html-type="submit">登录</a-button>
+                </a-form-item>
+              </a-form>
+            </a-tab-pane>
+            <a-tab-pane key="userSms" :tab="'手机号登录'" force-render>
+              <a-form ref="phoneLoginFormRef">
+                <a-form-item name="phone">
+                  <a-input  placeholder="请输入手机号" size="large">
+                    <template #prefix>
+                      <mobile-outlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input>
+                </a-form-item>
+                <a-form-item name="phoneValidCode">
+                  <a-row :gutter="8">
+                    <a-col :span="17">
+                      <a-input
+                          placeholder="请输入验证码"
+                          size="large"
+                      >
+                        <template #prefix>
+                          <mail-outlined style="color: rgba(0, 0, 0, 0.25)" />
+                        </template>
+                      </a-input>
+                    </a-col>
+                    <a-col :span="7">
+                      <a-button size="large" style="width: 100%">获取验证码</a-button>
+                    </a-col>
+                  </a-row>
+                </a-form-item>
+                <a-form-item>
+                  <a-button type="primary" style="width: 100%" :loading="false" round size="large">登录</a-button>
+                </a-form-item>
+              </a-form>
+            </a-tab-pane>
+          </a-tabs>
+          <three-login/>
         </a-card>
       </div>
     </div>
@@ -51,7 +87,8 @@ import { useUserStore } from '../store/user'
 import { useAppStore } from '../store/app'
 import { notification } from 'ant-design-vue'
 import { timeFix } from '../utils/Utils'
-import { defaultConfig } from '@/config/defaultConfig'
+import ThreeLogin from './ThreeLogin.vue'
+import { defaultConfig } from '@/config/defaultConfig.js'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -62,6 +99,7 @@ const sys = ref({
   logo: appStore.config.sysLogo || defaultConfig.logo
 })
 
+const activeKey = ref('userAccount')
 const form = reactive({
   username: '',
   password: ''

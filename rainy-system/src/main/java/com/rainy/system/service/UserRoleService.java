@@ -1,6 +1,6 @@
 package com.rainy.system.service;
 
-import com.rainy.system.entity.UserRoleRel;
+import com.rainy.system.entity.UserRole;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Created by renguangli at 2022/9/19 17:53
  */
-public interface UserRoleRelService extends BaseService<UserRoleRel> {
+public interface UserRoleService extends BaseService<UserRole> {
 
     List<Long> listRoleIdsByUserId(Object userId);
 
