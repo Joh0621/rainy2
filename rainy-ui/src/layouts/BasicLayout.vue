@@ -38,7 +38,7 @@
       </router-link>
     </template>
     <setting-drawer v-model="proConfig" />
-    <multi-tag v-if="proConfig.multiTag" style="margin: -16px -16px 16px -16px"/>
+    <multi-tab v-if="proConfig.multiTab" style="margin: -16px -16px 16px -16px"/>
     <router-view v-if="!loading" #="{ Component, route }">
       <component :is="Component" :key="route.path" />
     </router-view>
@@ -77,7 +77,7 @@ const proConfig = ref({
   splitMenus: defaultConfig.splitMenus,
   headerHeight: defaultConfig.headerHeight,
   primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor,
-  multiTag: localStorage.getItem('multiTag') ? localStorage.getItem('multiTag') === 'true' : defaultConfig.multiTag
+  multiTab: localStorage.getItem('multiTab') ? localStorage.getItem('multiTab') === 'true' : defaultConfig.multiTab
 })
 
 const { nickName, avatar } = storeToRefs(store)

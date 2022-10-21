@@ -18,31 +18,3 @@ watch(locale, val => {
 
 const componentSize = ref('middle')
 </script>
-
-<style>
-#app {
-  height: 100%;
-}
-.ant-pro-sider {
-  z-index: 20;
-}
-.ant-modal-body {
-  padding-bottom: 0;
-}
-.has-breadcrumb {
-  padding: 10px 24px;
-}
-.table-query {
-  margin-bottom: 8px;
-}
-.ant-btn-link {
-  margin-right: 0;
-  padding: 0;
-}
-.ant-col {
-  padding-left: 0;
-}
-.bjs-powered-by {
-  display: none;
-}
-</style>

@@ -1,4 +1,4 @@
-package com.rainy.framework.config.mybatis.plus;
+package com.rainy.framework.config.mybatis;
 
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.hutool.core.util.StrUtil;
@@ -41,6 +41,10 @@ public class DataPermissionHandlerImpl implements DataPermissionHandler {
             return where;
         }
         Method method = UrlMethodMappingHolder.getCurrentControllerMethod();
+        // /users/{id} 获取不到
+        if (method == null) {
+            return where;
+        }
         DataPermission dataPermission = method.getAnnotation(DataPermission.class);
         if (dataPermission == null) {
             return where;

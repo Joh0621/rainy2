@@ -1,5 +1,6 @@
 import '@ant-design-vue/pro-layout/dist/style.css'
 import 'ant-design-vue/dist/antd.variable.min.css'
+import './default.less'
 
 import { createApp } from 'vue'
 import { ConfigProvider } from 'ant-design-vue'

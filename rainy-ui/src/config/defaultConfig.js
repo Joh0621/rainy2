@@ -8,7 +8,7 @@ export const defaultConfig = {
   splitMenus: false,
   collapsed: false,
   headerHeight: 55,
-  multiTag: true,
+  multiTab: true,
   menu: {
     locale: true
   },

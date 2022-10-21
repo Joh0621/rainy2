@@ -1,5 +1,5 @@
 <template>
-  <div class="multi-tags">
+  <div class="multi-tabs">
     <a-tabs
         v-model:activeKey="activeKey"
         type="editable-card"
@@ -17,34 +17,33 @@
         <div class="ant-multi-tabs-arrow" @click="scrollRight">
           <right-outlined />
         </div>
-<!--        <a-dropdown>-->
-<!--          <div class="ant-multi-tabs-drop">-->
-<!--            <DownOutlined />-->
-<!--          </div>-->
-<!--          <template #overlay>-->
-<!--            <a-menu>-->
-<!--              <a-menu-item>-->
-<!--                <reload-outlined  />-->
-<!--              </a-menu-item>-->
-<!--              <a-menu-item>-->
-<!--                关闭其他标签-->
-<!--              </a-menu-item>-->
-<!--              <a-menu-item>-->
-<!--                <expand-outlined />最大化-->
-<!--              </a-menu-item>-->
-<!--              <a-menu-item>-->
-<!--                <select-outlined class="rainy-header-tags-right" />-->
-<!--                在新的窗口中打开-->
-<!--              </a-menu-item>-->
-<!--            </a-menu>-->
-<!--          </template>-->
-<!--        </a-dropdown>-->
       </template>
       <a-tab-pane
-          v-for="tag in tagList"
-          :key="tag.fullPath"
-          :tab="tag.meta.title"
-          :closable="tag.meta.affix">
+          v-for="item in tagList"
+          :key="item.fullPath"
+          :closable="item.meta.affix">
+        <template #tab>
+          <a-dropdown :trigger="['contextmenu']">
+            <div>
+              {{item.meta.title}}
+            </div>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item @click="refresh">
+                  <reload-outlined  /> 刷新
+                </a-menu-item>
+                <a-menu-item @click="closeAll">
+                  <close-outlined /> 关闭其他标签
+                </a-menu-item>
+                <a-menu-item >
+                  <a :href="item.fullPath" target="_blank">
+                    <select-outlined /> 在新的窗口中打开
+                  </a>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </template>
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -113,6 +112,10 @@ const handleTabEdit = (fullPath) => {
 const scrollLeft = () => {
 }
 const scrollRight = () => {
+}
+const refresh = () => {
+}
+const closeAll = () => {
 }
 </script>
 

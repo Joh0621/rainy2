@@ -120,7 +120,7 @@ public class RoleController {
         return roleService.assignMenus(param.getId(), roleMenuList);
     }
 
-    @GetMapping("/role/menuIds")
+    @GetMapping("/role/orgIds")
     @Log(module = "角色管理", type = OpType.UPDATE, detail = "'查询了角色[' + #param.name + ']拥有的数据权限列表'")
     public List<Long> getOrgIdsByRoleId(IdNamesParam param) {
         List<RoleMenu> roleMenus = roleMenuService.lambdaQuery()
