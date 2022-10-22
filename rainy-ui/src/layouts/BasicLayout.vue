@@ -12,22 +12,22 @@
     <template #menuHeaderRender>
       <router-link :to="{ path: '/' }">
         <img :src="sys.logo" :alt="sys.title" />
-        <h1>{{ sys.title }}</h1>
+        <h1 v-if="!state.collapsed">{{ sys.title }}</h1>
       </router-link>
     </template>
     <template #headerContentRender>
-<!--      <menu-unfold-outlined v-if="state.collapsed" style="font-size: 18px; padding: 4px" @click="changeCollapsed" />-->
-<!--      <menu-fold-outlined v-else style="font-size: 18px; padding: 4px" @click="changeCollapsed" />-->
-<!--      <a-tooltip title="刷新">-->
-<!--        <redo-outlined style="font-size: 20px;" @click="reload" />-->
-<!--      </a-tooltip>-->
-<!--      {{ router.currentRoute.value.meta.title }}-->
       <PageContainer>
       </PageContainer>
     </template>
     <template #rightContentRender>
       <RightContent />
     </template>
+    <template #footerRender>
+      <GlobalFooter :links="[{ title: '首页', href: '#' }]" copyright="数据门户 &copy; 2022 信息所" />
+    </template>
+<!--    <template #menuExtraRender>-->
+<!--      首页-->
+<!--    </template>-->
     <!-- custom breadcrumb itemRender  -->
     <template #breadcrumbRender="{ route, params, routes }">
       <span v-if="routes.indexOf(route) === routes.length - 1">
@@ -49,7 +49,7 @@ import { useRouter } from 'vue-router'
 import { useAppStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { defaultConfig } from '@/config/defaultConfig'
-import { clearMenuItem } from '@ant-design-vue/pro-layout'
+import { GlobalFooter, clearMenuItem } from '@ant-design-vue/pro-layout'
 
 const router = useRouter()
 const store = useUserStore()
@@ -67,13 +67,18 @@ const state = reactive({
   selectedKeys: [] // default selectedKeys
 })
 
+const layout = ref(localStorage.getItem('layout') || defaultConfig.layout)
 const proConfig = ref({
-  layout: localStorage.getItem('layout') || defaultConfig.layout,
+  layout: layout.value,
+  siderWidth: defaultConfig.siderWidth,
+  collapsedWidth: defaultConfig.collapsedWidth,
+  headerHeight: defaultConfig.headerHeight,
+  contentWidth: defaultConfig.contentWidth,
   navTheme: defaultConfig.navTheme,
+  headerTheme: defaultConfig.navTheme,
   fixedHeader: defaultConfig.fixedHeader,
   fixSiderbar: defaultConfig.fixSiderbar,
-  splitMenus: defaultConfig.splitMenus,
-  headerHeight: defaultConfig.headerHeight,
+  splitMenus: !layout.value === 'mix',
   primaryColor: localStorage.getItem('primaryColor') || defaultConfig.primaryColor,
   multiTab: localStorage.getItem('multiTab') ? localStorage.getItem('multiTab') === 'true' : defaultConfig.multiTab
 })

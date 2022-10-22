@@ -4,9 +4,11 @@ export const defaultConfig = {
   layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
-  fixSiderbar: false,
+  fixSiderbar: true,
   splitMenus: false,
   collapsed: false,
+  siderWidth: 210,
+  collapsedWidth: 48,
   headerHeight: 55,
   multiTab: true,
   menu: {

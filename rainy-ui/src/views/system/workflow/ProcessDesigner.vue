@@ -25,6 +25,7 @@ import {
   CamundaPlatformPropertiesProviderModule
 } from 'bpmn-js-properties-panel'
 import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json'
+import translate from './translation/translate'
 import { ProcessBpmn20xml } from '@/api/workflow/workflow.js'
 import { bpmn20xml } from '@/views/system/workflow/bpmn20xml.js'
 import { message } from 'ant-design-vue'
@@ -37,6 +38,9 @@ onMounted(() => {
 const container = ref()
 const propertiesPanel = ref()
 const bpmModeler = ref()
+const translateModule = {
+  translate: ['value', translate]
+}
 const initBpmModeler = () => {
   bpmModeler.value = new BpmnModeler({
     container: container.value,
@@ -47,7 +51,8 @@ const initBpmModeler = () => {
       // 左边工具栏以及节点
       BpmnPropertiesProviderModule,
       BpmnPropertiesPanelModule,
-      CamundaPlatformPropertiesProviderModule
+      CamundaPlatformPropertiesProviderModule,
+      translateModule
     ],
     moddleExtensions: {
       camunda: CamundaBpmnModdle
@@ -55,6 +60,8 @@ const initBpmModeler = () => {
   })
 
   bpmModeler.value.on('commandStack.changed', (e) => {
+    // const canvas = bpmModeler.value.get('canvas')
+    // canvas.addMarker('UserTask_1', 'highlight')
     console.log(e)
   })
 }
@@ -120,6 +127,9 @@ const handleExportImg = () => {
 </script>
 
 <style lang="less">
+.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+  fill: green !important; /* color elements as green */
+}
 .bpmn-container {
   height: 550px
 }

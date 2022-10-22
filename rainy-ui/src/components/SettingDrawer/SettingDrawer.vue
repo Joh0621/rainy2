@@ -15,10 +15,9 @@
         <a-radio value="top">
           <img src="https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg" />
         </a-radio>
-<!--        <a-radio value="dark">-->
-<!--          <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" />-->
-<!--        </a-radio>-->
-        <!--        <a-radio value="mix">混合菜单布局</a-radio>-->
+        <a-radio value="mix">
+          <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" />
+        </a-radio>
       </a-radio-group>
       <h4>主题色</h4>
       <div>
@@ -66,18 +65,6 @@
           />
         </a-col>
       </a-row>
-      <a-row style="margin-bottom: 12px">
-        <a-col :span="12">自动分割菜单</a-col>
-        <a-col :span="12" style="text-align: right">
-          <a-switch
-            checked-children="开"
-            un-checked-children="关"
-            :checked="modelValue.splitMenus"
-            @change="checked => updateConf(checked, 'splitMenus')"
-          />
-        </a-col>
-      </a-row>
-
       <a-divider />
       <h3>内容区域</h3>
       <a-row style="margin-bottom: 12px">
@@ -119,8 +106,8 @@
           <a-switch
             checked-children="开"
             un-checked-children="关"
-            :checked="modelValue.multiTag"
-            @change="checked => updateConf(checked, 'multiTag')"
+            :checked="modelValue.multiTab"
+            @change="checked => updateConf(checked, 'multiTab')"
           />
         </a-col>
       </a-row>
