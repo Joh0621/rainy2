@@ -25,7 +25,7 @@
 <!--              <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />-->
 <!--            </a-form-item>-->
             <a-form-item>
-              <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入设备名称/设备编码/测点名称" />
+              <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入设备名称/测点名称" />
             </a-form-item>
             <a-form-item>
             </a-form-item>
@@ -72,8 +72,8 @@
 <script setup>
 import { Tree } from '@/api/main/dataDirectory'
 import { List as ListDevices } from '@/api/main/device'
-// import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue'
 import { useAppStore } from '@/store/app'
+import router from '@/router/index'
 const appStore = useAppStore()
 
 const fieldNames = {
@@ -114,7 +114,15 @@ const handleTreeSelect = (selectedKeys, e) => {
 }
 
 const dataLoading = ref(false)
-const queryParam = ref({})
+const queryParam = ref({
+  name: router.currentRoute.value.query.s
+})
+watch(
+  router.currentRoute,
+  (e) => {
+    queryParam.value.name = router.currentRoute.value.query.s
+  }
+)
 const listData = ref([])
 const pagination = {
   onChange: (page, size) => {
