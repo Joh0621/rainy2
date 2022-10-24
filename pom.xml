@@ -32,7 +32,7 @@
         <bcprov.version>1.71</bcprov.version>
         <lombok.version>1.18.24</lombok.version>
         <druid.version>1.2.12</druid.version>
-        <flowable.version>6.7.2</flowable.version>
+        <camunda.version>7.17.0</camunda.version>
         <dataway.version>4.2.5</dataway.version>
     </properties>
 
@@ -65,7 +65,7 @@
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-bom</artifactId>
-                <version>7.17.0</version>
+                <version>${camunda.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

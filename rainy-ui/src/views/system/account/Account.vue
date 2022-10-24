@@ -1,5 +1,5 @@
 <template>
-  <a-row :gutter="24">
+  <a-row :gutter="16">
     <a-col :md="24" :lg="7" style="padding-right: 0">
       <a-card :bordered="false">
         <div class="account-center-avatarHolder">
