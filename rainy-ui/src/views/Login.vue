@@ -1,46 +1,49 @@
 <template>
   <div class="login_background">
-    <div class="login_background_front"></div>
-    <div class="login_main">
-      <div class="login_config">
-        <a-dropdown>
-          <global-outlined />
-        </a-dropdown>
-      </div>
-      <div class="login-form">
-        <a-card>
-          <div class="login-header">
-            <div class="logo">
-              <img :alt="sys.title" :src="sys.logo" />
-              <label>{{ sys.title }}</label>
-              <component :is="'user-outlined'" class="xn-icons" />
+    <div class="login_wrap">
+       <div class="left_wrap">
+          <img src="/img/logo.png" class="logo_img"/>
+       </div>
+       <div class="right_wrap">
+           <div class="login_main">
+            <div class="login-form">
+              <div class="login-form-wrap">
+                <div class="login-header">
+                  <div class="logo">
+                    <img :alt="sys.title" :src="sys.logo" />
+                    <label>{{ sys.title }}</label>
+                    <component :is="'user-outlined'" class="xn-icons" />
+                  </div>
+                </div>
+                <img src="/img/login_tip.png" class="login_tip"/>
+              <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
+                <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
+                  <a-alert v-if="errMessage" style="margin-bottom: 8px;height:30px;" :message="errMessage" type="error" show-icon />
+                  <div v-if="!errMessage" style="margin-bottom: 8px;height:30px;">&nbsp;</div>
+                  <a-input v-model:value="form.username" size="large" placeholder="请输入用户名">
+                    <template #prefix>
+                      <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input>
+                </a-form-item>
+                <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
+                  <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码">
+                    <template #prefix>
+                      <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
+                    </template>
+                  </a-input-password>
+                </a-form-item>
+                <a-form-item>
+                  <a href="/" class="forget_password">忘记密码?</a>
+                </a-form-item>
+                <a-form-item>
+                  <a-button style="width: 100%; background: #205986; border-color:#205986;border-radius:25px;" size="large" type="primary" html-type="submit">登录</a-button>
+                </a-form-item>
+              </a-form>
+            </div>
             </div>
           </div>
-          <a-form :model="form" @finish="onFinish" @finishFailed="onFinishFailed" autocomplete="off">
-            <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
-              <a-alert v-if="errMessage" style="margin-bottom: 8px;" :message="errMessage" type="error" show-icon />
-              <a-input v-model:value="form.username" size="large" placeholder="请输入用户名">
-                <template #prefix>
-                  <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
-                </template>
-              </a-input>
-            </a-form-item>
-            <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
-              <a-input-password v-model:value="form.password" size="large" placeholder="请输入密码">
-                <template #prefix>
-                  <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
-                </template>
-              </a-input-password>
-            </a-form-item>
-            <a-form-item>
-              <a href="/" style="color: #0d84ff">忘记密码?</a>
-            </a-form-item>
-            <a-form-item>
-              <a-button style="width: 100%" size="large" type="primary" html-type="submit">登录</a-button>
-            </a-form-item>
-          </a-form>
-        </a-card>
-      </div>
+       </div>
     </div>
   </div>
 </template>
@@ -96,32 +99,94 @@ const onFinishFailed = (errorInfo) => {
   background-position: center;
   background-image: url(/img/login_background.png);
 }
-.login_background_front {
-  width: 450px;
-  height: 450px;
-  margin-left: 100px;
-  margin-top: 15%;
-  overflow: hidden;
-  /*position: relative;*/
-  background-size: cover;
-  background-position: center;
-  background-image: url(/img/login_background_front.png);
-  animation-name: myfirst;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-delay: 1s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-play-state: running;
-  /* Safari and Chrome: */
-  -webkit-animation-name: myfirst;
-  -webkit-animation-duration: 5s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-delay: 1s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  -webkit-animation-play-state: running;
+
+.login_wrap{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:1000px;
+  height:500px;
+  position:absolute;
 }
+.left_wrap{
+  width:620px;
+  height:100%;
+  float:left;
+  overflow: hidden;
+  background-position: center;
+  background-image: url(/img/left_background.png);
+  background-size: 170%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left:15px;
+  z-index:-998;
+}
+.logo_img{
+    width: 360px;
+    height: auto;
+    position:absolute;
+    top:60px;
+    left:120px;
+}
+.login_tip{
+  width:40px;
+  height:auto;
+  position: absolute;
+  top:100px;
+  left:60px;
+}
+.right_wrap{
+  width:520px;
+  height:100%;
+  overflow: hidden;
+  background-position: center;
+  background-image: url(/img/right_background.png);
+  background-size: 160%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top:16px;
+  left:580px;
+  z-index:-999;
+}
+.forget_password{
+  color: #666666;
+  float:right;
+}
+.ant-input-affix-wrapper{
+  border: 0px solid #d9d9d9;
+  border-bottom-color: #666666;
+  border-bottom-width: 1px;
+  border-radius: 2px;
+  background:rgba(255,0,0,0);
+}
+
+.ant-input-affix-wrapper-focused, .ant-input-affix-wrapper:focus{
+  box-shadow: 0 0 0 0px var(--ant-primary-color-outline);
+  border-right-width:0px!important;
+}
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+  border-bottom-color: #666666;
+  border-bottom-width: 1px;
+  border-right-width: 0px!important;
+  z-index: 1;
+}
+/deep/ .ant-input{
+  background-color: rgba(255,0,0,0);
+}
+.ant-form-item-has-error :not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper{
+  background-color:rgba(255,0,0,0);
+}
+.ant-form-item-has-error :not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus{
+  border:0px;
+  box-shadow:0 0 0 0px var(--ant-primary-color-outline);
+  border-right-width:0px!important;
+}
+/deep/ .ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover{
+  background-color:rgba(255,0,0,0);
+}
+
+
+
 @keyframes myfirst {
   0% {
     left: 0;
@@ -150,6 +215,7 @@ const onFinishFailed = (errorInfo) => {
     top: 0;
   }
 }
+
 .login_adv__title h2 {
   font-size: 40px;
 }
@@ -182,20 +248,22 @@ const onFinishFailed = (errorInfo) => {
 /*background-image:linear-gradient(transparent, #000);*/
 .login_main {
   flex: 1;
+  margin-top:100px;
   overflow: auto;
   display: flex;
 }
 .login-form {
-  top: 15%;
+  /*top: 15%;
   right: 15%;
-  position: absolute;
-  width: 450px;
-  margin-left: 10%;
+  position: absolute;*/
+  width: 260px;
+  margin-left: 15%;
   margin-top: 20px;
   padding: 10px 0;
 }
 .login-header {
   margin-bottom: 20px;
+  display:none;
 }
 .login-header .logo {
   display: flex;
