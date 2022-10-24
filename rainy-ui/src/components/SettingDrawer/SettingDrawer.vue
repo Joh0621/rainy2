@@ -6,19 +6,79 @@
         <CloseOutlined v-else />
       </div>
     </template>
-    <div class="margin-bottom: 24px">
-      <h3>导航模式</h3>
-      <a-radio-group :value="modelValue.layout" @change="e => updateConf(e.target.value, 'layout')">
-        <a-radio value="side">
-          <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" />
-        </a-radio>
-        <a-radio value="top">
-          <img src="https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg" />
-        </a-radio>
-        <a-radio value="mix">
-          <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" />
-        </a-radio>
-      </a-radio-group>
+    <div>
+      <h4>整体风格设置</h4>
+      <div class="setting-drawer-checkbox">
+        <a-tooltip>
+          <template #title>
+            亮色菜单风格
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('light', 'navTheme')">
+            <img src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg" alt="light">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="navTheme === 'light'" />
+            </div>
+          </div>
+        </a-tooltip>
+        <a-tooltip>
+          <template #title>
+            暗色菜单风格
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('dark', 'navTheme')">
+            <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="navTheme === 'dark'" />
+            </div>
+          </div>
+        </a-tooltip>
+        <a-tooltip>
+          <template #title>
+            暗黑模式
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('realDark', 'navTheme')">
+            <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" alt="realDark">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="navTheme === 'realDark'" />
+            </div>
+          </div>
+        </a-tooltip>
+      </div>
+      <h4>整体布局设置</h4>
+      <div class="setting-drawer-checkbox">
+        <a-tooltip>
+          <template #title>
+            侧边菜单布局
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('side', 'layout')">
+            <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="side">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="layout === 'side'" />
+            </div>
+          </div>
+        </a-tooltip>
+        <a-tooltip>
+          <template #title>
+            顶部菜单布局
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('top', 'layout')">
+            <img src="https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg" alt="top">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="layout === 'top'" />
+            </div>
+          </div>
+        </a-tooltip>
+        <a-tooltip>
+          <template #title>
+            混合布局
+          </template>
+          <div class="setting-drawer-item" @click="updateConf('mix', 'layout')">
+            <img class="layout-mix" style="width: 49px;height: 42px" :src="layoutMix" alt="mix">
+            <div class="setting-drawer-selectIcon">
+              <check-outlined v-if="layout === 'mix'" />
+            </div>
+          </div>
+        </a-tooltip>
+      </div>
       <h4>主题色</h4>
       <div>
         <a-tooltip v-for="(item, index) in colors" :key="index">
@@ -117,6 +177,8 @@
 
 <script setup>
 import { apply, colors } from '@/hooks/useTheme'
+import layoutMix from '@/assets/layout-mix.png'
+import { defaultConfig } from '@/config/defaultConfig'
 
 const props = defineProps({
   modelValue: {}
@@ -131,7 +193,15 @@ const handleShowDrawer = () => {
   visible.value = !visible.value
 }
 
+const navTheme = ref(localStorage.getItem('navTheme') || defaultConfig.navTheme)
+const layout = ref(localStorage.getItem('layout') || defaultConfig.layout)
 const updateConf = (val, type) => {
+  if (type === 'navTheme') {
+    navTheme.value = val
+  }
+  if (type === 'layout') {
+    layout.value = val
+  }
   localStorage.setItem(type, val)
   const newVal = {
     ...toRaw(props.modelValue),
@@ -168,5 +238,24 @@ const updateTheme = (color) => {
     color: rgb(255, 255, 255);
     font-size: 20px;
   }
+}
+
+.setting-drawer-checkbox {
+  display: flex;
+  cursor: pointer;
+
+  .setting-drawer-item {
+    margin-right: 16px;
+    .setting-drawer-selectIcon {
+      position: relative;
+      left: 20px;
+      bottom: 32px;
+      color: var(--ant-primary-color);
+    }
+  }
+}
+.layout-mix {
+  border-radius: 4px;
+  box-shadow: 0 1px 2.5px 0 rgb(0 0 0 / 18%);
 }
 </style>
