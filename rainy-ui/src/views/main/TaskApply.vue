@@ -47,6 +47,9 @@
                 <a-button :disabled="record.approved !== 1" @click="downloadPointCode(record)" type="link" size="small">下载点码</a-button>
               </a-menu-item>
               <a-menu-item>
+                <a-button :disabled="record.approved !== 1" @click="lookAccessToken(record)" type="link" size="small">接口密钥</a-button>
+              </a-menu-item>
+              <a-menu-item>
                 <a-popconfirm :disabled="record.approved !== 1" title="确认取消申请吗？" @confirm="handleCancelApply(record)">
                   <a-button :disabled="record.approved !== 1" type="link" size="small" danger>取消申请</a-button>
                 </a-popconfirm>
@@ -63,6 +66,7 @@
     </b-table>
     <TaskComplete ref="taskComplete" @ok="handleOk"></TaskComplete>
     <TaskTrack ref="taskTrack"></TaskTrack>
+    <AccessToken ref="accessToken"></AccessToken>
   </a-card>
 </template>
 
@@ -70,6 +74,7 @@
 import { List, CancelApply, PointDownload } from '@/api/main/dataApply'
 import TaskComplete from '../system/workflow/TaskComplete.vue'
 import TaskTrack from '../system/workflow/TaskTrack.vue'
+import AccessToken from './AccessToken.vue'
 import { useAppStore } from '@/store/app'
 import { message } from 'ant-design-vue'
 import { download } from '@/utils/Utils'
@@ -107,6 +112,11 @@ const downloadPointCode = record => {
   PointDownload(param).then(res => {
     download(res)
   })
+}
+
+const accessToken = ref()
+const lookAccessToken = (record) => {
+  accessToken.value.open(record)
 }
 
 const handleCancelApply = record => {

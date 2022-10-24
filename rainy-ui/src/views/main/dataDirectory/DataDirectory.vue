@@ -1,5 +1,5 @@
 <template>
-  <a-row :gutter="24">
+  <a-row :gutter="16">
     <a-col :span="5">
       <a-card>
         <a-skeleton :loading="loading">

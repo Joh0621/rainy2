@@ -10,4 +10,6 @@ import com.rainy.dmplatfrom.entity.UserDataRel;
  */
 public interface UserDataRelService extends BaseService<UserDataRel> {
 
+    boolean cancelApply(Long userDataId);
+
 }

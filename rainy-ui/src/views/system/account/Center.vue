@@ -1,63 +1,44 @@
 <template>
-  <a-row :gutter="16">
-    <a-col :span="6">
-      <a-card :bordered="false">
-        <div class="account-center-avatarHolder">
-          <div class="avatar">
-            <a-avatar :size="72" style="background-color: #f56a00">{{ userStore.userinfo.username }}</a-avatar>
-          </div>
-          <div class="username">{{ userStore.userinfo.nickName }}</div>
-        </div>
-        <div class="account-center-detail">
-          <p><i class="title"></i>{{ userStore.nickName }}</p>
-          <p><i class="group"></i>{{ userStore.userinfo.org }}</p>
-          <p>
-            <i class="address"></i>
-            <span>{{ userStore.userinfo.username }}</span>
-          </p>
-        </div>
-      </a-card>
+
+  <a-row>
+    <a-col :span="5">
+      <a-menu
+          :style="style"
+          v-model:selectedKeys="selectedKeys"
+          mode="inline"
+          theme="light"
+      >
+        <a-menu-item :key="1">
+          <template #icon>
+            <MailOutlined />
+          </template>
+          基本设置
+        </a-menu-item>
+        <a-menu-item :key="2">
+          <template #icon>
+            <CalendarOutlined />
+          </template>
+          安全设置
+        </a-menu-item>
+      </a-menu>
     </a-col>
 
-    <a-col :span="18">
-      <a-card
-          :bordered="false"
-          style="width: 100%"
-          :tab-list="tabs"
-          :active-tab-key="activeKey"
-          @tabChange="(key) => onTabChange(key)"
-      >
-        <p v-if="activeKey === 'basic'">
-          <Basic/>
-        </p>
-        <p v-if="activeKey === 'account'">
-          <a-button type="primary">修改密码</a-button>
-        </p>
+    <a-col :span="19">
+      <a-card v-if="selectedKeys[0] === 1" title="基本设置">
+        <Basic/>
+      </a-card>
+      <a-card v-if="selectedKeys[0] === 2" title="安全设置">
+        <a-button type="primary">修改密码</a-button>
       </a-card>
     </a-col>
   </a-row>
 </template>
 
 <script setup>
-import { useUserStore } from '@/store/user'
 import Basic from '@/views/system/account/Basic.vue'
 
-const userStore = useUserStore()
-
-const tabs = [
-  {
-    key: 'basic',
-    tab: '基本信息'
-  },
-  {
-    key: 'account',
-    tab: '账号中心'
-  }
-]
-const activeKey = ref('basic')
-const onTabChange = key => {
-  activeKey.value = key
-}
+const selectedKeys = ref([1])
+const style = 'height: ' + (document.documentElement.clientHeight - 200) + 'px'
 </script>
 
 <style lang="less" scoped>

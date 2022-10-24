@@ -1,5 +1,10 @@
 package com.rainy.dmplatfrom;
 
+import cn.hutool.core.lang.UUID;
+import com.fasterxml.uuid.impl.UUIDUtil;
+import com.rainy.dmplatfrom.entity.AccessToken;
+import com.rainy.dmplatfrom.mapper.AccessTokenMapper;
+import com.rainy.framework.constant.DictConstants;
 import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.dmplatfrom.entity.UserDataRel;
 import com.rainy.dmplatfrom.service.UserDataRelService;
@@ -22,6 +27,7 @@ import java.util.Map;
 public class AutoApprovalTask implements JavaDelegate {
 
     private final UserDataRelService userDataRelService;
+    private final AccessTokenMapper accessTokenMapper;
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -30,6 +36,11 @@ public class AutoApprovalTask implements JavaDelegate {
         Object dataType = variables.get("dataType");
         Object dataId = variables.get("dataId");
         Object approved = variables.get("approved");
+        if ((int) approved == DictConstants.APPROVE_STATUS_1) {
+            AccessToken accessToken = new AccessToken();
+            accessToken.setUserDataId((Long) dataId);
+            accessToken.setAccessToken(UUID.fastUUID().toString(true));
+        }
         userDataRelService.lambdaUpdate()
                 .eq(UserDataRel::getApplyUsername, applyUsername)
                 .eq(UserDataRel::getDataType, dataType)
