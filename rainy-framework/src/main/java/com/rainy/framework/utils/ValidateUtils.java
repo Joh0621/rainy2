@@ -25,10 +25,13 @@ public class ValidateUtils {
     }
 
     public static void isEquals(String str1, String str2, String message, Object... variables) {
-        if (str1 == null || str2 == null) {
-            return;
-        }
         if (StrUtil.equals(str1, str2)) {
+            throw new IllegalArgumentException(StrUtil.format(message, variables));
+        }
+    }
+
+    public static void isNotEquals(String str1, String str2, String message, Object... variables) {
+        if (!StrUtil.equals(str1, str2)) {
             throw new IllegalArgumentException(StrUtil.format(message, variables));
         }
     }

@@ -1,50 +1,52 @@
 <template>
-  <a-form ref="formRef" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-    <a-form-item v-show="false" name="id"></a-form-item>
-    <a-form-item
-        name="username"
-        label="账号"
-        :rules="[{ required: true, message: '请输入账号' }]"
-        has-feedback
-    >
-      <a-input :disabled="true" v-model:value="form.username" />
-    </a-form-item>
-    <a-form-item
-        name="nickName"
-        label="昵称"
-        :rules="[{ required: true, message: '请输入昵称' }]"
-        has-feedback
-    >
-      <a-input v-model:value="form.nickName" />
-    </a-form-item>
-    <a-form-item
-        name="birthday"
-        label="生日"
-        :rules="[{ required: true, message: '请输入生日' }]"
-        has-feedback
-    >
-      <a-date-picker v-model:value="form.birthday" :value-format="'YYYY-MM-DD'" :format="'YYYY-MM-DD'" placeholder="请输入生日" />
-    </a-form-item>
-    <a-form-item
-        name="telephone"
-        label="手机号"
-        :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
-        has-feedback
-    >
-      <a-input v-model:value="form.telephone" />
-    </a-form-item>
-    <a-form-item
-        name="email"
-        label="邮箱"
-        :rules="[{ type: 'email', required: true, message: '请输入正确格式的邮箱' }]"
-        has-feedback
-    >
-      <a-input v-model:value="form.email" placeholder="请输入邮箱"/>
-    </a-form-item>
-    <a-form-item :wrapper-col="{ span: 14, offset: 2 }">
-      <a-button type="primary" @click="onSubmit">更新基本信息</a-button>
-    </a-form-item>
-  </a-form>
+  <a-spin :spinning="loading">
+    <a-form ref="formRef" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-item v-show="false" name="id"></a-form-item>
+      <a-form-item
+          name="username"
+          label="账号"
+          :rules="[{ required: true, message: '请输入账号' }]"
+          has-feedback
+      >
+        <a-input :disabled="true" v-model:value="form.username" />
+      </a-form-item>
+      <a-form-item
+          name="nickName"
+          label="昵称"
+          :rules="[{ required: true, message: '请输入昵称' }]"
+          has-feedback
+      >
+        <a-input v-model:value="form.nickName" />
+      </a-form-item>
+      <a-form-item
+          name="birthday"
+          label="生日"
+          :rules="[{ required: true, message: '请输入生日' }]"
+          has-feedback
+      >
+        <a-date-picker v-model:value="form.birthday" :value-format="'YYYY-MM-DD'" :format="'YYYY-MM-DD'" placeholder="请输入生日" />
+      </a-form-item>
+      <a-form-item
+          name="telephone"
+          label="手机号"
+          :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
+          has-feedback
+      >
+        <a-input v-model:value="form.telephone" />
+      </a-form-item>
+      <a-form-item
+          name="email"
+          label="邮箱"
+          :rules="[{ type: 'email', required: true, message: '请输入正确格式的邮箱' }]"
+          has-feedback
+      >
+        <a-input v-model:value="form.email" placeholder="请输入邮箱"/>
+      </a-form-item>
+      <a-form-item :wrapper-col="{ span: 14, offset: 2 }">
+        <a-button type="primary" @click="onSubmit">更新基本信息</a-button>
+      </a-form-item>
+    </a-form>
+  </a-spin>
 </template>
 
 <script setup>
@@ -97,7 +99,9 @@ const onSubmit = () => {
       })
     })
     .finally(() => {
-      loading.value = false
+      setTimeout(() => {
+        loading.value = false
+      }, 200)
     })
 }
 </script>

@@ -20,7 +20,7 @@ public class PasswordUpdateParam {
     @NotBlank
     private String password;
     @NotBlank
-    private String configPassword;
+    private String confirmPassword;
 
     public User convert() {
         return BeanUtil.copyProperties(this, User.class);

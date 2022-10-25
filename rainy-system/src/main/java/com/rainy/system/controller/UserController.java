@@ -146,9 +146,9 @@ public class UserController {
     public Boolean updatePassword(@RequestBody @Validated PasswordUpdateParam param) {
         User user = userService.getById(SecurityUtils.getUserId());
         // 1.校验原密码是否正确
-        ValidateUtils.isEquals(param.getOldPassword(), user.getPassword(),"旧密码不正确！");
-        // 2.校验原密码是否正确
-        ValidateUtils.isEquals(param.getOldPassword(), user.getPassword(),"密码与确认密码不一致！");
+        ValidateUtils.isNotEquals(param.getOldPassword(), user.getPassword(),"原密码不正确！");
+        // 2.校验新密码与确认密码是否相等
+        ValidateUtils.isNotEquals(param.getConfirmPassword(), param.getPassword(),"密码与确认密码不一致！");
         // 3.检验新密码与旧密码是否相同
         ValidateUtils.isEquals(param.getOldPassword(), param.getPassword(),"新密码与旧密码不能相同！");
         // 4.检验新密码是否包含用户名
