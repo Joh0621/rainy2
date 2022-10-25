@@ -1,12 +1,10 @@
 import request, { method } from '@/utils/request'
 
 const api = {
-  List: '/devices',
-  Detail: '/device',
-  Export: '/devices/export',
-  Add: '/device',
-  Del: '/devices',
-  Update: '/device/update'
+  List: '/interfaces',
+  Add: '/interface',
+  Del: '/interfaces',
+  Update: '/interface/update'
 }
 
 export function List (parameter) {
@@ -14,20 +12,6 @@ export function List (parameter) {
     url: api.List,
     method: method.GET,
     params: parameter
-  })
-}
-
-export function DetailById (id) {
-  return request({
-    url: `${api.Detail}/${id}`,
-    method: method.GET
-  })
-}
-
-export function Detail (deviceCode) {
-  return request({
-    url: `${api.List}/${deviceCode}`,
-    method: method.GET
   })
 }
 

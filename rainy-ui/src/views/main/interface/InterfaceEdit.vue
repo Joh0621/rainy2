@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    :title="(flag ? '新增' : '编辑') + '点码'"
+    :title="(flag ? '新增' : '编辑') + '接口'"
     :confirm-loading="confirmLoading"
     :destroyOnClose="false"
     :maskClosable="false"
@@ -43,13 +43,13 @@
       </a-form-item>
       <a-form-item
           name="code"
-          label="数据点码"
-          :rules="[{ required: true, message: '请输入数据点码' }]"
+          label="数据接口"
+          :rules="[{ required: true, message: '请输入数据接口' }]"
           has-feedback
       >
         <a-input
             v-model:value="form.code"
-            placeholder="请输入数据点码"
+            placeholder="请输入数据接口"
         />
       </a-form-item>
       <a-form-item
@@ -63,7 +63,7 @@
   </a-modal>
 </template>
 <script setup>
-import { Add, Edit } from '@/api/main/point'
+import { Add, Edit } from '@/api/main/interface'
 import { message } from 'ant-design-vue'
 
 const labelCol = reactive({ span: 5, offset: 0 })

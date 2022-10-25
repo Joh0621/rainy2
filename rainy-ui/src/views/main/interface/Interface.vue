@@ -24,37 +24,21 @@
         @add="handleAdd"
         @batch-del="handleBatchDel"
     >
-      <template #operation>
-        <a-button @click="downloadTemplate" type="dashed">
-          <download-outlined/>
-          模版下载
-        </a-button>
+      <template #status="{ record }">
+        <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
       </template>
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
-        <a-dropdown>
-          <a class="ant-dropdown-link" @click.prevent>
-            更多  <DownOutlined />
-          </a>
-          <template #overlay>
-            <a-menu>
-              <a-menu-item>
-              </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
-                  <a-button type="link" size="small" danger>删除</a-button>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
+        <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
+          <a-button type="link" size="small" danger>删除</a-button>
+        </a-popconfirm>
       </template>
     </b-table>
   </a-card>
 </template>
 <script setup>
-import { List, Del } from '@/api/main/interface.js'
+import { List, Del, Edit } from '@/api/main/interface.js'
 import { toIdNamesParam } from '@/utils/ParamUtils.js'
 import { message } from 'ant-design-vue'
 
@@ -62,12 +46,9 @@ const table = ref()
 const queryParam = ref({})
 const columns = [
   { title: '接口名称', dataIndex: 'name' },
-  { title: '所属场站', dataIndex: 'dataDirectoryName' },
-  { title: '专业', dataIndex: 'major' },
-  { title: '更新频率', dataIndex: 'updateFrequency' },
-  { title: '责任部门', dataIndex: 'orgName' },
-  { title: '责任人', dataIndex: 'responsible' },
-  { title: '描述', dataIndex: 'description', ellipsis: true },
+  { title: '接口编码', dataIndex: 'code' },
+  { title: '描述', dataIndex: 'description' },
+  { title: '启用停用', dataIndex: 'status' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
@@ -82,6 +63,14 @@ const handleOk = () => {
 const handleReset = () => {
   queryParam.value = {}
   handleOk()
+}
+
+const handleChange = (record) => {
+  Edit(record).then(res => {
+    if (res.success) {
+      message.info(res.message)
+    }
+  })
 }
 
 const handleEdit = (record) => {
