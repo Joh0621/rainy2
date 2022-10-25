@@ -7,6 +7,8 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import static com.rainy.system.entity.User.PASSWORD_REGEX;
+
 /**
  * rainy
  *
@@ -18,12 +20,9 @@ public class PasswordUpdateParam {
     @NotBlank
     private String oldPassword;
     @NotBlank
+    @Pattern(regexp = PASSWORD_REGEX, message = "密码至少8位且包含大写字母、小写字母、数字或特殊符号中的任意三种!")
     private String password;
     @NotBlank
     private String confirmPassword;
-
-    public User convert() {
-        return BeanUtil.copyProperties(this, User.class);
-    }
 
 }

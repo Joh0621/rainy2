@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,11 +30,15 @@ import java.time.LocalDateTime;
 @TableName("t_user")
 public class User extends BaseEntity {
 
+    public static final String PASSWORD_REGEX = "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_]+$)(?![a-z0-9]+$)(?![a-z\\W_]+$)(?![0-9\\W_]+$)[a-zA-Z0-9\\W_]{8,20}$";
+
     private Long orgId;
     @NotNull
     @NotUnique(groups = {Group.Add.class, Group.Edit.class}, entity = User.class, field = "username")
     private String username;
     @NotNull
+
+    @Pattern(regexp = PASSWORD_REGEX, message = "密码至少8位且包含大写字母、小写字母、数字或特殊符号中的任意三种!")
     private String password;
     @NotUnique(groups = {Group.Add.class, Group.Edit.class}, entity = User.class, field = "nick_name")
     private String nickName;
