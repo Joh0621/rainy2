@@ -1,12 +1,41 @@
 <template>
   <a-row :gutter="16">
+    <a-col :span="6">
+      <a-card :bordered="false">
+        <a-statistic
+            title="我的申请"
+            :value="count[3]"
+            :value-style="{ color: 'blue', cursor: 'pointer' }">
+          <template #formatter="record">
+            <router-link to="/apply">
+              {{ record.value }}
+            </router-link>
+          </template>
+        </a-statistic>
+      </a-card>
+    </a-col>
+    <a-col :span="6">
+      <a-card :bordered="false">
+        <a-statistic
+            @click="Count"
+            title="我的待办"
+            :value="count[4]"
+            :value-style="{ color: 'blue', cursor: 'pointer' }">
+          <template #formatter="record">
+            <router-link to="/workflow/task/todo">
+              {{ record.value }}
+            </router-link>
+          </template>
+        </a-statistic>
+      </a-card>
+    </a-col>
     <a-col :span="4">
       <a-card :bordered="false">
         <a-statistic
             title="接入场站"
             :value="count[0]"
             suffix="个"
-            :value-style="{ color: '#3f8600' }">
+            :value-style="{ color: 'red' }">
         </a-statistic>
       </a-card>
     </a-col>
@@ -15,8 +44,8 @@
         <a-statistic
             title="接入设备"
             :value="count[1]"
-            suffix="个"
-            :value-style="{ color: '#3f8600' }">
+            suffix="台"
+            :value-style="{ color: 'blue' }">
         </a-statistic>
       </a-card>
     </a-col>
@@ -34,12 +63,12 @@
   <a-row class="margin-t16" :gutter="16">
     <a-col :span="12">
       <a-card :bordered="false">
-        <bar-chart :height="300" :options="barOptions"/>
+        <pie-chart :height="300" :options="pieOptions"/>
       </a-card>
     </a-col>
     <a-col :span="12">
       <a-card :bordered="false">
-        <pie-chart :height="300" :options="pieOptions"/>
+        <bar-chart :height="300" :options="barOptions"/>
       </a-card>
     </a-col>
   </a-row>
@@ -60,18 +89,18 @@ const loadCount = () => {
 }
 const barOptions = ref({
   title: {
-    text: '接入场站'
+    text: '测点数量统计'
   },
   tooltip: {},
   xAxis: {
-    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+    data: ['鲁能迎风岭', '天桥山', '大苏计', '金阳风光储']
   },
   yAxis: {},
   series: [
     {
       name: '销量',
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
+      data: [52322, 23330, 33336, 82323]
     }
   ]
 })

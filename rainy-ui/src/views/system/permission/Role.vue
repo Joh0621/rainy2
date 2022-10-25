@@ -40,10 +40,10 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <a-button @click="handleAuthorize(record)" type="link" size="small">分配菜单</a-button>
+                <a-button :disabled="record.code === 'role_superAdmin'" @click="handleAuthorize(record)" type="link" size="small">分配菜单</a-button>
               </a-menu-item>
               <a-menu-item>
-                <a-button @click="handleAssignDataPermission(record)" type="link" size="small">分配数据权限</a-button>
+                <a-button :disabled="record.code === 'role_superAdmin'" @click="handleAssignDataPermission(record)" type="link" size="small">分配数据权限</a-button>
               </a-menu-item>
               <a-menu-item>
                 <a-popconfirm :disabled="record.isDefault" title="确认删除吗？" @confirm="handleDel(record)">

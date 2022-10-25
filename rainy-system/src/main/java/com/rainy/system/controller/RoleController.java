@@ -76,7 +76,7 @@ public class RoleController {
     }
 
     @PostMapping("/role/menus/assign")
-    @SaCheckPermission("role:assignMenus")
+    @SaCheckPermission("role:assignMenu")
     @Log(module = "角色管理", type = OpType.UPDATE, detail = "'给角色[' + #param.name + ']分配了菜单[' + #param.names + ']'")
     public Boolean assignMenus(@RequestBody @Validated(Group.ASSIGN.class) IdNamesParam param) {
         List<RoleMenu> roleMenuList = new ArrayList<>();

@@ -14,8 +14,5 @@ public interface MenuService extends IService<Menu> {
 
     List<Menu> tree(Menu menu);
     List<Menu> treeByUserId(Long userId);
-    List<String> listPermissionsInId(List<Long> menuIds);
-
-    String getName(String permission);
 
 }
