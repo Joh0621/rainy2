@@ -31,18 +31,19 @@ import PointPreview from './PointPreview.vue'
 import BloodRel from './BloodRel.vue'
 import ApiDoc from './ApiDoc.vue'
 import ApplyData from './ApplyData.vue'
-import { Detail } from '@/api/main/device'
+import { DetailById } from '@/api/main/device'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 onMounted(() => {
   detail()
 })
-const deviceCode = router.currentRoute.value.params.deviceCode
+const deviceCode = ref()
 const device = ref({})
 const detail = () => {
-  Detail(deviceCode).then(res => {
+  DetailById(router.currentRoute.value.params.id).then(res => {
     device.value = res.data
+    deviceCode.value = res.data.code
   })
 }
 const activeKey = ref('0')

@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 @TableName("t_operation_log")
 public class OperationLog {
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Integer id;
+    @TableId(type = IdType.AUTO)
+    private Long id;
     private String module;
     private String type;
     private String username;

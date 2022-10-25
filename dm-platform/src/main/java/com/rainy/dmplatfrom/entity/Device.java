@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @TableName("biz_device")
 public class Device {
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     @NotNull
     private Long dataDirectoryId;

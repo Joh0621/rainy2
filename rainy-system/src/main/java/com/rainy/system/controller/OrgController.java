@@ -3,13 +3,12 @@ package com.rainy.system.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rainy.framework.annotation.DataPermission;
+import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.ValidateUtils;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.Org;
 import com.rainy.system.service.OrgService;
 import lombok.RequiredArgsConstructor;
@@ -75,10 +74,7 @@ public class OrgController {
                 .in(Org::getParentId, param.getIds())
                 .exists();
         ValidateUtils.isTrue(exists, "该组织下有子组织,请先删除子组织");
-        return orgService.lambdaUpdate()
-                .in(Org::getId, param.getIds())
-                .set(Org::getDelFlag, true)
-                .update();
+        return orgService.removeBatchByIds(param.getIds());
     }
 
     @PostMapping("/org/update")

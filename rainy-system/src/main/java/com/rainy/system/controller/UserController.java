@@ -4,8 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.dfa.SensitiveUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
 import com.rainy.framework.common.Userinfo;
@@ -16,10 +16,7 @@ import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.framework.utils.ValidateUtils;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.framework.annotation.Log;
-import com.rainy.system.entity.Org;
 import com.rainy.system.entity.User;
-import com.rainy.system.entity.UserRole;
 import com.rainy.system.param.user.PasswordUpdateParam;
 import com.rainy.system.service.ConfigService;
 import com.rainy.system.service.OrgService;
@@ -34,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 

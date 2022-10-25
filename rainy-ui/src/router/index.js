@@ -13,7 +13,7 @@ const routes = [
     redirect: '/workbench',
     children: [
       {
-        path: '/device/:deviceCode',
+        path: '/device/:id',
         name: '设备详情',
         component: () => import('@/views/main/DataDirectoryDetail.vue'),
         meta: {

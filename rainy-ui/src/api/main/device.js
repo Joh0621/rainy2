@@ -24,13 +24,6 @@ export function DetailById (id) {
   })
 }
 
-export function Detail (deviceCode) {
-  return request({
-    url: `${api.List}/${deviceCode}`,
-    method: method.GET
-  })
-}
-
 export function Add (parameter) {
   return request({
     url: api.Add,

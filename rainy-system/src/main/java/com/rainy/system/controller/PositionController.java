@@ -3,11 +3,11 @@ package com.rainy.system.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.Org;
 import com.rainy.system.entity.Position;
 import com.rainy.system.service.PositionService;
@@ -62,10 +62,7 @@ public class PositionController {
     @SaCheckPermission("position:del")
     @Log(module = "职位管理", type = OpType.DEL, detail = "'删除了职位[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
-        return positionService.lambdaUpdate()
-                .in(Position::getId, param.getIds())
-                .set(Position::getDelFlag, true)
-                .update();
+        return positionService.removeBatchByIds(param.getIds());
     }
 
     @PostMapping("/position/update")

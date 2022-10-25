@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @TableName("t_role_menu_rel")
 public class RoleMenu {
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     private Long roleId;
     private Long menuId;

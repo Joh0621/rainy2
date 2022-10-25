@@ -1,6 +1,5 @@
 package com.rainy.framework.holder;
 
-import cn.hutool.core.stream.CollectorUtil;
 import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.utils.WebUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * data-middle-platform

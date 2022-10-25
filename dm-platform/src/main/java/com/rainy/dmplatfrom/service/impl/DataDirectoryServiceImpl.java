@@ -1,12 +1,11 @@
 package com.rainy.dmplatfrom.service.impl;
 
-import com.rainy.system.service.impl.BaseServiceImpl;
 import com.rainy.dmplatfrom.entity.DataDirectory;
 import com.rainy.dmplatfrom.entity.Device;
 import com.rainy.dmplatfrom.mapper.DataDirectoryMapper;
 import com.rainy.dmplatfrom.service.DataDirectoryService;
 import com.rainy.dmplatfrom.service.DeviceService;
-import com.rainy.dmplatfrom.service.PointService;
+import com.rainy.system.service.impl.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

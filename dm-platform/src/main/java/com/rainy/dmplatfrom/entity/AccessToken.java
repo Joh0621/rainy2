@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName("biz_access_token")
 public class AccessToken {
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     private Long userDataId;
     private String accessToken;

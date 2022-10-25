@@ -51,7 +51,7 @@
               <a-list-item :key="item.id">
                 <a-list-item-meta :description="item.description">
                   <template #title>
-                    <router-link :to="`/device/${item.code}`">
+                    <router-link :to="`/device/${item.id}`">
                       <a class="data-title">{{ item.name }}</a>
                     </router-link>
                     <a-divider type="vertical"/>

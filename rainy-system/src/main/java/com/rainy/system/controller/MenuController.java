@@ -2,12 +2,12 @@ package com.rainy.system.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.ValidateUtils;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.Menu;
 import com.rainy.system.service.MenuService;
 import lombok.RequiredArgsConstructor;

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @TableName("t_login_log")
 public class LoginLog {
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String username;
     private int type;

@@ -23,9 +23,9 @@ const options = {
   showBatchDel: false
 }
 const columns = [
-  { title: '设备名称', dataIndex: 'deviceName', width: '80px' },
-  { title: '设备编码', dataIndex: 'deviceCode', width: '140px' },
-  { title: '测点点码', dataIndex: 'code', width: '200px' },
+  { title: '设备名称', dataIndex: 'deviceName' },
+  // { title: '设备编码', dataIndex: 'deviceCode' },
+  { title: '测点点码', dataIndex: 'code' },
   { title: '测点描述', dataIndex: 'name', ellipsis: true }
 ]
 const queryParam = ref({

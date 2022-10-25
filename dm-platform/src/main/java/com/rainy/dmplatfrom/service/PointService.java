@@ -1,7 +1,7 @@
 package com.rainy.dmplatfrom.service;
 
-import com.rainy.system.service.BaseService;
 import com.rainy.dmplatfrom.entity.Point;
+import com.rainy.system.service.BaseService;
 
 /**
  * rainy

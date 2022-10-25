@@ -3,11 +3,8 @@ package com.rainy.workflow.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rainy.framework.utils.DateUtils;
 import lombok.Data;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
-import org.camunda.bpm.engine.task.Comment;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * data-middle-platform

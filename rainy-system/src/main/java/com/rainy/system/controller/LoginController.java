@@ -9,19 +9,17 @@ import com.rainy.framework.common.Userinfo;
 import com.rainy.framework.exception.UnauthorizedException;
 import com.rainy.framework.utils.SecurityUtils;
 import com.rainy.system.entity.Menu;
-import com.rainy.system.entity.Org;
 import com.rainy.system.entity.User;
 import com.rainy.system.param.LoginParam;
-import com.rainy.system.service.*;
+import com.rainy.system.service.MenuService;
+import com.rainy.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -34,7 +32,6 @@ import java.util.Objects;
 public class LoginController {
 
     private final UserService userService;
-    private final OrgService orgService;
     private final MenuService menuService;
 
     @SaIgnore

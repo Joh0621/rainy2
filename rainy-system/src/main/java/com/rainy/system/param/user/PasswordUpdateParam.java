@@ -1,7 +1,5 @@
 package com.rainy.system.param.user;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.rainy.system.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

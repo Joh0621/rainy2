@@ -3,11 +3,11 @@ package com.rainy.system.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.framework.annotation.Log;
 import com.rainy.system.entity.Config;
 import com.rainy.system.service.ConfigService;
 import lombok.RequiredArgsConstructor;
@@ -62,10 +62,7 @@ public class ConfigController {
     @SaCheckPermission("config:del")
     @Log(module = "配置管理", type = OpType.DEL, detail = "'删除了配置[' + #param.names + '].'")
     public Boolean remove(@RequestBody @Validated(Group.Del.class) IdNamesParam param) {
-        return configService.lambdaUpdate()
-                .in(Config::getId, param.getIds())
-                .set(Config::getDelFlag, true)
-                .update();
+        return configService.removeBatchByIds(param.getIds());
     }
 
     @PostMapping("/config/update")

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Null(groups = {Group.Add.class})
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @TableField(fill = FieldFill.INSERT)

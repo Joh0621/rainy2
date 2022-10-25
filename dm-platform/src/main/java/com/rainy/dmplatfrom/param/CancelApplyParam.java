@@ -1,9 +1,6 @@
 package com.rainy.dmplatfrom.param;
 
-import com.rainy.dmplatfrom.entity.Device;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * data-middle-platform

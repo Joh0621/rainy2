@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName("t_role_data_permission_rel")
 public class RoleDataPermission {
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     private Long roleId;
     private Long orgId;

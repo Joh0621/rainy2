@@ -1,36 +1,33 @@
 package com.rainy.dmplatfrom.controller;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.cell.CellHandler;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.dmplatfrom.entity.AllData;
 import com.rainy.dmplatfrom.entity.DataDirectory;
+import com.rainy.dmplatfrom.entity.Device;
+import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.service.DataDirectoryService;
+import com.rainy.dmplatfrom.service.DeviceService;
 import com.rainy.dmplatfrom.service.ExcelService;
+import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.framework.annotation.Log;
+import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
 import com.rainy.framework.constant.OpType;
-import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
-import com.rainy.dmplatfrom.entity.Device;
-import com.rainy.dmplatfrom.service.DeviceService;
 import com.rainy.system.entity.Org;
 import com.rainy.system.service.OrgService;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.Console;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * rainy
@@ -45,27 +42,35 @@ public class DeviceController {
     private final DataDirectoryService dataDirectoryService;
     private final DeviceService deviceService;
     private final ExcelService excelService;
+    private final PointService pointService;
 
     @GetMapping("/devices")
     public Page<Device> list(Page<Device> page, Device param) {
+        String keyword = param.getName();
+        List<Point> list = pointService.lambdaQuery()
+                .select(Point::getDeviceCode)
+                .like(Point::getName, keyword)
+                .list();
+        List<String> deviceCodes = list.stream()
+                .map(Point::getDeviceCode)
+                .toList()
+                .stream()
+                .distinct()
+                .toList();
+
         return deviceService.lambdaQuery()
                 .eq(!Objects.isNull(param.getDataDirectoryId()), Device::getDataDirectoryId, param.getDataDirectoryId())
                 .eq(Objects.nonNull(param.getMajor()), Device::getMajor, param.getMajor())
                 .likeRight(StrUtil.isNotBlank(param.getName()), Device::getName, param.getName())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Device::getCode, param.getCode())
+                .or()
+                .in(!deviceCodes.isEmpty(), Device::getCode, deviceCodes)
                 .page(page);
     }
 
     @GetMapping("/device/{id}")
     public Device detailById(@PathVariable Long id) {
         return deviceService.getById(id);
-    }
-
-    @GetMapping("/devices/{deviceCode}")
-    public Device detailByCode(@PathVariable String deviceCode) {
-        return deviceService.lambdaQuery()
-                .eq(Device::getCode, deviceCode)
-                .one();
     }
 
     @Log(module = "设备管理", type = OpType.EXPORT, detail = "导出了设备列表")

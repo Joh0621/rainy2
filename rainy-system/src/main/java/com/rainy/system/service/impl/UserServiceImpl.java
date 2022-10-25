@@ -1,7 +1,6 @@
 package com.rainy.system.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.rainy.framework.common.Userinfo;
 import com.rainy.framework.constant.DictConstants;
 import com.rainy.framework.enums.DefaultRole;
