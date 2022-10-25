@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * data-middle-platform
@@ -43,6 +44,16 @@ public class DashboardController {
         long todoCount = taskService.createTaskQuery()
                 .taskAssignee(SecurityUtils.getUsername()).count();
         return Arrays.asList(count, deviceCount, pointCount, applies, todoCount);
+    }
+
+    @GetMapping("/dashboard/station/point/count")
+    private List<Map<String, Object>> stationPointCount(){
+        return deviceService.stationPointCount();
+    }
+
+    @GetMapping("/dashboard/station/device/count")
+    private List<Map<String, Object>> stationDeviceCount(){
+        return deviceService.stationDeviceCount();
     }
 }
 

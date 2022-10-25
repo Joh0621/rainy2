@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * rainy
@@ -38,5 +39,15 @@ public class DeviceServiceImpl extends BaseServiceImpl<DeviceMapper, Device> imp
                     .remove();
         }
         return super.removeBatchByIds(ids);
+    }
+
+    @Override
+    public List<Map<String, Object>> stationPointCount() {
+        return this.baseMapper.stationPointCount();
+    }
+
+    @Override
+    public List<Map<String, Object>> stationDeviceCount() {
+        return this.baseMapper.stationDeviceCount();
     }
 }

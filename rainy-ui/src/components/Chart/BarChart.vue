@@ -47,13 +47,21 @@ const style = {
 }
 
 const barChart = ref()
+const myChart = ref()
 onMounted(() => {
-  const myChart = echarts.init(barChart.value)
-  myChart.setOption(props.options)
+  myChart.value = echarts.init(barChart.value)
+  myChart.value.setOption(props.options)
   window.onresize = () => {
-    myChart.resize()
+    myChart.value.resize()
   }
 })
+
+watch(
+  props.options,
+  e => {
+    myChart.value.setOption(props.options)
+  }
+)
 </script>
 
 <style scoped>

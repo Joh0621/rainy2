@@ -1,5 +1,5 @@
 <template>
-  <div :style="style" ref="barChart"></div>
+  <div :style="style" ref="pieChart"></div>
 </template>
 
 <script setup>
@@ -48,14 +48,22 @@ const style = {
   height: props.height + 'px'
 }
 
-const barChart = ref()
+const pieChart = ref()
+const myChart = ref()
 onMounted(() => {
-  const myChart = echarts.init(barChart.value)
-  myChart.setOption(props.options)
+  myChart.value = echarts.init(pieChart.value)
+  myChart.value.setOption(props.options)
   window.onresize = () => {
-    myChart.resize()
+    myChart.value.resize()
   }
 })
+
+watch(
+  props.options,
+  e => {
+    myChart.value.setOption(props.options)
+  }
+)
 </script>
 
 <style scoped>

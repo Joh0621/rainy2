@@ -75,10 +75,12 @@
 </template>
 
 <script setup>
-import { Count } from '@/api/main/dashboard'
+import { Count, StationPointCount, StationDeviceCount } from '@/api/main/dashboard'
 
 onMounted(() => {
   loadCount()
+  stationPointCount()
+  stationDeviceCount()
 })
 
 const count = ref([0, 0, 0])
@@ -98,12 +100,25 @@ const barOptions = ref({
   yAxis: {},
   series: [
     {
-      name: '销量',
+      name: '测点数量',
       type: 'bar',
       data: [52322, 23330, 33336, 82323]
     }
   ]
 })
+
+const stationPointCount = () => {
+  StationPointCount().then(res => {
+    const x = []
+    const y = []
+    res.data.forEach(r => {
+      x.push(r.stationName)
+      y.push(r.pointCount)
+    })
+    barOptions.value.xAxis = x
+    barOptions.value.series[0].data = y
+  })
+}
 const pieOptions = ref({
   title: {
     text: '设备数量统计',
@@ -137,6 +152,18 @@ const pieOptions = ref({
     }
   ]
 })
+const stationDeviceCount = () => {
+  StationDeviceCount().then(res => {
+    const data = []
+    res.data.forEach(r => {
+      data.push({
+        name: r.stationName,
+        value: r.deviceCount
+      })
+    })
+    pieOptions.value.series[0].data = data
+  })
+}
 </script>
 
 <style scoped>
