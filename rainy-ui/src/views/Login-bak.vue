@@ -132,7 +132,7 @@ const onFinishFailed = (errorInfo) => {
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  background-image: url(/img/login_background.png);
+  background-image: url(/img/login/login_background.png);
 }
 .login_background_front {
   width: 450px;
@@ -143,7 +143,7 @@ const onFinishFailed = (errorInfo) => {
   /*position: relative;*/
   background-size: cover;
   background-position: center;
-  background-image: url(/img/login_background_front.png);
+  background-image: url(/img/login/login_background_front.png);
   animation-name: myfirst;
   animation-duration: 5s;
   animation-timing-function: linear;

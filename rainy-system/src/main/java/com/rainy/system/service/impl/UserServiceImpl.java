@@ -1,6 +1,9 @@
 package com.rainy.system.service.impl;
 
+import com.rainy.framework.common.Userinfo;
 import com.rainy.framework.enums.DefaultRole;
+import com.rainy.framework.utils.SecurityUtils;
+import com.rainy.system.entity.Org;
 import com.rainy.system.entity.User;
 import com.rainy.system.entity.UserRole;
 import com.rainy.system.mapper.UserMapper;
@@ -24,6 +27,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     private final MenuService menuService;
     private final RoleMenuService roleMenuService;
     private final UserRoleService userRoleService;
+    private final OrgService orgService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -60,4 +64,18 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         // 3.查询菜单（按钮）权限码
         return menuService.listPermissionsInId(menuIds);
     }
+
+    @Override
+    public void cacheUserinfo() {
+        User user = this.getById(SecurityUtils.getUserId());
+        Userinfo userinfo = user.userinfo();
+        Org org = orgService.getById(userinfo.getOrgId());
+        List<Long> orgIds = orgService.getChildrenIds(org.getId());
+        userinfo.setOrgIds(orgIds);
+        userinfo.setOrg(org.getName());
+        userinfo.setRoles(this.listRoles(user.getId()));
+        userinfo.setPermissions(this.listPermissions(user.getId()));
+        SecurityUtils.setUserinfo(userinfo);
+    }
+
 }

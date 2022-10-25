@@ -2,17 +2,26 @@ package com.rainy.system.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.dfa.SensitiveUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
+import com.rainy.framework.common.Userinfo;
 import com.rainy.framework.constant.CharConstants;
+import com.rainy.framework.constant.ConfigConstants;
 import com.rainy.framework.constant.OpType;
+import com.rainy.framework.utils.SecurityUtils;
+import com.rainy.framework.utils.ValidateUtils;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
 import com.rainy.framework.annotation.Log;
+import com.rainy.system.entity.Org;
 import com.rainy.system.entity.User;
+import com.rainy.system.entity.UserRole;
 import com.rainy.system.param.user.PasswordUpdateParam;
+import com.rainy.system.service.ConfigService;
 import com.rainy.system.service.OrgService;
 import com.rainy.system.service.UserRoleService;
 import com.rainy.system.service.UserService;
@@ -25,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,6 +50,7 @@ public class UserController {
     private final UserService userService;
     private final UserRoleService userRoleService;
     private final OrgService orgService;
+    private final ConfigService configService;
 
     @GetMapping("/users")
     @SaCheckPermission("user:query")
@@ -81,15 +92,6 @@ public class UserController {
         return userService.updateById(param);
     }
 
-    @PostMapping("/user/password/reset")
-    @SaCheckPermission("user:resetPassword")
-    @Log(module = "用户管理", type = OpType.ADD, detail = "'重置了用户[' + #param.username + ']的密码'")
-    public Boolean resetPassword(@RequestBody @Validated PasswordUpdateParam param) {
-        return userService.lambdaUpdate()
-                .eq(User::getUsername, param.getUsername())
-                .update(param.convert());
-    }
-
     @GetMapping("/user/roleIds")
     @Log(module = "用户管理", type = OpType.QUERY, detail = "'查询了用户[' + #param.name + ']拥有的角色列表'")
     public List<Long> listRoleIdsByUserId(IdNamesParam param) {
@@ -122,10 +124,50 @@ public class UserController {
 
     @PostMapping("/user/kickOut")
     @SaCheckPermission("onlineUser:kickOut")
-    @Log(module = "在线用户", type = OpType.DEL, detail = "'下线了用户[' + #param.names + '].'")
+    @Log(module = "在线用户", type = OpType.KICK_OUT, detail = "'下线了用户[' + #param.names + '].'")
     public Result<Boolean> kickOut(@RequestBody @Valid IdNamesParam param){
         param.getIds().forEach(StpUtil::kickout);
         return Result.ok();
+    }
+
+    @PostMapping("/user/password/reset")
+    @SaCheckPermission("user:resetPassword")
+    @Log(module = "用户管理", type = OpType.UPDATE, detail = "'重置了用户[' + #param.name + ']的密码'")
+    public Boolean resetPassword(@RequestBody @Validated(Group.ResetPwd.class) IdNamesParam param) {
+        String resetPassword = configService.get(ConfigConstants.RESET_PASSWORD);
+        return userService.lambdaUpdate()
+                .set(User::getPassword, resetPassword)
+                .eq(User::getId, param.getId())
+                .update();
+    }
+
+    @PostMapping("/user/password")
+    @Log(module = "用户管理", type = OpType.UPDATE, detail = "修改了密码")
+    public Boolean updatePassword(@RequestBody @Validated PasswordUpdateParam param) {
+        User user = userService.getById(SecurityUtils.getUserId());
+        // 1.校验原密码是否正确
+        ValidateUtils.isEquals(param.getOldPassword(), user.getPassword(),"旧密码不正确！");
+        // 2.校验原密码是否正确
+        ValidateUtils.isEquals(param.getOldPassword(), user.getPassword(),"密码与确认密码不一致！");
+        // 3.检验新密码与旧密码是否相同
+        ValidateUtils.isEquals(param.getOldPassword(), param.getPassword(),"新密码与旧密码不能相同！");
+        // 4.检验新密码是否包含用户名
+        ValidateUtils.isContains(param.getPassword(), user.getUsername(), "密码不能等于或包含用户名！");
+        return userService.lambdaUpdate()
+                .set(User::getPassword, param.getPassword())
+                .eq(User::getId, user.getId())
+                .update();
+    }
+
+    @PostMapping("/userinfo/update")
+    @Log(module = "用户管理", type = OpType.UPDATE, detail = "修改了个人基本信息")
+    public Boolean updateUserinfo(@RequestBody @Validated Userinfo param) {
+        User updateUser = new User();
+        BeanUtil.copyProperties(param, updateUser);
+        boolean b = userService.updateById(updateUser);
+        // 更新登录用户信息
+        userService.cacheUserinfo();
+        return b;
     }
 
 }

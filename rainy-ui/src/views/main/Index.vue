@@ -1,7 +1,39 @@
 <template>
   <a-row :gutter="16">
-    <a-col :span="12">
+    <a-col :span="4">
+      <a-card :bordered="false">
+        <a-statistic
+            title="接入场站"
+            :value="count[0]"
+            suffix="个"
+            :value-style="{ color: '#3f8600' }">
+        </a-statistic>
+      </a-card>
+    </a-col>
+    <a-col :span="4">
       <a-card>
+        <a-statistic
+            title="接入设备"
+            :value="count[1]"
+            suffix="个"
+            :value-style="{ color: '#3f8600' }">
+        </a-statistic>
+      </a-card>
+    </a-col>
+    <a-col :span="4">
+      <a-card :bordered="false">
+        <a-statistic
+            title="接入测点"
+            :value="count[2]"
+            suffix="个"
+            :value-style="{ color: '#3f8600' }">
+        </a-statistic>
+      </a-card>
+    </a-col>
+  </a-row>
+  <a-row class="margin-t16" :gutter="16">
+    <a-col :span="12">
+      <a-card :bordered="false">
         <bar-chart :height="300" :options="barOptions"/>
       </a-card>
     </a-col>
@@ -14,6 +46,18 @@
 </template>
 
 <script setup>
+import { Count } from '@/api/main/dashboard'
+
+onMounted(() => {
+  loadCount()
+})
+
+const count = ref([0, 0, 0])
+const loadCount = () => {
+  Count().then(res => {
+    count.value = res.data
+  })
+}
 const barOptions = ref({
   title: {
     text: '接入场站'

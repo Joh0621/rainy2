@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @TableName("biz_point")
 public class Point {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     @NotBlank
     private String deviceCode;

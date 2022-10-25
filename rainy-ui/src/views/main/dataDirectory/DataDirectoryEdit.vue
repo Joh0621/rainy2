@@ -34,6 +34,13 @@
         </a-tree-select>
       </a-form-item>
       <a-form-item
+          label="目录名称"
+          name="name"
+          :rules="[{ required: true, message: '请输入目录名称' }]"
+          has-feedback>
+        <a-input v-model:value="form.name" placeholder="请输入目录名称" />
+      </a-form-item>
+      <a-form-item
         label="上级目录"
         name="parentId"
         :rules="[{ required: true, message: '请选择上级目录' }]"
@@ -49,13 +56,6 @@
         ></a-tree-select>
       </a-form-item>
       <a-form-item
-        label="目录名称"
-        name="name"
-        :rules="[{ required: true, message: '请输入目录名称' }]"
-        has-feedback>
-        <a-input v-model:value="form.name" placeholder="请输入目录名称" />
-      </a-form-item>
-      <a-form-item
           label="目录类型"
           name="type"
           :rules="[{ required: true, message: '请选择目录类型' }]"
@@ -65,6 +65,13 @@
             {{ item.name }}
           </a-select-option>
         </a-select>
+      </a-form-item>
+      <a-form-item
+          label="是否目录"
+          name="isDirectory"
+          :rules="[{ required: true, message: '请选择是否是目录' }]"
+          has-feedback>
+        <a-switch v-model:checked="form.isDirectory" />
       </a-form-item>
       <a-form-item
           name="sort"

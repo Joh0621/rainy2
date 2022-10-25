@@ -15,4 +15,6 @@ public interface UserService extends BaseService<User> {
 
     List<String> listRoles(Long userId);
     List<String> listPermissions(Long userId);
+
+    void cacheUserinfo();
 }

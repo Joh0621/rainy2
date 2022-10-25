@@ -3,7 +3,7 @@
   <a-row>
     <a-col :span="5">
       <a-menu
-          :style="style"
+          style="height: 440px"
           v-model:selectedKeys="selectedKeys"
           mode="inline"
           theme="light"
@@ -24,21 +24,30 @@
     </a-col>
 
     <a-col :span="19">
-      <a-card v-if="selectedKeys[0] === 1" title="基本设置">
+      <a-card :bordered="false" v-if="selectedKeys[0] === 1" title="基本设置">
         <Basic/>
       </a-card>
-      <a-card v-if="selectedKeys[0] === 2" title="安全设置">
-        <a-button type="primary">修改密码</a-button>
+      <a-card :bordered="false" v-if="selectedKeys[0] === 2" title="安全设置">
+        <a-button @click="updatePassword" type="primary">修改密码</a-button>
+        <PasswordUpdate ref="passwordUpdate"/>
       </a-card>
     </a-col>
   </a-row>
 </template>
 
 <script setup>
-import Basic from '@/views/system/account/Basic.vue'
+import Basic from './Basic.vue'
+import PasswordUpdate from './PasswordUpdate.vue'
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
 
 const selectedKeys = ref([1])
-const style = 'height: ' + (document.documentElement.clientHeight - 200) + 'px'
+
+const passwordUpdate = ref()
+const updatePassword = () => {
+  passwordUpdate.value.open(userStore.userinfo.username)
+}
 </script>
 
 <style lang="less" scoped>

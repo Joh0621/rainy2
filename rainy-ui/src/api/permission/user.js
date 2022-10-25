@@ -6,6 +6,8 @@ const api = {
   Add: '/user',
   Del: '/users',
   Update: '/user/update',
+  UpdatePassword: '/user/password',
+  UpdateUserinfo: '/userinfo/update',
   ResetPassword: '/user/password/reset',
   ListRoleIds: '/user/roleIds',
   AssignRoles: '/user/roles/assign',
@@ -77,6 +79,22 @@ export function Export () {
   })
 }
 
+export function UpdatePassword (parameter) {
+  return request({
+    url: api.UpdatePassword,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function UpdateUserinfo (parameter) {
+  return request({
+    url: api.UpdateUserinfo,
+    method: method.POST,
+    data: parameter
+  })
+}
+
 export function ListOnline (parameter) {
   return request({
     url: api.ListOnline,
@@ -92,3 +110,6 @@ export function KickOut (parameter) {
     data: parameter
   })
 }
+
+
+

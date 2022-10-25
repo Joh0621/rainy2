@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @TableName("biz_user_data_rel")
 public class UserDataRel {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private Long dataId;
     /**

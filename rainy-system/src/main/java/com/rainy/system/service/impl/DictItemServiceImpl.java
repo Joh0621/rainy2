@@ -20,6 +20,12 @@ import java.util.List;
 public class DictItemServiceImpl extends BaseServiceImpl<DictItemMapper, DictItem> implements DictItemService {
 
     @Override
+    @CacheEvict(key = "#dictItem.dictCode")
+    public boolean save(DictItem dictItem) {
+        return super.save(dictItem);
+    }
+
+    @Override
     @Cacheable(key = "#dictCode")
     public List<DictItem> listByDictCode(String dictCode) {
         return this.lambdaQuery().eq(DictItem::getDictCode, dictCode).list();
@@ -32,12 +38,12 @@ public class DictItemServiceImpl extends BaseServiceImpl<DictItemMapper, DictIte
     }
 
     @Override
+    @Cacheable(key = "#dictCode + #value")
     public String getCodeByDictCodeAndValue(String dictCode, String value) {
         DictItem dictItem = this.lambdaQuery()
                 .eq(DictItem::getDictCode, dictCode)
                 .eq(DictItem::getValue, value)
                 .one();
-
         return dictItem == null ? null : dictItem.getCode();
     }
 }

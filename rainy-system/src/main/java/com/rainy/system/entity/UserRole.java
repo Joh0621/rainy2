@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName("t_user_role_rel")
 public class UserRole {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private Long userId;
     private Long roleId;

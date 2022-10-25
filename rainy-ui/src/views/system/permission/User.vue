@@ -148,8 +148,8 @@ const handleAuthorize = (record) => {
 //  // 重置密码
 const resetPassword = record => {
   const param = {
-    username: record.username,
-    password: 'admin'
+    id: record.id,
+    name: record.username
   }
   ResetPassword(param).then(res => {
     if (res.success) {

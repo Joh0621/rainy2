@@ -5,6 +5,7 @@ import com.rainy.system.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * rainy
@@ -15,9 +16,11 @@ import javax.validation.constraints.NotBlank;
 public class PasswordUpdateParam {
 
     @NotBlank
-    private String username;
+    private String oldPassword;
     @NotBlank
     private String password;
+    @NotBlank
+    private String configPassword;
 
     public User convert() {
         return BeanUtil.copyProperties(this, User.class);

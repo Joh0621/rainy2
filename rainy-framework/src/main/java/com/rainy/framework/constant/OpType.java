@@ -9,6 +9,7 @@ public interface OpType {
 
     String ADD = "add";
     String DEL = "delete";
+    String KICK_OUT = "kickOut";
     String UPDATE = "update";
     String QUERY = "query";
     String IMPORT = "import";

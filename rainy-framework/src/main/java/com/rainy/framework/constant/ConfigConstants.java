@@ -15,7 +15,7 @@ public interface ConfigConstants {
     /**
      * 重置密码
      */
-    String RESET_PASSWORD = "reset_password";
+    String RESET_PASSWORD = "sys_reset_password";
 
     /**
      * 日志保留天数

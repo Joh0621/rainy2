@@ -75,7 +75,7 @@ public class DeviceController {
         WebUtils.exportExcel(response, devices, "devices.xls");
     }
 
-    @Log(module = "设备管理", type = OpType.EXPORT, detail = "导入了设备列表")
+    @Log(module = "设备管理", type = OpType.IMPORT, detail = "导入了设备列表")
     @PostMapping("/devices/import")
     public Object importExcel(@RequestParam("file") MultipartFile file) throws IOException {
         ExcelReader reader = ExcelUtil.getReader(file.getInputStream());

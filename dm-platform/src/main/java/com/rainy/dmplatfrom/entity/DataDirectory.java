@@ -36,6 +36,8 @@ public class DataDirectory extends BaseEntity {
     @NotNull
     private Integer type;
     @NotNull
+    private Boolean isDirectory;
+    @NotNull
     @OrderBy(asc = true)
     private Integer sort;
     @Size(max = 128)

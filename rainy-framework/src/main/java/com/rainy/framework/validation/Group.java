@@ -30,4 +30,10 @@ public interface Group {
      */
     interface ASSIGN {
     }
+
+    /**
+     * 分组校验: 重置密码
+     */
+    interface ResetPwd {
+    }
 }

@@ -2,9 +2,9 @@
   <a-dropdown>
         <span class="account-avatar" style="display: inline-block">
           <a-avatar size="small" style="background-color: #f56a00" class="avatar">
-            {{ userStore.userinfo.username }}
+            {{ userinfo.username }}
           </a-avatar>
-          <span>{{ userStore.nickName }}</span>
+          <span>{{ userinfo.nickName }}</span>
         </span>
     <template #overlay>
       <a-menu>
@@ -31,8 +31,11 @@
 <script setup>
 import { Modal } from 'ant-design-vue'
 import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
 
 const userStore = useUserStore()
+
+const { userinfo } = storeToRefs(userStore)
 const accountCenterPath = '/account/center'
 
 const logout = () => {

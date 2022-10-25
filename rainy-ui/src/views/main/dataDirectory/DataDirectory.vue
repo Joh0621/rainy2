@@ -161,7 +161,8 @@ const onAddClick = (record) => {
   dataDirectoryEditor.value.open(true, {
     sort: sortValue,
     type: appStore.dictItems('biz_data_directory_type')[0].value,
-    parentId: record.id
+    parentId: record.id,
+    isDirectory: false
   })
 }
 const onEditClick = (record) => {

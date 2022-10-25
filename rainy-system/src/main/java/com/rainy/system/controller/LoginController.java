@@ -53,14 +53,7 @@ public class LoginController {
         StpUtil.login(user.getId(), param.getRememberMe() != null && param.getRememberMe());
 
         // 缓存用户信息
-        Userinfo userinfo = user.userinfo();
-        Org org = orgService.getById(userinfo.getOrgId());
-        List<Long> orgIds = orgService.getChildrenIds(org.getId());
-        userinfo.setOrgIds(orgIds);
-        userinfo.setOrg(org.getName());
-        userinfo.setRoles(userService.listRoles(user.getId()));
-        userinfo.setPermissions(userService.listPermissions(user.getId()));
-        SecurityUtils.setUserinfo(userinfo);
+        userService.cacheUserinfo();
         // 返回 token
         return StpUtil.getTokenInfo();
     }

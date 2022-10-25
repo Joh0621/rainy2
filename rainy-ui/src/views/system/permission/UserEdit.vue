@@ -63,15 +63,15 @@
           :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
           has-feedback
       >
-        <a-input v-model:value="form.telephone" placeholder="请输入正确的11位手机号" />
+        <a-input v-model:value="form.telephone" placeholder="请输入手机号" />
       </a-form-item>
       <a-form-item
           name="email"
           label="邮箱"
-          :rules="[{ type: 'email', required: true, message: '请输入正确的邮箱格式' }]"
+          :rules="[{ type: 'email', required: true, message: '请输入正确格式的邮箱' }]"
           has-feedback
       >
-        <a-input v-model:value="form.email" placeholder="请输入正确的邮箱格式" />
+        <a-input v-model:value="form.email" placeholder="请输入邮箱" />
       </a-form-item>
       <a-form-item
         name="orgId"
