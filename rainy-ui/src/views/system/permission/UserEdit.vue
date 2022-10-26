@@ -55,15 +55,22 @@
           :rules="[{ required: true, message: '请输入生日' }]"
           has-feedback
       >
-        <a-date-picker v-model:value="form.birthday" :format="'YYYY-MM-DD'" placeholder="请输入生日" />
-      </a-form-item>
+        <a-date-picker v-model:value="form.birthday" :value-format="'YYYY-MM-DD'" :format="'YYYY-MM-DD'" placeholder="请输入生日" />      </a-form-item>
       <a-form-item
-          name="telephone"
+          name="phoneNumber"
           label="手机号"
           :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
           has-feedback
       >
-        <a-input v-model:value="form.telephone" placeholder="请输入手机号" />
+        <a-input v-model:value="form.phoneNumber" placeholder="请输入手机号" />
+      </a-form-item>
+      <a-form-item
+          name="telephone"
+          label="座机"
+          :rules="[{ required: true, message: '请输入座机' }]"
+          has-feedback
+      >
+        <a-input v-model:value="form.telephone" placeholder="请输入座机" />
       </a-form-item>
       <a-form-item
           name="email"
@@ -105,7 +112,6 @@
 import { Tree } from '@/api/org/org'
 import { Add, Edit } from '@/api/permission/user'
 import { message } from 'ant-design-vue'
-import dayjs from 'dayjs'
 
 const labelCol = reactive({ span: 5, offset: 0 })
 const wrapperCol = reactive({ span: 16, offset: 0 })
@@ -134,11 +140,6 @@ const open = (flagValue, record) => {
   visible.value = true
   flag.value = flagValue
   form.value = record
-  if (!flagValue) {
-    form.value.birthday = dayjs(record.birthday)
-  } else {
-    form.value.birthday = dayjs()
-  }
 }
 
 const handleOk = () => {
@@ -146,7 +147,6 @@ const handleOk = () => {
   formRef.value
     .validateFields()
     .then((values) => {
-      values.birthday = values.birthday.format('YYYY-MM-DD')
       if (flag.value) {
         handleAdd(values)
       } else {

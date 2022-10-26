@@ -31,17 +31,17 @@
             </div>
           </div>
         </a-tooltip>
-        <a-tooltip>
-          <template #title>
-            暗黑模式
-          </template>
-          <div class="setting-drawer-item" @click="updateConf('realDark', 'navTheme')">
-            <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" alt="realDark">
-            <div class="setting-drawer-selectIcon">
-              <check-outlined v-if="navTheme === 'realDark'" />
-            </div>
-          </div>
-        </a-tooltip>
+<!--        <a-tooltip>-->
+<!--          <template #title>-->
+<!--            暗黑模式-->
+<!--          </template>-->
+<!--          <div class="setting-drawer-item" @click="updateConf('realDark', 'navTheme')">-->
+<!--            <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" alt="realDark">-->
+<!--            <div class="setting-drawer-selectIcon">-->
+<!--              <check-outlined v-if="navTheme === 'realDark'" />-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </a-tooltip>-->
       </div>
       <h4>整体布局设置</h4>
       <div class="setting-drawer-checkbox">

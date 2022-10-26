@@ -5,3 +5,17 @@
 k-form-design
 snow
 ant-design-vue/pro-layout
+
+首页
+新增一些图表
+纬度/设备，专业
+
+个人设置
+加部门/座机
+去掉生日
+
+接口管理
+数据传输速率/ 传输总量/ kb/s
+
+数据目录
+批量申请

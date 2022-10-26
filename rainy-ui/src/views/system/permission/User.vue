@@ -80,7 +80,6 @@
 import { Tree } from '@/api/org/org'
 import { List, Del, ResetPassword, Export } from '@/api/permission/user'
 import { toIdNamesParam } from '@/utils/ParamUtils'
-import { sortValue } from '@/utils/constants'
 import UserEdit from './UserEdit.vue'
 import UserAuthorize from './UserAuthorize.vue'
 import { message } from 'ant-design-vue'
@@ -161,10 +160,7 @@ const resetPassword = record => {
 const editor = ref()
 // 添加用户
 const handleAdd = () => {
-  editor.value.open(true, {
-    sort: sortValue,
-    parentId: 0
-  })
+  editor.value.open(true, {})
 }
 // 编辑
 const handleEdit = (record) => {

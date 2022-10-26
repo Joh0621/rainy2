@@ -2,37 +2,51 @@
   <a-spin :spinning="loading">
     <a-form ref="formRef" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-item v-show="false" name="id"></a-form-item>
-      <a-form-item
-          name="username"
-          label="账号"
-          :rules="[{ required: true, message: '请输入账号' }]"
-          has-feedback
-      >
-        <a-input :disabled="true" v-model:value="form.username" />
-      </a-form-item>
+<!--      <a-form-item-->
+<!--          name="username"-->
+<!--          label="账号"-->
+<!--          :rules="[{ required: true, message: '请输入账号' }]"-->
+<!--          has-feedback-->
+<!--      >-->
+<!--        {{ form.username }}-->
+<!--      </a-form-item>-->
       <a-form-item
           name="nickName"
-          label="昵称"
-          :rules="[{ required: true, message: '请输入昵称' }]"
+          label="姓名"
           has-feedback
       >
-        <a-input v-model:value="form.nickName" />
+        {{ form.nickName }}
       </a-form-item>
       <a-form-item
-          name="birthday"
-          label="生日"
-          :rules="[{ required: true, message: '请输入生日' }]"
+          name="org"
+          label="部门"
           has-feedback
       >
-        <a-date-picker v-model:value="form.birthday" :value-format="'YYYY-MM-DD'" :format="'YYYY-MM-DD'" placeholder="请输入生日" />
+        {{ form.org }}
       </a-form-item>
+<!--      <a-form-item-->
+<!--          name="birthday"-->
+<!--          label="生日"-->
+<!--          :rules="[{ required: true, message: '请输入生日' }]"-->
+<!--          has-feedback-->
+<!--      >-->
+<!--        <a-date-picker v-model:value="form.birthday" :value-format="'YYYY-MM-DD'" :format="'YYYY-MM-DD'" placeholder="请输入生日" />-->
+<!--      </a-form-item>-->
       <a-form-item
-          name="telephone"
+          name="phoneNumber"
           label="手机号"
           :rules="[{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, required: true, message: '请输入正确的11位手机号' }]"
           has-feedback
       >
-        <a-input v-model:value="form.telephone" />
+        <a-input v-model:value="form.phoneNumber" placeholder="请输入手机号" />
+      </a-form-item>
+      <a-form-item
+          name="telephone"
+          label="座机"
+          :rules="[ {required: true, message: '请输入座机' }]"
+          has-feedback
+      >
+        <a-input v-model:value="form.telephone" placeholder="请输入座机" />
       </a-form-item>
       <a-form-item
           name="email"
@@ -70,7 +84,9 @@ const form = ref({
   id: userStore.userinfo.id,
   username: userStore.userinfo.username,
   nickName: userStore.userinfo.nickName,
+  org: userStore.userinfo.org,
   birthday: userStore.userinfo.birthday,
+  phoneNumber: userStore.userinfo.phoneNumber,
   telephone: userStore.userinfo.telephone,
   email: userStore.userinfo.email
 })
@@ -82,7 +98,6 @@ const onSubmit = () => {
   formRef.value
     .validateFields()
     .then((values) => {
-      // values.birthday = values.birthday.format('YYYY-MM-DD')
       UpdateUserinfo(values).then(res => {
         if (res.success) {
           message.info(res.message)
@@ -93,7 +108,6 @@ const onSubmit = () => {
       })
     })
     .catch((err) => {
-      console.log(err)
       err.errorFields.forEach((msg) => {
         console.warn(msg.errors)
       })

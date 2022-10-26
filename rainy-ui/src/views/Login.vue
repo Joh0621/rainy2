@@ -79,7 +79,7 @@ const onFinish = (values) => {
         message: '欢迎',
         description: `${timeFix()}，欢迎回来`
       })
-    }, 500)
+    }, 1000)
   }).catch(err => {
     errMessage.value = err.message
   })
