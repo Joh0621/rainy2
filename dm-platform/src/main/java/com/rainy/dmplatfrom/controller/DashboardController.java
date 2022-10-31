@@ -47,16 +47,19 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard/station/point/count")
-    private List<Map<String, Object>> stationPointCount(){
-        return deviceService.stationPointCount();
+    private List<Map<String, Object>> stationPointCount(int type){
+        if (type == 0) {
+            return deviceService.stationPointCount();
+        }
+        return deviceService.majorPointCount();
     }
 
     @GetMapping("/dashboard/station/device/count")
-    private List<Map<String, Object>> stationDeviceCount(String category){
-        if ("station".equals(category)) {
+    private List<Map<String, Object>> stationDeviceCount(int type){
+        if (type == 0) {
             return deviceService.stationDeviceCount();
         }
-        return deviceService.majorPointCount();
+        return deviceService.majorDeviceCount();
     }
 }
 

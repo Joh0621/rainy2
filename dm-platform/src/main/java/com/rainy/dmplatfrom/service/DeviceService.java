@@ -19,5 +19,6 @@ public interface DeviceService extends BaseService<Device> {
     List<Map<String, Object>> majorPointCount();
 
     List<Map<String, Object>> stationDeviceCount();
+    List<Map<String, Object>> majorDeviceCount();
 
 }
