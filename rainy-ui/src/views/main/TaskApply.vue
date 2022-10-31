@@ -2,8 +2,8 @@
   <a-card :bordered="false">
     <div class="table-query">
       <a-form layout="inline">
-        <a-form-item label="流程名称">
-          <a-input v-model:value="queryParam.processName" placeholder="请输入流程名称" />
+        <a-form-item label="设备名称">
+          <a-input v-model:value="queryParam.deviceName" placeholder="请输入设备名称" />
         </a-form-item>
         <a-form-item>
           <a-space>

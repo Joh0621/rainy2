@@ -7,6 +7,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
+import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
@@ -66,6 +67,17 @@ public class ScheduleTaskController {
     @Log(module = "定时任务管理", type = OpType.ADD, detail = "'新增了定时任务[' + #param.name + '].'")
     public Boolean save(@RequestBody @Validated(Group.Add.class) ScheduleTask param) {
         return scheduleTaskService.save(param);
+    }
+
+    @PostMapping("/task/execute")
+    @SaCheckPermission("task:execute")
+    @Log(module = "定时任务管理", type = OpType.ADD, detail = "'执行了定时任务[' + #param.name + '].'")
+    public Boolean executeTask(@RequestBody @Validated ScheduleTask param) {
+        String simpleName = StrUtil.subAfter(param.getClassName(), CharConstants.DOT, true);
+        String beanName = StrUtil.lowerFirst(simpleName);
+        Task task = SpringUtil.getBean(beanName, Task.class);
+        task.execute();
+        return Boolean.TRUE;
     }
 
     @PostMapping("/tasks")

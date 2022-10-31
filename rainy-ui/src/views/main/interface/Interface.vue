@@ -19,6 +19,7 @@
     <b-table
         ref="table"
         :columns="columns"
+        :options="{ showAdd: false, showBatchDel: false }"
         :row-key="record => record.id"
         :load-data="data"
         @add="handleAdd"
@@ -34,6 +35,11 @@
           <a-button type="link" size="small" danger>删除</a-button>
         </a-popconfirm>
       </template>
+      <template #expandedRowRender="{ record }">
+        <p style="margin: 0">
+          {{ record.description }}
+        </p>
+      </template>
     </b-table>
   </a-card>
 </template>
@@ -47,7 +53,9 @@ const queryParam = ref({})
 const columns = [
   { title: '接口名称', dataIndex: 'name' },
   { title: '接口编码', dataIndex: 'code' },
-  { title: '描述', dataIndex: 'description' },
+  { title: '调用次数', dataIndex: 'callCount' },
+  { title: '传输总量', dataIndex: 'TransferTotal' },
+  // { title: '描述', dataIndex: 'description' },
   { title: '启用停用', dataIndex: 'status' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]

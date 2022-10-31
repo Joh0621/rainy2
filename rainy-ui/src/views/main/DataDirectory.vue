@@ -18,12 +18,6 @@
       <a-card>
         <div class="table-query">
           <a-form layout="inline">
-<!--            <a-form-item label="设备名称">-->
-<!--              <a-input v-model:value="queryParam.name" placeholder="请输入设备名称" />-->
-<!--            </a-form-item>-->
-<!--            <a-form-item label="设备编码">-->
-<!--              <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />-->
-<!--            </a-form-item>-->
             <a-form-item>
               <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入设备名称/测点名称" />
             </a-form-item>
@@ -38,32 +32,36 @@
           </a-form>
           <div style="margin-top: 12px">
             专业：
-            <a-radio-group size="default" v-model:value="queryParam.major" @change="handleOk">
+            <a-radio-group v-model:value="queryParam.major" @change="handleOk">
               <a-radio-button :key="item.value" v-for="item in appStore.dictItems('biz_major')" :value="item.value">
                 {{item.name}}
               </a-radio-button>
             </a-radio-group>
+            <a-button @click="batchApply" style="margin-left: 10px" type="primary">批量申请</a-button>
           </div>
         </div>
         <a-spin :spinning="dataLoading">
-          <a-list item-layout="vertical" size="large" :pagination="pagination" @change="handleChange" :data-source="listData">
-            <template #renderItem="{ item }">
-              <a-list-item :key="item.id">
-                <a-list-item-meta :description="item.description">
-                  <template #title>
-                    <router-link :to="`/device/${item.id}`">
-                      <a class="data-title">{{ item.name }}</a>
-                    </router-link>
-                    <a-divider type="vertical"/>
-                    <a-tag color="orange">
-                      {{ appStore.dictItemValue('biz_major', item.major ) }}
-                    </a-tag>
-                  </template>
-                </a-list-item-meta>
-                {{ item.content }}
-              </a-list-item>
-            </template>
-          </a-list>
+          <a-checkbox-group v-model:value="checkedList">
+            <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+              <template #renderItem="{ item }">
+                <a-list-item :key="item.id">
+                  <a-checkbox :value="item.id" style="float: left;margin-right: 10px" @change="handleChange"></a-checkbox>
+                  <a-list-item-meta :description="item.description">
+                    <template #title>
+                      <router-link :to="`/device/${item.id}`">
+                        <a class="data-title">{{ item.name }}</a>
+                      </router-link>
+                      <a-divider type="vertical"/>
+                      <a-tag color="orange">
+                        {{ appStore.dictItemValue('biz_major', item.major ) }}
+                      </a-tag>
+                    </template>
+                  </a-list-item-meta>
+                  {{ item.content }}
+                </a-list-item>
+              </template>
+            </a-list>
+          </a-checkbox-group>
         </a-spin>
       </a-card>
     </a-col>
@@ -74,6 +72,7 @@ import { Tree } from '@/api/main/dataDirectory'
 import { List as ListDevices } from '@/api/main/device'
 import { useAppStore } from '@/store/app'
 import router from '@/router/index'
+import { message } from 'ant-design-vue'
 const appStore = useAppStore()
 
 const fieldNames = {
@@ -88,6 +87,7 @@ onMounted(() => {
 
 const handleOk = () => {
   listDevices()
+  clearCheckAll()
 }
 const handleReset = () => {
   queryParam.value = {}
@@ -133,8 +133,19 @@ const pagination = {
   total: 0
 }
 
-const handleChange = p => {
-  console.log(p)
+const checkedList = ref([])
+const clearCheckAll = () => {
+  checkedList.value = []
+}
+const handleChange = () => {
+  // console.log(toRaw(checkedList.value))
+}
+
+const batchApply = () => {
+  console.log(toRaw(checkedList.value))
+  if (checkedList.value.length === 0) {
+    message.warn('请选择您想要申请的数据')
+  }
 }
 
 const listDevices = (current, size) => {
@@ -163,7 +174,13 @@ const listDevices = (current, size) => {
 .ant-list-item {
   padding-left: 4px;
 }
+.ant-list-lg .ant-list-item {
+  padding: 16px 0 0 0;
+}
 .data-title {
   color:#1890ff
+}
+.ant-checkbox-group {
+  width: 100%;
 }
 </style>

@@ -4,6 +4,7 @@ import com.rainy.dmplatfrom.entity.Device;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * data-middle-platform
@@ -16,5 +17,6 @@ public class ApplyParam {
     @NotNull
     private Integer dataType;
     private Device device;
+    private List<String> deviceIds;
     private String remarks;
 }

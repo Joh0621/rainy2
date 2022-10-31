@@ -11,6 +11,7 @@ import com.rainy.dmplatfrom.service.UserDataRelService;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
+import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.constant.DictConstants;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.SecurityUtils;
@@ -92,6 +93,25 @@ public class DataApplyController {
         boolean flag = Objects.equals(device.getOrgId(), SecurityUtils.getUserinfo().getOrgId());
         variables.put(VariableNames.APPROVED, DictConstants.APPROVE_STATUS_1);
         variables.put("flag", flag);
+        Task task = workflowTaskService.getTaskByProcessInstanceId(processInstance.getProcessInstanceId());
+        workflowService.complete(task.getId(), variables, param.getRemarks());
+        return Result.ok();
+    }
+
+    @Log(module = "数据申请", type = OpType.DEL, detail = "'申请了数据[' + #param.device.name + '].'")
+    @PostMapping("/datas/apply")
+    public Result<Object> batchApply(@RequestBody ApplyParam param) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put(VariableNames.START_BY, SecurityUtils.getUsername());
+        // 1.启动数据申请流程
+        ProcessInstance processInstance = workflowService.startProcess(processDefinitionKey, variables);
+        //
+        String id = String.join(CharConstants.COMMA, param.getDeviceIds());
+        // 3. 完成任务
+        variables.put("dataType", param.getDataType());
+        variables.put("dataId", id);
+        // 是否申请本部门数据
+        variables.put("flag", false);
         Task task = workflowTaskService.getTaskByProcessInstanceId(processInstance.getProcessInstanceId());
         workflowService.complete(task.getId(), variables, param.getRemarks());
         return Result.ok();
