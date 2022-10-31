@@ -16,6 +16,7 @@ public interface DeviceService extends BaseService<Device> {
     boolean removeBatchByIds(List<Long> ids);
 
     List<Map<String, Object>> stationPointCount();
+    List<Map<String, Object>> majorPointCount();
 
     List<Map<String, Object>> stationDeviceCount();
 

@@ -63,6 +63,10 @@
   <a-row class="margin-t16" :gutter="16">
     <a-col :span="12">
       <a-card :bordered="false">
+        <a-radio-group style="float: right" v-model:value="activeKey" @change="deviceCount">
+          <a-radio-button style="z-index: 99" value="station">场站</a-radio-button>
+          <a-radio-button style="z-index: 99" value="major">专业</a-radio-button>
+        </a-radio-group>
         <pie-chart :height="300" :options="pieOptions"/>
       </a-card>
     </a-col>
@@ -75,13 +79,16 @@
 </template>
 
 <script setup>
-import { Count, StationPointCount, StationDeviceCount } from '@/api/main/dashboard'
+import { Count, StationPointCount, DeviceCount } from '@/api/main/dashboard'
+import { useAppStore } from '@/store/app'
+const appStore = useAppStore()
 
 onMounted(() => {
   loadCount()
   stationPointCount()
-  stationDeviceCount()
+  deviceCount()
 })
+
 
 const count = ref([0, 0, 0])
 const loadCount = () => {
@@ -152,13 +159,18 @@ const pieOptions = ref({
     }
   ]
 })
-const stationDeviceCount = () => {
-  StationDeviceCount().then(res => {
+
+const activeKey = ref('station')
+const deviceCount = () => {
+  const param = {
+    category: activeKey.value
+  }
+  DeviceCount(param).then(res => {
     const data = []
     res.data.forEach(r => {
       data.push({
-        name: r.stationName,
-        value: r.deviceCount
+        name: activeKey.value === 'device' ? r.name : appStore.dictItemValue('biz_major', r.name),
+        value: r.count
       })
     })
     pieOptions.value.series[0].data = data

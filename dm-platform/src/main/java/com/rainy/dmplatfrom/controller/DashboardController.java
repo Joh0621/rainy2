@@ -52,8 +52,11 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard/station/device/count")
-    private List<Map<String, Object>> stationDeviceCount(){
-        return deviceService.stationDeviceCount();
+    private List<Map<String, Object>> stationDeviceCount(String category){
+        if ("station".equals(category)) {
+            return deviceService.stationDeviceCount();
+        }
+        return deviceService.majorPointCount();
     }
 }
 

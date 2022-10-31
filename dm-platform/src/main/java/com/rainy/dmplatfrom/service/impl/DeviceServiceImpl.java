@@ -47,6 +47,11 @@ public class DeviceServiceImpl extends BaseServiceImpl<DeviceMapper, Device> imp
     }
 
     @Override
+    public List<Map<String, Object>> majorPointCount() {
+        return this.baseMapper.majorDeviceCount();
+    }
+
+    @Override
     public List<Map<String, Object>> stationDeviceCount() {
         return this.baseMapper.stationDeviceCount();
     }
