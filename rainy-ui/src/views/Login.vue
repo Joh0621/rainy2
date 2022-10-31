@@ -170,7 +170,7 @@ const onFinishFailed = (errorInfo) => {
   border-right-width: 0px!important;
   z-index: 1;
 }
-/deep/ .ant-input{
+:deep(.ant-input){
   background-color: rgba(255,0,0,0);
 }
 .ant-form-item-has-error :not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper{
@@ -181,11 +181,9 @@ const onFinishFailed = (errorInfo) => {
   box-shadow:0 0 0 0px var(--ant-primary-color-outline);
   border-right-width:0px!important;
 }
-/deep/ .ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover{
+:deep(.ant-form-item-has-error) :not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover{
   background-color:rgba(255,0,0,0);
 }
-
-
 
 @keyframes myfirst {
   0% {

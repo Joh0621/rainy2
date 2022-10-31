@@ -17,6 +17,10 @@
         </dependency>
         <dependency>
             <groupId>com.rainy</groupId>
+            <artifactId>rainy-task</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-workflow</artifactId>
         </dependency>
         <dependency>
