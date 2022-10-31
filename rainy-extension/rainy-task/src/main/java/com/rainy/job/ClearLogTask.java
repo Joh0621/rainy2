@@ -27,7 +27,6 @@ public class ClearLogTask implements Task {
     private final OperationLogService operationLogService;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void execute() {
         int days = configService.getAsInt(ConfigConstants.SYS_LOG_RETENTION_DAYS);
         LocalDateTime dateTime = LocalDateTime.now().minusDays(days);

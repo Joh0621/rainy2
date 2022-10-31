@@ -6,7 +6,7 @@
           <a-input v-model:value="queryParam.name" placeholder="请输入任务名称" />
         </a-form-item>
         <a-form-item label="任务分类">
-          <a-select style="width: 150px" v-model:value="queryParam.categoryCode" placeholder="请选择分类" @select="$refs.table.refresh()">
+          <a-select style="width: 150px" v-model:value="queryParam.category" placeholder="请选择分类" @select="$refs.table.refresh()">
             <a-select-option :key="item.value" v-for="item in appStore.dictItems('sys_task_category')" :value="item.value">
               {{ item.name }}
             </a-select-option>
@@ -62,8 +62,8 @@ const appStore = useAppStore()
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '任务分类', dataIndex: 'category' },
   { title: '任务名称', dataIndex: 'name' },
+  { title: '任务分类', dataIndex: 'category' },
   { title: 'cron表达式', dataIndex: 'cron' },
   { title: 'class类名', dataIndex: 'className', width: '220px' },
   { title: '状态', dataIndex: 'status' },
