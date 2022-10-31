@@ -6,6 +6,8 @@ import com.rainy.dmplatfrom.entity.Device;
 import com.rainy.dmplatfrom.entity.Point;
 import com.rainy.dmplatfrom.entity.UserDataRel;
 import com.rainy.dmplatfrom.param.ApplyParam;
+import com.rainy.dmplatfrom.param.BatchApplyParam;
+import com.rainy.dmplatfrom.service.DeviceService;
 import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.dmplatfrom.service.UserDataRelService;
 import com.rainy.framework.annotation.Log;
@@ -31,10 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * rainy
@@ -51,6 +50,7 @@ public class DataApplyController {
     private final WorkflowTaskService workflowTaskService;
     private final UserDataRelService userDataRelService;
     private final PointService pointService;
+    private final DeviceService deviceService;
 
     @Log(module = "数据申请", type = OpType.DEL, detail = "'申请了数据[' + #param.device.name + '].'")
     @PostMapping("/data/apply")
@@ -70,7 +70,7 @@ public class DataApplyController {
         // 2.启动数据申请流程
         ProcessInstance processInstance = workflowService.startProcess(processDefinitionKey, variables);
         UserDataRel userDataRel = new UserDataRel();
-        userDataRel.setDataId(device.getId());
+        userDataRel.setDataId(device.getId().toString());
         userDataRel.setDataType(param.getDataType());
         userDataRel.setDataName(device.getName());
         userDataRel.setDataCode(device.getCode());
@@ -98,18 +98,47 @@ public class DataApplyController {
         return Result.ok();
     }
 
-    @Log(module = "数据申请", type = OpType.DEL, detail = "'申请了数据[' + #param.device.name + '].'")
-    @PostMapping("/datas/apply")
-    public Result<Object> batchApply(@RequestBody ApplyParam param) {
+    @Log(module = "数据申请", type = OpType.DEL, detail = "'批量申请了数据[' + #param.dataIds + '].'")
+    @PostMapping("/data/apply/batch")
+    public Result<Object> batchApply(@RequestBody BatchApplyParam param) {
         Map<String, Object> variables = new HashMap<>();
         variables.put(VariableNames.START_BY, SecurityUtils.getUsername());
         // 1.启动数据申请流程
         ProcessInstance processInstance = workflowService.startProcess(processDefinitionKey, variables);
         //
-        String id = String.join(CharConstants.COMMA, param.getDeviceIds());
+        List<String> dataIds = param.getDataIds();
+        List<Device> list = deviceService.lambdaQuery()
+                .in(Device::getId, dataIds)
+                .list();
+        StringBuilder dataName = new StringBuilder();
+        StringBuilder dataCode = new StringBuilder();
+        Set<String> dataDirectorNames = new HashSet<>();
+        for (Device device : list) {
+            dataName.append(device.getName()).append(CharConstants.COMMA);
+            dataCode.append(device.getCode()).append(CharConstants.COMMA);
+            dataDirectorNames.add(device.getDataDirectoryName());
+        }
+
+        UserDataRel userDataRel = new UserDataRel();
+        String dataId = String.join(CharConstants.COMMA, param.getDataIds());
+        userDataRel.setDataId(dataId);
+        userDataRel.setDataType(param.getDataType());
+        userDataRel.setDataName(dataName.toString());
+        userDataRel.setDataCode(dataCode.toString());
+//        userDataRel.setDataDirectionId(device.getDataDirectoryId());
+        userDataRel.setDataDirectionName(StrUtil.join(CharConstants.COMMA, dataDirectorNames));
+//        userDataRel.setOrgId(device.getOrgId());
+//        userDataRel.setOrgName(device.getOrgName());
+        userDataRel.setApplyTime(LocalDateTime.now());
+        userDataRel.setApplyUserId(SecurityUtils.getUserId());
+        userDataRel.setApplyUsername(SecurityUtils.getUsername());
+        userDataRel.setApproved(DictConstants.APPROVE_STATUS_0);
+        userDataRel.setProcessInstanceId(processInstance.getProcessInstanceId());
+        userDataRel.setProcessDefinitionId(processInstance.getProcessDefinitionId());
+        userDataRelService.save(userDataRel);
         // 3. 完成任务
         variables.put("dataType", param.getDataType());
-        variables.put("dataId", id);
+        variables.put("dataId", dataId);
         // 是否申请本部门数据
         variables.put("flag", false);
         Task task = workflowTaskService.getTaskByProcessInstanceId(processInstance.getProcessInstanceId());

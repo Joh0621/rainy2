@@ -20,7 +20,7 @@ public class UserDataRel {
 
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Long dataId;
+    private String dataId;
     /**
      * 0.时序数据
      * 1.关系表

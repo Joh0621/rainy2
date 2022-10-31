@@ -15,6 +15,7 @@ import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.common.Result;
+import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
@@ -66,6 +67,13 @@ public class DeviceController {
                 .or()
                 .in(!deviceCodes.isEmpty(), Device::getCode, deviceCodes)
                 .page(page);
+    }
+
+    @GetMapping("/devices/ids")
+    public List<Device> listByIds(String ids) {
+        return deviceService.lambdaQuery()
+                .in(Device::getId, ids.split(CharConstants.COMMA))
+                .list();
     }
 
     @GetMapping("/device/{id}")

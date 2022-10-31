@@ -34,7 +34,7 @@
   </a-modal>
 </template>
 <script setup>
-import { Apply } from '@/api/main/dataApply.js'
+import { Apply } from '@/api/main/dataApply'
 import { message } from 'ant-design-vue'
 
 const labelCol = reactive({ span: 4, offset: 0 })

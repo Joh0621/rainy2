@@ -2,6 +2,7 @@ import request, { method } from '@/utils/request'
 
 const api = {
   Apply: '/data/apply',
+  BatchApply: '/data/apply/batch',
   PointDownload: '/data/point/download',
   CancelApply: '/data/apply/cancel',
   List: '/applies'
@@ -10,6 +11,14 @@ const api = {
 export function Apply (parameter) {
   return request({
     url: api.Apply,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function BatchApply (parameter) {
+  return request({
+    url: api.BatchApply,
     method: method.POST,
     data: parameter
   })

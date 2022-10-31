@@ -9,6 +9,7 @@ import com.rainy.dmplatfrom.service.AccessTokenService;
 import com.rainy.dmplatfrom.service.AuthService;
 import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.dmplatfrom.service.UserDataRelService;
+import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         Long userDataId = accessToken.getUserDataId();
         UserDataRel userDataRel = userDataRelService.getById(userDataId);
         List<Point> points = pointService.lambdaQuery()
-                .eq(Point::getDeviceCode, userDataRel.getDataCode())
+                .in(Point::getDeviceCode, userDataRel.getDataCode().split(CharConstants.COMMA))
                 .list();
         Set<String> authCodes = points.stream()
                 .map(Point::getCode)

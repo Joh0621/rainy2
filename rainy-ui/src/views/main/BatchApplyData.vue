@@ -16,12 +16,12 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
     >
-      <a-form-item
-          label="设备名称"
-          has-feedback
-      >
-        <a-input :disabled="true" v-model:value="record.name" />
-      </a-form-item>
+<!--      <a-form-item-->
+<!--          label="设备名称"-->
+<!--          has-feedback-->
+<!--      >-->
+<!--        <a-input :disabled="true" v-model:value="record.name" />-->
+<!--      </a-form-item>-->
       <a-form-item
           name="remarks"
           label="数据用途"
@@ -34,19 +34,18 @@
   </a-modal>
 </template>
 <script setup>
-import { Apply } from '@/api/main/dataApply.js'
+import { BatchApply } from '@/api/main/dataApply'
 import { message } from 'ant-design-vue'
 
 const labelCol = reactive({ span: 4, offset: 0 })
 const wrapperCol = reactive({ span: 16, offset: 0 })
 
-// 是否是新增: true 新增，false 编辑，默认新增
 const visible = ref(false)
 const confirmLoading = ref(false)
-const record = ref({})
 const form = ref({})
 const formRef = ref({})
 
+const record = ref([])
 const open = (recordValue) => {
   visible.value = true
   record.value = recordValue
@@ -63,11 +62,11 @@ const apply = () => {
     .validateFields()
     .then((values) => {
       const param = {
-        device: record.value,
+        dataIds: record.value,
         remarks: values.remarks,
         dataType: 0
       }
-      Apply(param).then(res => {
+      BatchApply(param).then(res => {
         if (res.success) {
           message.info('申请成功')
           handleCancel()

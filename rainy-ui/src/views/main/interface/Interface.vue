@@ -22,7 +22,6 @@
         :options="{ showAdd: false, showBatchDel: false }"
         :row-key="record => record.id"
         :load-data="data"
-        @add="handleAdd"
         @batch-del="handleBatchDel"
     >
       <template #status="{ record }">
