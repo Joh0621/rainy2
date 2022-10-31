@@ -66,8 +66,10 @@
       </a-card>
     </a-col>
   </a-row>
+  <BatchApplyData ref="batchApplyData" />
 </template>
 <script setup>
+import BatchApplyData from './BatchApplyData.vue'
 import { Tree } from '@/api/main/dataDirectory'
 import { List as ListDevices } from '@/api/main/device'
 import { useAppStore } from '@/store/app'
@@ -141,13 +143,6 @@ const handleChange = () => {
   // console.log(toRaw(checkedList.value))
 }
 
-const batchApply = () => {
-  console.log(toRaw(checkedList.value))
-  if (checkedList.value.length === 0) {
-    message.warn('请选择您想要申请的数据')
-  }
-}
-
 const listDevices = (current, size) => {
   queryParam.value.current = current
   queryParam.value.size = size
@@ -163,6 +158,16 @@ const listDevices = (current, size) => {
     }, 100)
   })
 }
+
+const batchApplyData = ref()
+const batchApply = () => {
+  if (checkedList.value.length === 0) {
+    message.warn('请选择您想要申请的数据')
+  } else {
+    batchApplyData.value.open(checkedList.value)
+  }
+}
+
 </script>
 <style scoped>
 .ant-tag {

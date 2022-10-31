@@ -90,11 +90,11 @@ const taskTrack = ref()
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '设备名称', dataIndex: 'dataName', width: '120px', ellipsis: true },
-  { title: '数据目录', dataIndex: 'dataDirectionName' },
-  { title: '责任部门', dataIndex: 'orgName' },
+  { title: '设备名称', dataIndex: 'dataName', ellipsis: true },
+  { title: '数据目录', dataIndex: 'dataDirectionName', ellipsis: true },
+  // { title: '责任部门', dataIndex: 'orgName' },
   { title: '申请人', dataIndex: 'applyUsername' },
-  { title: '申请时间', dataIndex: 'applyTime', width: '180px' },
+  { title: '申请时间', dataIndex: 'applyTime' },
   { title: '审批状态', dataIndex: 'approved' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
