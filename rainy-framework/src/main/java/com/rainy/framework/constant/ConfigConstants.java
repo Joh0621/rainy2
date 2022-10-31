@@ -20,7 +20,7 @@ public interface ConfigConstants {
     /**
      * 日志保留天数
      */
-    String LOG_RETENTION_DAYS = "log_retention_days";
+    String SYS_LOG_RETENTION_DAYS = "sys_log_retention_days";
 
     /**
      * 算法 sm4 密钥

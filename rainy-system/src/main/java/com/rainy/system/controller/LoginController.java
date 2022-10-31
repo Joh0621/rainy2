@@ -42,7 +42,7 @@ public class LoginController {
                 .one();
         // 校验账号密码是否正确
         if (user == null || !Objects.equals(param.getPassword(), user.getPassword())) {
-            throw new UnauthorizedException(ResultCode.ACCOUNT_PASSWORD_NOT_MATCH);
+            throw new UnauthorizedException(ResultCode.ACCOUNT_PASSWORD_NOT_MATCH.getMessage());
         }
         // 检查账号是否被封禁
         StpUtil.checkDisable(user.getId());

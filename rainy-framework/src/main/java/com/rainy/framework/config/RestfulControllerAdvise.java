@@ -51,7 +51,7 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(value = UnauthorizedException.class)
     public Result<Object> unauthorizedException(UnauthorizedException e) {
-        return Result.of(e.getResultCode());
+        return Result.of(e.getResultCode(), e.getMessage());
     }
 
     /**

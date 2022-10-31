@@ -11,11 +11,10 @@ import lombok.Getter;
 @Getter
 public class UnauthorizedException extends RuntimeException {
 
-    private final ResultCode resultCode;
+    private final ResultCode resultCode = ResultCode.UNAUTHORIZED;;
 
-    public UnauthorizedException(ResultCode resultCode) {
-        super(resultCode.getMessage());
-        this.resultCode = resultCode;
+    public UnauthorizedException(String message) {
+        super(message);
     }
 
 }
