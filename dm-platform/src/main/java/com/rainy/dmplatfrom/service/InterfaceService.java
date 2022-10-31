@@ -10,4 +10,6 @@ import com.rainy.system.service.BaseService;
  */
 public interface InterfaceService extends BaseService<Interface> {
 
+    Interface getByCode(String realTimeApiCode);
+
 }

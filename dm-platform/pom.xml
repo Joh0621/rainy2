@@ -12,6 +12,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.iotdb</groupId>
+            <artifactId>iotdb-session</artifactId>
+            <version>0.12.6</version>
+        </dependency>
+        <dependency>
             <groupId>com.rainy</groupId>
             <artifactId>rainy-system</artifactId>
         </dependency>

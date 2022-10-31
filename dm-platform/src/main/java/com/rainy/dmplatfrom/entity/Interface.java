@@ -1,6 +1,7 @@
 package com.rainy.dmplatfrom.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -20,5 +21,11 @@ public class Interface {
     private String code;
     private String description;
     private Integer status;
+    @TableField(exist = false)
+    private Long totalCount;
+    @TableField(exist = false)
+    private Long avgResponseTime;
+    @TableField(exist = false)
+    private Long totalDataSize;
 
 }

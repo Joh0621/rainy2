@@ -17,6 +17,12 @@
         :wrapper-col="wrapperCol"
     >
       <a-form-item
+          label="设备名称"
+          has-feedback
+      >
+        <a-input :disabled="true" v-model:value="record.name" />
+      </a-form-item>
+      <a-form-item
           name="remarks"
           label="数据用途"
           :rules="[{ required: true, message: '请输入数据用途' }]"

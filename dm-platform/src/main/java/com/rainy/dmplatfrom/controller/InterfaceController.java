@@ -2,7 +2,10 @@ package com.rainy.dmplatfrom.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rainy.dmplatfrom.entity.ApiRecord;
+import com.rainy.dmplatfrom.entity.ApiRecordStatistics;
 import com.rainy.dmplatfrom.entity.Interface;
+import com.rainy.dmplatfrom.service.ApiRecordService;
 import com.rainy.dmplatfrom.service.InterfaceService;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * data-middle-platform
@@ -30,13 +34,25 @@ import java.util.List;
 public class InterfaceController {
 
     private final InterfaceService interfaceService;
+    private final ApiRecordService apiRecordService;
 
     @GetMapping("/interfaces")
     public Page<Interface> list(Page<Interface> page, Interface param) {
-        return interfaceService.lambdaQuery()
+        Page<Interface> pageData = interfaceService.lambdaQuery()
                 .likeRight(StrUtil.isNotBlank(param.getName()), Interface::getName, param.getName())
                 .likeRight(StrUtil.isNotBlank(param.getCode()), Interface::getCode, param.getCode())
                 .page(page);
+        Map<String, ApiRecordStatistics> res = apiRecordService.statistics();
+        for (Interface record : pageData.getRecords()) {
+            ApiRecordStatistics r = res.get(record.getCode());
+            if (r == null) {
+                continue;
+            }
+            record.setTotalCount(r.getTotalCount());
+            record.setAvgResponseTime(r.getAvgResponseTime());
+            record.setTotalDataSize(r.getTotalDataSize());
+        }
+        return pageData;
     }
 
     @Log(module = "接口管理", type = OpType.EXPORT, detail = "导出了接口列表")

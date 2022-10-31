@@ -4,6 +4,7 @@ import cn.hutool.core.lang.UUID;
 import com.rainy.dmplatfrom.entity.AccessToken;
 import com.rainy.dmplatfrom.entity.UserDataRel;
 import com.rainy.dmplatfrom.mapper.AccessTokenMapper;
+import com.rainy.dmplatfrom.service.AccessTokenService;
 import com.rainy.dmplatfrom.service.UserDataRelService;
 import com.rainy.framework.constant.DictConstants;
 import com.rainy.workflow.constant.VariableNames;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class AutoApprovalTask implements JavaDelegate {
 
     private final UserDataRelService userDataRelService;
-    private final AccessTokenMapper accessTokenMapper;
+    private final AccessTokenService accessTokenService;
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -36,8 +37,13 @@ public class AutoApprovalTask implements JavaDelegate {
         Object approved = variables.get("approved");
         if ((int) approved == DictConstants.APPROVE_STATUS_1) {
             AccessToken accessToken = new AccessToken();
-            accessToken.setUserDataId((Long) dataId);
+            UserDataRel one = userDataRelService.lambdaQuery()
+                    .eq(UserDataRel::getApplyUsername, applyUsername)
+                    .eq(UserDataRel::getDataType, dataType)
+                    .eq(UserDataRel::getDataId, dataId).one();
+            accessToken.setUserDataId(one.getId());
             accessToken.setAccessToken(UUID.fastUUID().toString(true));
+            accessTokenService.save(accessToken);
         }
         userDataRelService.lambdaUpdate()
                 .eq(UserDataRel::getApplyUsername, applyUsername)

@@ -53,11 +53,12 @@ const queryParam = ref({})
 const columns = [
   { title: '接口名称', dataIndex: 'name' },
   { title: '接口编码', dataIndex: 'code' },
-  { title: '调用次数', dataIndex: 'callCount' },
-  { title: '传输总量', dataIndex: 'TransferTotal' },
+  { title: '调用次数', dataIndex: 'totalCount' },
+  { title: '传输总量(byte)', dataIndex: 'totalDataSize' },
+  { title: '平均响应时间(ms)', dataIndex: 'avgResponseTime' },
   // { title: '描述', dataIndex: 'description' },
-  { title: '启用停用', dataIndex: 'status' },
-  { title: '操作', dataIndex: 'action', width: '150px' }
+  { title: '状态', dataIndex: 'status' }
+  // { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
   return List(Object.assign(parameter, queryParam.value)).then(res => {

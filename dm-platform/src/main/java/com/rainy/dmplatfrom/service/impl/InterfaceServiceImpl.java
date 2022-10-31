@@ -16,4 +16,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class InterfaceServiceImpl extends BaseServiceImpl<InterfaceMapper, Interface> implements InterfaceService {
 
+    @Override
+    public Interface getByCode(String realTimeApiCode) {
+        return this.lambdaQuery()
+                .eq(Interface::getCode, realTimeApiCode)
+                .one();
+    }
 }
