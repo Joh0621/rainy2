@@ -2,8 +2,9 @@ import request, { method } from '@/utils/request'
 
 const api = {
   Count: '/dashboard/count',
-  PointCount: '/dashboard/station/point/count',
-  DeviceCount: '/dashboard/station/device/count'
+  PointCount: '/dashboard/point/count',
+  DeviceCount: '/dashboard/device/count',
+  ApiStatistics: '/dashboard/api/statistics'
 }
 
 export function Count () {
@@ -26,6 +27,13 @@ export function DeviceCount (parameter) {
     url: api.DeviceCount,
     method: method.GET,
     params: parameter
+  })
+}
+
+export function ApiStatistics () {
+  return request({
+    url: api.ApiStatistics,
+    method: method.GET
   })
 }
 

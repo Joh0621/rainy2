@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { Count, PointCount, DeviceCount } from '@/api/main/dashboard'
+import { Count, PointCount, DeviceCount, ApiStatistics } from '@/api/main/dashboard'
 import { useAppStore } from '@/store/app'
 const appStore = useAppStore()
 
@@ -108,6 +108,7 @@ onMounted(() => {
   loadCount()
   deviceCount()
   pointCount()
+  apiStatistics()
 })
 
 // 数量统计
@@ -214,7 +215,10 @@ const apiCount = ref({
     left: 'right'
   },
   tooltip: {
-    trigger: 'item'
+    trigger: 'item',
+    formatter: (params) => {
+      return params.name + '<br/> 调用次数：' + params.value + ' 次'
+    }
   },
   legend: {
     orient: 'vertical',
@@ -222,20 +226,13 @@ const apiCount = ref({
   },
   series: [
     {
-      name: '设备数量',
+      name: '调用次数',
       type: 'pie',
       radius: '50%',
       data: [
         { value: 53, name: '实时数据接口' },
         { value: 34, name: '历史数据接口' }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
+      ]
     }
   ]
 })
@@ -243,11 +240,14 @@ const apiCount = ref({
 // 接口调用次数统计
 const apiResponseTime = ref({
   title: {
-    text: '接口响应时长统计',
+    text: '接口平均响应时长统计',
     left: 'right'
   },
   tooltip: {
-    trigger: 'item'
+    trigger: 'item',
+    formatter: (params) => {
+      return params.name + '<br/> 平均响应时长：' + params.value + ' ms'
+    }
   },
   legend: {
     orient: 'vertical',
@@ -255,20 +255,13 @@ const apiResponseTime = ref({
   },
   series: [
     {
-      name: '设备数量',
+      name: '平均响应时长',
       type: 'pie',
       radius: '50%',
       data: [
         { value: 53, name: '实时数据接口' },
         { value: 34, name: '历史数据接口' }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
+      ]
     }
   ]
 })
@@ -280,7 +273,10 @@ const apiDataSize = ref({
     left: 'right'
   },
   tooltip: {
-    trigger: 'item'
+    trigger: 'item',
+    formatter: (params) => {
+      return params.name + '<br/> 数据传输量：' + params.value + ' kb'
+    }
   },
   legend: {
     orient: 'vertical',
@@ -288,23 +284,24 @@ const apiDataSize = ref({
   },
   series: [
     {
-      name: '设备数量',
+      name: '数据传输量',
       type: 'pie',
       radius: '50%',
       data: [
         { value: 53, name: '实时数据接口' },
         { value: 34, name: '历史数据接口' }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
+      ]
     }
   ]
 })
+
+const apiStatistics = () => {
+  ApiStatistics().then(res => {
+    apiCount.value.series[0].data = res.data[0]
+    apiResponseTime.value.series[0].data = res.data[1]
+    apiDataSize.value.series[0].data = res.data[2]
+  })
+}
 </script>
 
 <style scoped>
