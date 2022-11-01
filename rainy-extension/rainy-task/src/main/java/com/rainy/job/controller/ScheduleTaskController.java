@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rainy.framework.annotation.Log;
 import com.rainy.framework.common.IdNamesParam;
 import com.rainy.framework.constant.CharConstants;
+import com.rainy.framework.constant.DictConstants;
 import com.rainy.framework.constant.OpType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.framework.validation.Group;
@@ -69,17 +70,6 @@ public class ScheduleTaskController {
         return scheduleTaskService.save(param);
     }
 
-    @PostMapping("/task/execute")
-    @SaCheckPermission("task:execute")
-    @Log(module = "定时任务管理", type = OpType.ADD, detail = "'执行了定时任务[' + #param.name + '].'")
-    public Boolean executeTask(@RequestBody @Validated ScheduleTask param) {
-        String simpleName = StrUtil.subAfter(param.getClassName(), CharConstants.DOT, true);
-        String beanName = StrUtil.lowerFirst(simpleName);
-        Task task = SpringUtil.getBean(beanName, Task.class);
-        task.execute();
-        return Boolean.TRUE;
-    }
-
     @PostMapping("/tasks")
     @SaCheckPermission("task:del")
     @Log(module = "定时任务管理", type = OpType.DEL, detail = "'删除了定时任务[' + #param.names + '].'")
@@ -91,6 +81,33 @@ public class ScheduleTaskController {
     @SaCheckPermission("task:update")
     @Log(module = "定时任务管理", type = OpType.UPDATE, detail = "'更新了定时任务[' + #param.name + '].'")
     public Boolean update(@RequestBody @Validated(Group.Edit.class) ScheduleTask param) {
+        return scheduleTaskService.update(param);
+    }
+
+    @PostMapping("/task/execute")
+    @SaCheckPermission("task:execute")
+    @Log(module = "定时任务管理", type = OpType.ADD, detail = "'执行了定时任务[' + #param.name + '].'")
+    public Boolean executeTask(@RequestBody @Validated ScheduleTask param) {
+        String simpleName = StrUtil.subAfter(param.getClassName(), CharConstants.DOT, true);
+        String beanName = StrUtil.lowerFirst(simpleName);
+        Task task = SpringUtil.getBean(beanName, Task.class);
+        task.execute();
+        return Boolean.TRUE;
+    }
+
+    @PostMapping("/task/start")
+    @SaCheckPermission("task:start")
+    @Log(module = "定时任务管理", type = OpType.ADD, detail = "'暂停了定时任务[' + #param.name + '].'")
+    public Boolean startTask(@RequestBody @Validated ScheduleTask param) {
+        param.setStatus(DictConstants.TASK_STATUS_START);
+        return scheduleTaskService.update(param);
+    }
+
+    @PostMapping("/task/stop")
+    @SaCheckPermission("task:stop")
+    @Log(module = "定时任务管理", type = OpType.ADD, detail = "'暂停了定时任务[' + #param.name + '].'")
+    public Boolean stopTask(@RequestBody @Validated ScheduleTask param) {
+        param.setStatus(DictConstants.TASK_STATUS_STOP);
         return scheduleTaskService.update(param);
     }
 

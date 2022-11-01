@@ -41,9 +41,31 @@
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
-        <a-popconfirm title="确认删除吗？" @confirm="handleDel(record)">
-          <a-button type="link" size="small" danger>删除</a-button>
-        </a-popconfirm>
+        <a-dropdown>
+          <a class="ant-dropdown-link" @click.prevent>
+            更多  <DownOutlined />
+          </a>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a-popconfirm :disabled="record.isDefault" title="确认删除吗？" @confirm="handleDel(record)">
+                  <a-button type="link" size="small" danger>删除</a-button>
+                </a-popconfirm>
+              </a-menu-item>
+              <a-menu-item>
+                <a-popconfirm title="确认执行一次吗？" @confirm="execute(record)">
+                  <a-button type="link" size="small">执行一次</a-button>
+                </a-popconfirm>
+              </a-menu-item>
+              <a-menu-item>
+                <a-button @click="startTask(record)" :disabled="record.status === 0" type="link" size="small">启动任务</a-button>
+              </a-menu-item>
+              <a-menu-item>
+                <a-button @click="stopTask(record)" :disabled="record.status === 1" type="link" size="small">暂停任务</a-button>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
       </template>
     </b-table>
     <task-edit ref="editor" @ok="handleOk"></task-edit>
@@ -52,7 +74,7 @@
 
 <script setup>
 import { useAppStore } from '@/store/app'
-import { List, Del, Export } from '@/api/system/task'
+import { List, Del, Export, Execute, Start, Stop } from '@/api/system/task'
 import { toIdNamesParam } from '@/utils/ParamUtils'
 import TaskEdit from './TaskEdit.vue'
 import { message } from 'ant-design-vue'
@@ -117,6 +139,32 @@ const downloader = ref()
 const handleExportExcel = () => {
   Export().then(res => {
     downloader.value.download(res)
+  })
+}
+
+const execute = record => {
+  Execute(record).then(res => {
+    if (res.success) {
+      message.info(res.message)
+    }
+  })
+}
+
+const startTask = record => {
+  Start(record).then(res => {
+    if (res.success) {
+      message.info(res.message)
+      handleOk()
+    }
+  })
+}
+
+const stopTask = record => {
+  Stop(record).then(res => {
+    if (res.success) {
+      message.info(res.message)
+      handleOk()
+    }
   })
 }
 

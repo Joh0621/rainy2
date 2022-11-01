@@ -6,7 +6,10 @@ const api = {
   Export: '/tasks/export',
   Add: '/task',
   Del: '/tasks',
-  Update: '/task/update'
+  Update: '/task/update',
+  Execute: '/task/execute',
+  Start: '/task/start',
+  Stop: '/task/stop'
 }
 
 export function ListClasses () {
@@ -53,5 +56,29 @@ export function Export () {
     url: api.Export,
     method: method.GET,
     responseType: 'blob'
+  })
+}
+
+export function Execute (parameter) {
+  return request({
+    url: api.Execute,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function Start (parameter) {
+  return request({
+    url: api.Start,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function Stop (parameter) {
+  return request({
+    url: api.Stop,
+    method: method.POST,
+    data: parameter
   })
 }

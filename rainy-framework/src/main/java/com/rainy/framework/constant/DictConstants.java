@@ -53,4 +53,7 @@ public interface DictConstants {
      */
     int APPROVE_STATUS_2 = 2;
 
+    int TASK_STATUS_START = 0;
+    int TASK_STATUS_STOP = 1;
+
 }
