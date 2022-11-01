@@ -41,6 +41,11 @@
           </div>
         </div>
         <a-spin :spinning="dataLoading">
+          <div>
+            <a-checkbox v-model:checked="checkAll"
+                        :indeterminate="indeterminate"
+                        @change="onCheckAllChange">全选</a-checkbox>
+          </div>
           <a-checkbox-group v-model:value="checkedList">
             <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
               <template #renderItem="{ item }">
@@ -135,14 +140,39 @@ const pagination = {
   total: 0
 }
 
-const checkedList = ref([])
+
+const ids = ref([])
+const checkedList = ref(ids.value)
+const checkAll = ref(false)
+const indeterminate = ref(false)
+const onCheckAllChange = e => {
+  if (checkAll.value) {
+    checkedList.value = ids.value
+  } else {
+    clearCheckAll()
+  }
+}
+watch(
+  checkedList,
+  val => {
+    if (checkedList.value.length === ids.value.length) {
+      checkAll.value = true
+      indeterminate.value = false
+    } else if (checkedList.value.length === 0) {
+      checkAll.value = false
+      indeterminate.value = false
+    } else {
+      checkAll.value = false
+      indeterminate.value = true
+    }
+  }
+)
 const clearCheckAll = () => {
   checkedList.value = []
 }
 const handleChange = () => {
   // console.log(toRaw(checkedList.value))
 }
-
 const listDevices = (current, size) => {
   queryParam.value.current = current
   queryParam.value.size = size
@@ -152,6 +182,7 @@ const listDevices = (current, size) => {
     pagination.current = res.data.current
     pagination.pageSize = res.data.size
     pagination.total = res.data.total
+    ids.value = res.data.records.map(r => r.id)
   }).finally(() => {
     setTimeout(() => {
       dataLoading.value = false

@@ -19,3 +19,10 @@ ant-design-vue/pro-layout
 
 数据目录
 批量申请
+
+## 
+全选/反选
+
+针对申请锁定
+
+按用户统计api调用
