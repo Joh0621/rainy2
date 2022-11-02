@@ -3,8 +3,10 @@ package com.rainy.system.aop;
 import com.rainy.framework.enums.LoginType;
 import com.rainy.framework.utils.WebUtils;
 import com.rainy.system.entity.LoginLog;
+import com.rainy.system.entity.User;
 import com.rainy.system.param.LoginParam;
 import com.rainy.system.service.LoginLogService;
+import com.rainy.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 public class LoginLogAspect {
 
     private final LoginLogService loginLogService;
+    private final UserService userService;
 
     /**
      * 打印方法执行时常
@@ -52,8 +55,19 @@ public class LoginLogAspect {
             throw e;
         } finally {
             loginLogService.asyncSave(loginLog);
+            this.updateUser(username);
         }
     }
 
-
+    public void updateUser(String username){
+        User user = userService.lambdaQuery()
+                .eq(User::getUsername, username)
+                .one();
+        user.setLoginCount(user.getLoginCount() == null ? 1 : user.getLoginCount() + 1);
+        user.setLastLoginTime(LocalDateTime.now());
+        user.setLastLoginIp(WebUtils.getRemoteIp());
+        user.setBrowser(WebUtils.getBrowser());
+        user.setOs(WebUtils.getOs());
+        userService.updateById(user);
+    }
 }

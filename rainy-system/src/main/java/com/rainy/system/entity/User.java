@@ -52,9 +52,19 @@ public class User extends BaseEntity {
     private String telephone;
     @NotNull
     private Integer status;
-    private Long loginCount;
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
+    @DateTimeFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
     private LocalDateTime usernameExpiredTime;
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
+    @DateTimeFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
     private LocalDateTime passwordExpiredTime;
+
+    private Long loginCount;
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
+    private LocalDateTime lastLoginTime;
+    private String lastLoginIp;
+    private String browser;
+    private String os;
 
     public Userinfo userinfo(){
         return BeanUtil.copyProperties(this, Userinfo.class);

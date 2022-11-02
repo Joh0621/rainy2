@@ -112,6 +112,7 @@ public class UserController {
         List<String> userIds = sessionIds.stream()
                 .map(v -> StrUtil.subAfter(v, CharConstants.COLON, true)).toList();
         return userService.lambdaQuery()
+                .select(User::getUsername, User::getNickName, User::getLoginCount, User::getLastLoginTime, User::getLastLoginIp, User::getBrowser, User::getOs)
                 .likeRight(StrUtil.isNotBlank(username), User::getUsername, username)
                 .likeRight(StrUtil.isNotBlank(nickName), User::getNickName, username)
                 .in(User::getId, userIds)

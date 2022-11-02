@@ -49,10 +49,11 @@ const queryParam = ref({})
 const columns = [
   { title: '用户名', dataIndex: 'username' },
   { title: '昵称', dataIndex: 'nickName' },
-  { title: '生日', dataIndex: 'birthday' },
-  { title: '手机号', dataIndex: 'telephone' },
-  { title: '邮箱', dataIndex: 'email' },
-  { title: '状态', dataIndex: 'status' },
+  { title: '登录次数', dataIndex: 'loginCount' },
+  { title: '登录时间', dataIndex: 'lastLoginTime' },
+  { title: '登录地址', dataIndex: 'lastLoginIp' },
+  { title: '浏览器', dataIndex: 'browser' },
+  { title: '操作系统', dataIndex: 'os' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
