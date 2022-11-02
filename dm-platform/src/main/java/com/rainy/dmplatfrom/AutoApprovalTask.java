@@ -50,7 +50,7 @@ public class AutoApprovalTask implements JavaDelegate {
                 .eq(UserDataRel::getDataType, dataType)
                 .eq(UserDataRel::getDataId, dataId)
                 .set(UserDataRel::getApproved, approved)
-                .set(UserDataRel::getApplyTime, LocalDateTime.now())
+                .set(UserDataRel::getApprovedTime, LocalDateTime.now())
                 .update();
     }
 

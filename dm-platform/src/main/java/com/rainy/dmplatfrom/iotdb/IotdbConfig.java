@@ -15,6 +15,6 @@ public class IotdbConfig {
 
     @Bean
     public SessionPool sessionPool(){
-        return new SessionPool("localhost", 6667, "root", "root", 5000);
+        return new SessionPool("24.43.102.240", 6667, "root", "root", 5000);
     }
 }

@@ -1,5 +1,6 @@
 package com.rainy.dmplatfrom.service;
 
+import com.rainy.dmplatfrom.entity.UserDataRel;
 import org.aopalliance.reflect.Code;
 
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public interface AuthService {
 
-    void auth(List<String> codes);
+    UserDataRel auth(List<String> codes);
 }

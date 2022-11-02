@@ -23,6 +23,9 @@
       <template #finished="{ record }">
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
+            <template #status="{ record }">
+              <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
+            </template>
       <template #approved="{ record }">
         <a-tag v-if="record.approved === 0" color="#2db7f5">
           {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
@@ -71,7 +74,7 @@
 </template>
 
 <script setup>
-import { List, CancelApply, PointDownload } from '@/api/main/dataApply'
+import { List, Edit, CancelApply, PointDownload } from '@/api/main/dataApply'
 import TaskComplete from '../system/workflow/TaskComplete.vue'
 import TaskTrack from '../system/workflow/TaskTrack.vue'
 import AccessToken from './AccessToken.vue'
@@ -96,6 +99,7 @@ const columns = [
   { title: '申请人', dataIndex: 'applyUsername' },
   { title: '申请时间', dataIndex: 'applyTime' },
   { title: '审批状态', dataIndex: 'approved' },
+  { title: '状态', dataIndex: 'status' },
   { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
@@ -128,6 +132,18 @@ const handleCancelApply = record => {
     if (res.success) {
       message.info(res.message)
       handleOk()
+    }
+  })
+}
+
+const handleChange = (record) => {
+  const param = {
+    id: record.id,
+    status: record.status
+  }
+  Edit(param).then(res => {
+    if (res.success) {
+      message.info(res.message)
     }
   })
 }

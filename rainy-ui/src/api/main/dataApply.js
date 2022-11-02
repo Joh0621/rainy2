@@ -5,7 +5,8 @@ const api = {
   BatchApply: '/data/apply/batch',
   PointDownload: '/data/point/download',
   CancelApply: '/data/apply/cancel',
-  List: '/applies'
+  List: '/applies',
+  Edit: '/apply/update'
 }
 
 export function Apply (parameter) {
@@ -27,6 +28,14 @@ export function BatchApply (parameter) {
 export function CancelApply (parameter) {
   return request({
     url: api.CancelApply,
+    method: method.POST,
+    data: parameter
+  })
+}
+
+export function Edit (parameter) {
+  return request({
+    url: api.Edit,
     method: method.POST,
     data: parameter
   })

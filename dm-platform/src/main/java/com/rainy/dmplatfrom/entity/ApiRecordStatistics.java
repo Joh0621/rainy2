@@ -10,7 +10,9 @@ import lombok.Data;
 @Data
 public class ApiRecordStatistics {
 
+    private String apiName;
     private String apiCode;
+    private String username;
     private Long totalCount;
     private Long avgResponseTime;
     private Long totalDataSize;

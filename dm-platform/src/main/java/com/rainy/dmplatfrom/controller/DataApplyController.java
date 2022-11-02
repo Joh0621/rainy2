@@ -153,6 +153,11 @@ public class DataApplyController {
                 .page(page);
     }
 
+    @PostMapping("/apply/update")
+    public boolean edit(@RequestBody UserDataRel userDataRel) {
+        return userDataRelService.updateById(userDataRel);
+    }
+
     @GetMapping("/data/point/download")
     @Log(module = "数据申请", type = OpType.DEL, detail = "'下载了设备[' + #param.name + ']测点点码.'")
     public void downloadPointCode(HttpServletResponse response, IdNamesParam param) throws IOException {

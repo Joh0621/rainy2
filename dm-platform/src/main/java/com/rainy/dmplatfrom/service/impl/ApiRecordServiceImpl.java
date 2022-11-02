@@ -31,12 +31,17 @@ public class ApiRecordServiceImpl extends ServiceImpl<ApiRecordMapper, ApiRecord
     }
 
     @Override
-    public Map<String, ApiRecordStatistics> statistics() {
-        List<ApiRecordStatistics> data =  this.baseMapper.statistics();
-        Map<String, ApiRecordStatistics> res = new HashMap<>();
-        data.forEach(r -> {
-            res.put(r.getApiCode(), r);
+    public List<ApiRecordStatistics> statistics() {
+        return this.baseMapper.statistics();
+    }
+
+    @Override
+    public Map<String, ApiRecordStatistics> statisticsByMap() {
+        List<ApiRecordStatistics> statistics = this.baseMapper.statistics();
+        Map<String, ApiRecordStatistics> map = new HashMap<>();
+        statistics.forEach(r -> {
+            map.put(r.getApiCode(), r);
         });
-        return res;
+        return map;
     }
 }

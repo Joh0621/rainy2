@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface ApiRecordMapper extends BaseMapper<ApiRecord> {
 
-    @Select("select api_code,count(*) totalCount, avg(response_time) avgResponseTime, sum(data_size) totalDataSize " +
-            "from biz_api_record group by api_code")
+    @Select("select api_code,username,count(*) totalCount, avg(response_time) avgResponseTime, sum(data_size) totalDataSize " +
+            "from biz_api_record group by api_code,username")
     List<ApiRecordStatistics> statistics();
 }

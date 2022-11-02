@@ -37,6 +37,9 @@ public class UserDataRel {
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
     private LocalDateTime applyTime;
     private Integer approved;
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS)
+    private LocalDateTime approvedTime;
+    private Integer status;
     private String processInstanceId;
     private String processDefinitionId;
 

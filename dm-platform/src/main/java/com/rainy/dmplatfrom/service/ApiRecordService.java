@@ -15,5 +15,7 @@ import java.util.Map;
 public interface ApiRecordService extends IService<ApiRecord> {
 
     void asyncSave(ApiRecord apiRecord);
-    Map<String, ApiRecordStatistics> statistics();
+    List<ApiRecordStatistics> statistics();
+
+    Map<String, ApiRecordStatistics> statisticsByMap();
 }

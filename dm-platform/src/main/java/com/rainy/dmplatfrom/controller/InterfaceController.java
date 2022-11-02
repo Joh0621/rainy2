@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +38,18 @@ public class InterfaceController {
     private final ApiRecordService apiRecordService;
 
     @GetMapping("/interfaces")
-    public Page<Interface> list(Page<Interface> page, Interface param) {
-        Page<Interface> pageData = interfaceService.lambdaQuery()
-                .likeRight(StrUtil.isNotBlank(param.getName()), Interface::getName, param.getName())
-                .likeRight(StrUtil.isNotBlank(param.getCode()), Interface::getCode, param.getCode())
-                .page(page);
-        Map<String, ApiRecordStatistics> res = apiRecordService.statistics();
-        for (Interface record : pageData.getRecords()) {
-            ApiRecordStatistics r = res.get(record.getCode());
-            if (r == null) {
-                continue;
-            }
-            record.setTotalCount(r.getTotalCount());
-            record.setAvgResponseTime(r.getAvgResponseTime());
-            record.setTotalDataSize(r.getTotalDataSize());
+    public Page<ApiRecordStatistics> list(Page<ApiRecordStatistics> page, ApiRecordStatistics param) {
+        List<Interface> list = interfaceService.list();
+        Map<String, String> map = new HashMap<>();
+        for (Interface anInterface : list) {
+            map.put(anInterface.getCode(), anInterface.getName());
         }
-        return pageData;
+        List<ApiRecordStatistics> statistics = apiRecordService.statistics();
+        for (ApiRecordStatistics statistic : statistics) {
+            statistic.setApiName(map.get(statistic.getApiCode()));
+        }
+        page.setRecords(statistics);
+        return page;
     }
 
     @Log(module = "接口管理", type = OpType.EXPORT, detail = "导出了接口列表")

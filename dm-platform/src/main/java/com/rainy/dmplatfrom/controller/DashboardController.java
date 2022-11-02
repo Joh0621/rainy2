@@ -63,7 +63,7 @@ public class DashboardController {
 
     @GetMapping("/dashboard/api/statistics")
     private List<List<Map<String, Object>>> statistics(){
-        Map<String, ApiRecordStatistics> res = apiRecordService.statistics();
+        Map<String, ApiRecordStatistics> res = apiRecordService.statisticsByMap();
         List<Map<String, Object>> apiCount = new ArrayList<>();
         List<Map<String, Object>> apiResponseTime = new ArrayList<>();
         List<Map<String, Object>> apiDataSize = new ArrayList<>();

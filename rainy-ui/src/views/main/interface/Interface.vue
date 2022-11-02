@@ -24,9 +24,9 @@
         :load-data="data"
         @batch-del="handleBatchDel"
     >
-      <template #status="{ record }">
-        <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
-      </template>
+<!--      <template #status="{ record }">-->
+<!--        <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />-->
+<!--      </template>-->
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
@@ -43,20 +43,20 @@
   </a-card>
 </template>
 <script setup>
-import { List, Del, Edit } from '@/api/main/interface.js'
+import { List, Del } from '@/api/main/interface.js'
 import { toIdNamesParam } from '@/utils/ParamUtils.js'
 import { message } from 'ant-design-vue'
 
 const table = ref()
 const queryParam = ref({})
 const columns = [
-  { title: '接口名称', dataIndex: 'name' },
-  { title: '接口编码', dataIndex: 'code' },
+  { title: '接口名称', dataIndex: 'apiName' },
+  { title: '调用者', dataIndex: 'username' },
   { title: '调用次数', dataIndex: 'totalCount' },
   { title: '传输总量(byte)', dataIndex: 'totalDataSize' },
-  { title: '平均响应时间(ms)', dataIndex: 'avgResponseTime' },
+  { title: '平均响应时间(ms)', dataIndex: 'avgResponseTime' }
   // { title: '描述', dataIndex: 'description' },
-  { title: '状态', dataIndex: 'status' }
+  // { title: '状态', dataIndex: 'status' }
   // { title: '操作', dataIndex: 'action', width: '150px' }
 ]
 const data = (parameter) => {
@@ -73,13 +73,13 @@ const handleReset = () => {
   handleOk()
 }
 
-const handleChange = (record) => {
-  Edit(record).then(res => {
-    if (res.success) {
-      message.info(res.message)
-    }
-  })
-}
+// const handleChange = (record) => {
+//   Edit(record).then(res => {
+//     if (res.success) {
+//       message.info(res.message)
+//     }
+//   })
+// }
 
 const handleEdit = (record) => {
 }

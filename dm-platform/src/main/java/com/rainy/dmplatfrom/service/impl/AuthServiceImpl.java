@@ -9,6 +9,8 @@ import com.rainy.dmplatfrom.service.AccessTokenService;
 import com.rainy.dmplatfrom.service.AuthService;
 import com.rainy.dmplatfrom.service.PointService;
 import com.rainy.dmplatfrom.service.UserDataRelService;
+import com.rainy.framework.common.Result;
+import com.rainy.framework.common.ResultCode;
 import com.rainy.framework.constant.CharConstants;
 import com.rainy.framework.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final PointService pointService;
 
     @Override
-    public void auth(List<String> codes) {
+    public UserDataRel auth(List<String> codes) {
         String token = SpringMVCUtil.getRequest().getHeader("token");
         if (token == null) {
             token = SpringMVCUtil.getRequest().getParameter("token");
@@ -41,10 +43,13 @@ public class AuthServiceImpl implements AuthService {
                 .eq(AccessToken::getAccessToken, token)
                 .one();
         if (accessToken == null) {
-            throw new UnauthorizedException(StrUtil.format("token[] 无效", token));
+            throw new UnauthorizedException(StrUtil.format("token[{}] 无效", token));
         }
         Long userDataId = accessToken.getUserDataId();
         UserDataRel userDataRel = userDataRelService.getById(userDataId);
+        if (userDataRel.getStatus() == 1) {
+            throw new RuntimeException("调用失败，接口已被停用!");
+        }
         List<Point> points = pointService.lambdaQuery()
                 .in(Point::getDeviceCode, userDataRel.getDataCode().split(CharConstants.COMMA))
                 .list();
@@ -56,6 +61,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new UnauthorizedException(StrUtil.format("您没有点码[{}]的权限！", code));
             }
         }
+        return userDataRel;
     }
 
 }

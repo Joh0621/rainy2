@@ -2,6 +2,7 @@ package com.rainy.framework.utils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -26,6 +27,15 @@ public final class DateUtils {
 
     public static String format(TemporalAccessor datetime, String pattern) {
         return getDtf(pattern).format(datetime);
+    }
+
+    public static LocalDateTime parse(long timestamp) {
+        Instant instant = Instant.ofEpochMilli(timestamp);
+        return LocalDateTime.ofInstant(instant, ZoneId.of(ZONE_OFFSET_8));
+    }
+
+    public static LocalDateTime parse(Instant instant) {
+        return LocalDateTime.ofInstant(instant, ZoneId.of(ZONE_OFFSET_8));
     }
 
     public static LocalDateTime parse(String datetime) {

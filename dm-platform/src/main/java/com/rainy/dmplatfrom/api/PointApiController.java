@@ -6,9 +6,11 @@ import cn.hutool.json.JSONUtil;
 import com.rainy.dmplatfrom.entity.ApiRecord;
 import com.rainy.dmplatfrom.entity.Interface;
 import com.rainy.dmplatfrom.entity.PointData;
+import com.rainy.dmplatfrom.entity.UserDataRel;
 import com.rainy.dmplatfrom.service.ApiRecordService;
 import com.rainy.dmplatfrom.service.AuthService;
 import com.rainy.dmplatfrom.service.InterfaceService;
+import com.rainy.dmplatfrom.service.PointDataService;
 import com.rainy.framework.common.Result;
 import com.rainy.framework.common.ResultCode;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,7 @@ public class PointApiController {
     private final InterfaceService interfaceService;
     private final AuthService authService;
     private final ApiRecordService apiRecordService;
+    private final PointDataService pointDataService;
 
     @SaIgnore
     @RequestMapping("/points/realTime")
@@ -51,20 +55,14 @@ public class PointApiController {
             return Result.of(ResultCode.INTERNAL_SERVER_ERROR, "调用失败，接口已被停用!");
         }
         // 校验是否有点码权限
-        authService.auth(param.getCodes());
-
-        List<PointData> data = new ArrayList<>();
-        for (String code : param.getCodes()) {
-            PointData pointData = new PointData();
-            pointData.setCode(code);
-            pointData.setTime(LocalDateTime.now());
-            pointData.setValue(new Random().nextDouble());
-            data.add(pointData);
-        }
+        UserDataRel auth = authService.auth(param.getCodes());
+        List<PointData> data = pointDataService.listPoints(param.getCodes());
         stopWatch.stop();
         // 保存调用记录
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         ApiRecord apiRecord = new ApiRecord();
+        apiRecord.setUsername(auth.getApplyUsername());
+        apiRecord.setDatetime(LocalDateTime.now());
         apiRecord.setApiCode(REAL_TIME_API_CODE);
         apiRecord.setResponseTime(totalTimeMillis);
         int length = JSONUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8).length;
@@ -83,13 +81,13 @@ public class PointApiController {
             return Result.of(ResultCode.INTERNAL_SERVER_ERROR, "调用失败，接口已被停用");
         }
         // 校验是否有点码权限
-        authService.auth(param.getCodes());
+        UserDataRel userData = authService.auth(param.getCodes());
 
         List<PointData> data = new ArrayList<>();
         for (String code : param.getCodes()) {
             PointData pointData = new PointData();
             pointData.setCode(code);
-            pointData.setTime(LocalDateTime.now());
+//            pointData.setTime(LocalDateTime.now());
             pointData.setValue(new Random().nextDouble());
             data.add(pointData);
         }
@@ -98,6 +96,8 @@ public class PointApiController {
         // 保存调用记录
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         ApiRecord apiRecord = new ApiRecord();
+        apiRecord.setDatetime(LocalDateTime.now());
+        apiRecord.setUsername(userData.getApplyUsername());
         apiRecord.setApiCode(HISTORY_API_CODE);
         apiRecord.setResponseTime(totalTimeMillis);
         int length = JSONUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8).length;
