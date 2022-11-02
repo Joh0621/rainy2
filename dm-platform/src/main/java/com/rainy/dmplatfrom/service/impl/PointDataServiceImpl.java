@@ -46,6 +46,18 @@ public class PointDataServiceImpl implements PointDataService {
         return influxdbClient.query(command, PointData.class);
     }
 
+    @Override
+    public List<PointData> listPoints(List<String> codes, LocalDateTime startTime, LocalDateTime endTime) {
+        Measurement m = PointData.class.getAnnotation(Measurement.class);
+        String whereSql = this.whereSql(codes);
+        String command = StrUtil.format("select time,code,value from {}.autogen.{} " +
+                        whereSql +
+                        " and time >= '{}' and time <= '{}' " +
+                        "tz('Asia/Shanghai')",
+                m.database(), m.name(), DateUtils.format(startTime), DateUtils.format(endTime));
+        return influxdbClient.query(command, PointData.class);
+    }
+
     private String whereSql(List<String> codes) {
         StringBuilder whereSql = new StringBuilder();
         for (int i = 0; i < codes.size(); i++) {

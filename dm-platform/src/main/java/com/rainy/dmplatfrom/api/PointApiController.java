@@ -50,10 +50,6 @@ public class PointApiController {
     public Result<Object> listPoints(@Validated RealTimeParam param) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        Interface anInterface = interfaceService.getByCode(REAL_TIME_API_CODE);
-        if (anInterface.getStatus() == 1) {
-            return Result.of(ResultCode.INTERNAL_SERVER_ERROR, "调用失败，接口已被停用!");
-        }
         // 校验是否有点码权限
         UserDataRel auth = authService.auth(param.getCodes());
         List<PointData> data = pointDataService.listPoints(param.getCodes());
@@ -76,22 +72,9 @@ public class PointApiController {
     public Result<Object> listPoints(@Validated HistoryParam param) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        Interface anInterface = interfaceService.getByCode(HISTORY_API_CODE);
-        if (anInterface.getStatus() == 1) {
-            return Result.of(ResultCode.INTERNAL_SERVER_ERROR, "调用失败，接口已被停用");
-        }
         // 校验是否有点码权限
         UserDataRel userData = authService.auth(param.getCodes());
-
-        List<PointData> data = new ArrayList<>();
-        for (String code : param.getCodes()) {
-            PointData pointData = new PointData();
-            pointData.setCode(code);
-//            pointData.setTime(LocalDateTime.now());
-            pointData.setValue(new Random().nextDouble());
-            data.add(pointData);
-        }
-
+        List<PointData> data = pointDataService.listPoints(param.getCodes(), param.getStartTime(), param.getEndTime());
         stopWatch.stop();
         // 保存调用记录
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
@@ -103,7 +86,7 @@ public class PointApiController {
         int length = JSONUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8).length;
         apiRecord.setDataSize((long) length);
         apiRecordService.asyncSave(apiRecord);
-        return Result.ok();
+        return Result.ok(data);
     }
 
 }

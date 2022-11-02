@@ -2,6 +2,7 @@ package com.rainy.dmplatfrom.service;
 
 import com.rainy.dmplatfrom.entity.PointData;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,4 +13,5 @@ import java.util.List;
 public interface PointDataService {
 
     List<PointData> listPoints(List<String> codes);
+    List<PointData> listPoints(List<String> codes, LocalDateTime startTime, LocalDateTime endTime);
 }
