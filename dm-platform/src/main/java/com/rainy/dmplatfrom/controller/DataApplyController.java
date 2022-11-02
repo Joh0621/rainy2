@@ -82,6 +82,7 @@ public class DataApplyController {
         userDataRel.setApplyUserId(SecurityUtils.getUserId());
         userDataRel.setApplyUsername(SecurityUtils.getUsername());
         userDataRel.setApproved(DictConstants.APPROVE_STATUS_0);
+        userDataRel.setStatus(0);
         userDataRel.setProcessInstanceId(processInstance.getProcessInstanceId());
         userDataRel.setProcessDefinitionId(processInstance.getProcessDefinitionId());
         userDataRelService.save(userDataRel);
@@ -133,6 +134,7 @@ public class DataApplyController {
         userDataRel.setApplyUserId(SecurityUtils.getUserId());
         userDataRel.setApplyUsername(SecurityUtils.getUsername());
         userDataRel.setApproved(DictConstants.APPROVE_STATUS_0);
+        userDataRel.setStatus(0);
         userDataRel.setProcessInstanceId(processInstance.getProcessInstanceId());
         userDataRel.setProcessDefinitionId(processInstance.getProcessDefinitionId());
         userDataRelService.save(userDataRel);

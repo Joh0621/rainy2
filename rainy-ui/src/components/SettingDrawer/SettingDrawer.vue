@@ -14,7 +14,7 @@
             亮色菜单风格
           </template>
           <div class="setting-drawer-item" @click="updateConf('light', 'navTheme')">
-            <img src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg" alt="light">
+            <img src="/img/light.svg" alt="light">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="navTheme === 'light'" />
             </div>
@@ -25,23 +25,12 @@
             暗色菜单风格
           </template>
           <div class="setting-drawer-item" @click="updateConf('dark', 'navTheme')">
-            <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="dark">
+            <img src="/img/dark.svg" alt="dark">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="navTheme === 'dark'" />
             </div>
           </div>
         </a-tooltip>
-<!--        <a-tooltip>-->
-<!--          <template #title>-->
-<!--            暗黑模式-->
-<!--          </template>-->
-<!--          <div class="setting-drawer-item" @click="updateConf('realDark', 'navTheme')">-->
-<!--            <img src="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" alt="realDark">-->
-<!--            <div class="setting-drawer-selectIcon">-->
-<!--              <check-outlined v-if="navTheme === 'realDark'" />-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </a-tooltip>-->
       </div>
       <h4>整体布局设置</h4>
       <div class="setting-drawer-checkbox">
@@ -50,7 +39,7 @@
             侧边菜单布局
           </template>
           <div class="setting-drawer-item" @click="updateConf('side', 'layout')">
-            <img src="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg" alt="side">
+            <img src="/img/side.svg" alt="side">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="layout === 'side'" />
             </div>
@@ -61,7 +50,7 @@
             顶部菜单布局
           </template>
           <div class="setting-drawer-item" @click="updateConf('top', 'layout')">
-            <img src="https://gw.alipayobjects.com/zos/antfincdn/URETY8%24STp/KDNDBbriJhLwuqMoxcAr.svg" alt="top">
+            <img src="/img/top.svg" alt="top">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="layout === 'top'" />
             </div>

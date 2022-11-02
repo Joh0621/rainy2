@@ -16,5 +16,5 @@ export const defaultConfig = {
   },
   title: '后台系统',
   logo: '/vite.svg',
-  iconfontUrl: '//at.alicdn.com/t/c/font_3592546_fapk7qrp98.js'
+  iconfontUrl: '/font/iconfont.js'
 }

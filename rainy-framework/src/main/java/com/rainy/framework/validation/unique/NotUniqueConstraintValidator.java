@@ -16,8 +16,8 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class NotUniqueConstraintValidator implements ConstraintValidator<NotUnique, String> {
 
-    private static final String UNIQUE_SQL = "select count(*) from {} where {} = {0}";
-    private static final String UNIQUE_SQL_EXCLUDE_SELF = "select count(*) from {} where {} = {0} and id != {1}";
+    private static final String UNIQUE_SQL = "select count(*) from {} where {} = {0} and del_flag = 0";
+    private static final String UNIQUE_SQL_EXCLUDE_SELF = "select count(*) from {} where {} = {0} and id != {1} and del_flag = 0";
 
     private String tableName;
     private String field;

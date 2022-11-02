@@ -23,9 +23,17 @@
       <template #finished="{ record }">
         {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
       </template>
-            <template #status="{ record }">
-              <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
-            </template>
+      <template #status="{ record }">
+        <a-switch v-if="roles.indexOf('role_superAdmin') !== -1" @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
+        <span v-if="roles.indexOf('role_superAdmin') === -1">
+          <a-tag v-if="record.status === 0" color="#2db7f5">
+            启用
+          </a-tag>
+          <a-tag v-if="record.approved === 1" color="#108ee9">
+            禁用
+          </a-tag>
+        </span>
+      </template>
       <template #approved="{ record }">
         <a-tag v-if="record.approved === 0" color="#2db7f5">
           {{ appStore.dictItemValue('wf_approve_status', record.approved)}}
@@ -79,11 +87,14 @@ import TaskComplete from '../system/workflow/TaskComplete.vue'
 import TaskTrack from '../system/workflow/TaskTrack.vue'
 import AccessToken from './AccessToken.vue'
 import { useAppStore } from '@/store/app'
+import { useUserStore } from '@/store/user'
 import { message } from 'ant-design-vue'
 import { download } from '@/utils/Utils'
 
 const appStore = useAppStore()
+const userStore = useUserStore()
 
+const roles = userStore.userinfo.roles
 const options = {
   showAdd: false,
   showBatchDel: false
