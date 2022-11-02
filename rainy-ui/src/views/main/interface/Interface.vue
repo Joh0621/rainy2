@@ -24,9 +24,17 @@
         :load-data="data"
         @batch-del="handleBatchDel"
     >
-<!--      <template #status="{ record }">-->
-<!--        <a-switch @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />-->
-<!--      </template>-->
+      <template #totalDataSize="{ record }">
+         <span v-if="record.totalDataSize < 1024">
+          {{ record.totalDataSize }} b
+        </span>
+        <span v-if="record.totalDataSize > 1024">
+          {{ (record.totalDataSize / 1024).toFixed(2) }} kb
+        </span>
+        <span v-if="record.totalDataSize > 1048576">
+          {{ (record.totalDataSize / 1048576).toFixed(2) }} mb
+        </span>
+      </template>
       <template #action="{ record }">
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical"/>
@@ -53,7 +61,7 @@ const columns = [
   { title: '接口名称', dataIndex: 'apiName' },
   { title: '调用者', dataIndex: 'username' },
   { title: '调用次数', dataIndex: 'totalCount' },
-  { title: '传输总量(byte)', dataIndex: 'totalDataSize' },
+  { title: '传输总量', dataIndex: 'totalDataSize' },
   { title: '平均响应时间(ms)', dataIndex: 'avgResponseTime' }
   // { title: '描述', dataIndex: 'description' },
   // { title: '状态', dataIndex: 'status' }

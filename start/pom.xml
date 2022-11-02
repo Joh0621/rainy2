@@ -13,6 +13,10 @@
     <dependencies>
         <dependency>
             <groupId>com.rainy</groupId>
+            <artifactId>rainy-framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rainy</groupId>
             <artifactId>rainy-system</artifactId>
         </dependency>
         <dependency>
@@ -34,7 +38,7 @@
     </dependencies>
 
     <build>
-        <finalName>dm-platform</finalName>
+        <finalName>app-starter</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

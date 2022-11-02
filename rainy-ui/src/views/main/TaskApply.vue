@@ -29,7 +29,7 @@
           <a-tag v-if="record.status === 0" color="#2db7f5">
             启用
           </a-tag>
-          <a-tag v-if="record.approved === 1" color="#108ee9">
+          <a-tag v-if="record.status === 1" color="#108ee9">
             禁用
           </a-tag>
         </span>

@@ -1,7 +1,6 @@
 <template>
   <a-modal
       v-model:visible="visible"
-      style="top: 40px;"
       :width="1000"
       title="字典项"
       :confirm-loading="confirmLoading"
