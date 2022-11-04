@@ -129,7 +129,7 @@ const onFinishFailed = (errorInfo) => {
   top:60px;
   text-align: center;
   font-weight:600;
-  font-size: 40px;
+  font-size: 32px;
   color: #205985;
 }
 .login_tip{

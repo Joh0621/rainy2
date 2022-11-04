@@ -1,6 +1,6 @@
 <template>
   <a-row :gutter="16">
-    <a-col :span="6">
+    <a-col :span="4">
       <a-card :bordered="false">
         <a-statistic
             title="我的申请"
@@ -14,7 +14,7 @@
         </a-statistic>
       </a-card>
     </a-col>
-    <a-col :span="6">
+    <a-col :span="4">
       <a-card :bordered="false">
         <a-statistic
             @click="Count"
@@ -54,6 +54,16 @@
         <a-statistic
             title="接入测点"
             :value="count[2]"
+            suffix="个"
+            :value-style="{ color: '#3f8600' }">
+        </a-statistic>
+      </a-card>
+    </a-col>
+    <a-col :span="4">
+      <a-card :bordered="false">
+        <a-statistic
+            title="接入数据表"
+            :value="0"
             suffix="个"
             :value-style="{ color: '#3f8600' }">
         </a-statistic>
@@ -122,7 +132,7 @@ const loadCount = () => {
 // 设备数量统计
 const pieOptions = ref({
   title: {
-    text: '设备数量统计',
+    text: '设备数量',
     left: 'center'
   },
   tooltip: {
@@ -174,7 +184,7 @@ const deviceCount = () => {
 // 测点数量统计
 const barOptions = ref({
   title: {
-    text: '测点数量统计'
+    text: '测点数量'
   },
   tooltip: {},
   xAxis: {
@@ -211,7 +221,7 @@ const pointCount = () => {
 // 接口调用次数统计
 const apiCount = ref({
   title: {
-    text: '接口调用次数统计',
+    text: '接口调用次数',
     left: 'right'
   },
   tooltip: {
@@ -240,7 +250,7 @@ const apiCount = ref({
 // 接口调用次数统计
 const apiResponseTime = ref({
   title: {
-    text: '接口平均响应时长统计',
+    text: '接口平均响应时长',
     left: 'right'
   },
   tooltip: {
@@ -269,7 +279,7 @@ const apiResponseTime = ref({
 // 接口调用次数统计
 const apiDataSize = ref({
   title: {
-    text: '接口数据传输量统计',
+    text: '接口数据传输量',
     left: 'right'
   },
   tooltip: {
