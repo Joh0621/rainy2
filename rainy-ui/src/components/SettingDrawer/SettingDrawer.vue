@@ -14,7 +14,7 @@
             亮色菜单风格
           </template>
           <div class="setting-drawer-item" @click="updateConf('light', 'navTheme')">
-            <img src="/img/light.svg" alt="light">
+            <img :src="light" alt="light">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="navTheme === 'light'" />
             </div>
@@ -25,7 +25,7 @@
             暗色菜单风格
           </template>
           <div class="setting-drawer-item" @click="updateConf('dark', 'navTheme')">
-            <img src="/img/dark.svg" alt="dark">
+            <img :src="dark" alt="dark">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="navTheme === 'dark'" />
             </div>
@@ -39,7 +39,7 @@
             侧边菜单布局
           </template>
           <div class="setting-drawer-item" @click="updateConf('side', 'layout')">
-            <img src="/img/side.svg" alt="side">
+            <img :src="side" alt="side">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="layout === 'side'" />
             </div>
@@ -50,7 +50,7 @@
             顶部菜单布局
           </template>
           <div class="setting-drawer-item" @click="updateConf('top', 'layout')">
-            <img src="/img/top.svg" alt="top">
+            <img :src="top" alt="top">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="layout === 'top'" />
             </div>
@@ -61,7 +61,7 @@
             混合布局
           </template>
           <div class="setting-drawer-item" @click="updateConf('mix', 'layout')">
-            <img class="layout-mix" style="width: 49px;height: 42px" :src="layoutMix" alt="mix">
+            <img class="layout-mix" style="width: 49px;height: 42px" :src="mix" alt="mix">
             <div class="setting-drawer-selectIcon">
               <check-outlined v-if="layout === 'mix'" />
             </div>
@@ -166,7 +166,11 @@
 
 <script setup>
 import { apply, colors } from '@/hooks/useTheme'
-import layoutMix from '@/assets/layout-mix.png'
+import mix from '@/assets/layout-mix.png'
+import top from '@/assets/top.svg'
+import side from '@/assets/side.svg'
+import light from '@/assets/light.svg'
+import dark from '@/assets/dark.svg'
 import { defaultConfig } from '@/config/defaultConfig'
 
 const props = defineProps({

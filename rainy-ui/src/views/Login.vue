@@ -2,7 +2,8 @@
   <div class="login_background">
     <div class="login_wrap">
        <div class="left_wrap">
-          <img src="/img/logo.png" class="logo_img"/>
+         <div class="logo_img">电科院数据门户</div>
+<!--          <img src="/img/logo.png" class="logo_img"/>-->
        </div>
        <div class="right_wrap">
            <div class="login_main">
@@ -122,11 +123,14 @@ const onFinishFailed = (errorInfo) => {
   z-index:-998;
 }
 .logo_img{
-    width: 360px;
-    height: auto;
-    position:absolute;
-    top:60px;
-    left:120px;
+  width: 100%;
+  height: auto;
+  position:absolute;
+  top:60px;
+  text-align: center;
+  font-weight:600;
+  font-size: 40px;
+  color: #205985;
 }
 .login_tip{
   width:40px;
