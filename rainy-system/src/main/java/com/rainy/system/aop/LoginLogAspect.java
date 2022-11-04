@@ -48,14 +48,15 @@ public class LoginLogAspect {
         loginLog.setOs(WebUtils.getOs());
         loginLog.setSuccess(true);
         try {
-            return joinPoint.proceed(args);
+            Object result = joinPoint.proceed(args);
+            this.updateUser(username);
+            return result;
         } catch (Throwable e) {
             loginLog.setSuccess(false);
             loginLog.setErrorMessage(e.getMessage());
             throw e;
         } finally {
             loginLogService.asyncSave(loginLog);
-            this.updateUser(username);
         }
     }
 

@@ -9,6 +9,10 @@
           <a-space>
             <a-button type="primary" @click="handleOk">查询</a-button>
             <a-button @click="handleReset">重置</a-button>
+            <a-button  @click="handleDl">
+              <download-outlined/>
+              接口使用说明
+            </a-button>
           </a-space>
         </a-form-item>
       </a-form>
@@ -20,9 +24,6 @@
         :row-key="record => record.id"
         :load-data="data"
     >
-      <template #finished="{ record }">
-        {{ appStore.dictItemValue('sys_yes_or_no', record.finished)}}
-      </template>
       <template #status="{ record }">
         <a-switch v-if="roles.indexOf('role_superAdmin') !== -1" @click="handleChange(record)" :checkedValue="0" :unCheckedValue="1" v-model:checked="record.status" checked-children="启用" un-checked-children="停用" />
         <span v-if="roles.indexOf('role_superAdmin') === -1">
@@ -157,6 +158,11 @@ const handleChange = (record) => {
       message.info(res.message)
     }
   })
+}
+
+const baseURL = import.meta.env.VITE_API_BASE_URL
+const handleDl = () => {
+  location.href = baseURL + '/file/download?fileName=接口使用说明.pdf'
 }
 
 const handleOk = () => {

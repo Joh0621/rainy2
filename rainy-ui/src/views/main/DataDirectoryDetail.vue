@@ -18,9 +18,9 @@
       <a-tab-pane key="3" tab="血缘关系">
         <blood-rel />
       </a-tab-pane>
-      <a-tab-pane key="4" tab="接口文档">
-        <api-doc />
-      </a-tab-pane>
+<!--      <a-tab-pane key="4" tab="接口文档">-->
+<!--        <api-doc />-->
+<!--      </a-tab-pane>-->
     </a-tabs>
   </a-card>
 </template>
@@ -29,7 +29,7 @@ import Basic from './Basic.vue'
 import Point from './Point.vue'
 import PointPreview from './PointPreview.vue'
 import BloodRel from './BloodRel.vue'
-import ApiDoc from './ApiDoc.vue'
+// import ApiDoc from './ApiDoc.vue'
 import ApplyData from './ApplyData.vue'
 import { DetailById } from '@/api/main/device'
 import { useRouter } from 'vue-router'

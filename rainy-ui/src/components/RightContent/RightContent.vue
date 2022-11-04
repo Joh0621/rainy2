@@ -1,8 +1,8 @@
 <template>
   <span>
       <a-input-search
-          style="width: 240px;display: inline-block;margin-top: 12px"
-          placeholder="请输入设备名称/测点名称"
+          style="width: 300px;display: inline-block;margin-top: 12px"
+          placeholder="请输入电厂/设备/数据表/测点名称"
           v-model:value="searchValue"
           @search="onSearch"
       />

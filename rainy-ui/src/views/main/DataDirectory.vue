@@ -19,7 +19,7 @@
         <div class="table-query">
           <a-form layout="inline">
             <a-form-item>
-              <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入设备名称/测点名称" />
+              <a-input style="width: 300px" v-model:value="queryParam.name" placeholder="请输入电厂/设备/数据表/测点名称" />
             </a-form-item>
             <a-form-item>
             </a-form-item>
