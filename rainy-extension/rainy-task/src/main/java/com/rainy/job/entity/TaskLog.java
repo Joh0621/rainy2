@@ -1,13 +1,14 @@
 package com.rainy.job.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.OrderBy;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rainy.framework.utils.DateUtils;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * data-middle-platform
@@ -19,7 +20,7 @@ import java.util.Date;
 public class TaskLog {
 
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String category;
     private String className;

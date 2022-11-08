@@ -1,13 +1,8 @@
 package com.rainy.job;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.cron.CronUtil;
-import cn.hutool.cron.task.Task;
-import cn.hutool.extra.spring.SpringUtil;
-import com.rainy.framework.constant.CharConstants;
 import com.rainy.job.entity.ScheduleTask;
 import com.rainy.job.service.ScheduleTaskService;
-import com.rainy.job.service.impl.ScheduleTaskServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

@@ -1,6 +1,7 @@
 package com.rainy.job.aop;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.rainy.framework.constant.CommonConstants;
 import com.rainy.framework.utils.ThrowableUtils;
 import com.rainy.job.entity.ScheduleTask;
 import com.rainy.job.entity.TaskLog;
@@ -62,7 +63,7 @@ public class TaskLogAspect {
                 .one();
         TaskLog taskLog = new TaskLog();
         taskLog.setClassName(className);
-        BeanUtil.copyProperties(task, taskLog);
+        BeanUtil.copyProperties(task, taskLog, CommonConstants.ID);
         taskLog.setDatetime(LocalDateTime.now());
         return taskLog;
     }

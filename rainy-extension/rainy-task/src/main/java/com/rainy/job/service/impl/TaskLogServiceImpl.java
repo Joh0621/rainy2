@@ -1,17 +1,11 @@
 package com.rainy.job.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rainy.job.entity.TaskLog;
 import com.rainy.job.mapper.TaskLogMapper;
 import com.rainy.job.service.TaskLogService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * data-middle-platform
