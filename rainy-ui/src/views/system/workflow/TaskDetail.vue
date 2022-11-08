@@ -81,9 +81,11 @@ const handleOk = () => {
   handleCancel()
 }
 
+const emits = defineEmits(['ok'])
 const handleCancel = () => {
   visible.value = false
   bpmnViewer.destroy()
+  emits('ok')
 }
 
 defineExpose({

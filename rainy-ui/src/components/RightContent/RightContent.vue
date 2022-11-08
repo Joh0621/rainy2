@@ -1,14 +1,14 @@
 <template>
-  <span>
-      <a-input-search
-          style="width: 300px;display: inline-block;margin-top: 12px"
-          placeholder="请输入电厂/设备/数据表/测点名称"
-          v-model:value="searchValue"
-          @search="onSearch"
-      />
-  </span>
+<!--  <span>-->
+<!--      <a-input-search-->
+<!--          style="width: 300px;display: inline-block;margin-top: 12px"-->
+<!--          placeholder="请输入电厂/设备/数据表/测点名称"-->
+<!--          v-model:value="searchValue"-->
+<!--          @search="onSearch"-->
+<!--      />-->
+<!--  </span>-->
   <span class="header-item">
-    <notice-icon/>
+    <notice-dropdown/>
   </span>
   <span class="header-item">
     <a @click="handleClick"><BgColorsOutlined /> </a>
@@ -19,18 +19,18 @@
 </template>
 
 <script setup>
-import NoticeIcon from '@/components/RightContent/NoticeIcon.vue'
-import AvatarDropdown from '@/components/RightContent/AvatarDropdown.vue'
+import AvatarDropdown from './AvatarDropdown.vue'
+import NoticeDropdown from './NoticeDropdown.vue'
 import { apply, randomTheme } from '@/hooks/useTheme'
-import router from '@/router/index'
+// import router from '@/router/index'
 
 const handleClick = () => {
   apply(randomTheme())
 }
-const searchValue = ref('')
-const onSearch = () => {
-  router.push({ path: '/data/directory', query: { s: searchValue.value } })
-}
+// const searchValue = ref('')
+// const onSearch = () => {
+//   router.push({ path: '/data/directory', query: { s: searchValue.value } })
+// }
 </script>
 <style lang="less" scoped>
 .header-item {

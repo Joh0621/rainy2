@@ -24,6 +24,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -44,6 +45,14 @@ public class RestfulControllerAdvise implements ResponseBodyAdvice<Object> {
     public Result<Object> exception(Exception e) {
         log.error(e.getMessage(), e);
         return Result.of(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    /**
+     * sse系统异常
+     */
+    @ExceptionHandler(value = AsyncRequestTimeoutException.class)
+    public void asyncRequestTimeoutException(AsyncRequestTimeoutException e) {
+
     }
 
     /**

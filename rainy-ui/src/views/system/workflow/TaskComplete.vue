@@ -121,7 +121,6 @@ const handleOk = () => {
     })
 }
 
-const emits = defineEmits(['ok'])
 const completeTask = (values) => {
   CompleteTask(values).then((res) => {
     if (res.success) {
@@ -131,6 +130,7 @@ const completeTask = (values) => {
   })
 }
 
+const emits = defineEmits(['ok'])
 const handleCancel = () => {
   visible.value = false
   form.value = {}
