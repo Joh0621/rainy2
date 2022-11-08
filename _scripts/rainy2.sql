@@ -5,17 +5,270 @@
  Source Server Type    : MySQL
  Source Server Version : 80029
  Source Host           : localhost:3306
- Source Schema         : dm-platform
+ Source Schema         : rainy2
 
  Target Server Type    : MySQL
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 02/11/2022 19:09:21
+ Date: 07/11/2022 16:21:22
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for biz_access_token
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_access_token`;
+CREATE TABLE `biz_access_token` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_data_id` bigint DEFAULT NULL,
+  `access_token` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+
+-- ----------------------------
+-- Records of biz_access_token
+-- ----------------------------
+BEGIN;
+INSERT INTO `biz_access_token` (`id`, `user_data_id`, `access_token`) VALUES (1, 1, 'ac018e2b-1d2c-4529-8ca0-f6b16ef13c18');
+INSERT INTO `biz_access_token` (`id`, `user_data_id`, `access_token`) VALUES (2, 2, 'b874e8eba63b479fa53519f06bff3f4a');
+INSERT INTO `biz_access_token` (`id`, `user_data_id`, `access_token`) VALUES (3, 3, '229dcffe1e1a41859fa18c133f2ca424');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_api_record
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_api_record`;
+CREATE TABLE `biz_api_record` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `api_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `data_size` bigint DEFAULT NULL,
+  `response_time` int DEFAULT NULL,
+  `datetime` datetime DEFAULT NULL,
+  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of biz_api_record
+-- ----------------------------
+BEGIN;
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (1, 'real_data', 143, 42, '2022-11-02 15:02:52', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (2, 'real_data', 143, 22, '2022-11-02 15:03:21', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (3, 'history_data', 60, 22, '2022-11-02 15:05:10', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (4, 'history_data', 62, 28, '2022-11-02 15:27:08', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (5, 'history_data', 60, 33, '2022-11-02 17:02:59', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (6, 'history_data', 61, 31, '2022-11-02 17:03:07', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (7, 'history_data', 2, 59, '2022-11-02 17:05:03', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (8, 'history_data', 2, 25, '2022-11-02 17:05:04', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (9, 'history_data', 1226881, 222, '2022-11-02 17:05:20', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (10, 'history_data', 1226881, 200, '2022-11-02 17:05:22', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (11, 'history_data', 1226881, 232, '2022-11-02 17:05:37', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (12, 'history_data', 1226881, 193, '2022-11-02 17:05:39', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (13, 'history_data', 1226881, 201, '2022-11-02 17:05:53', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (14, 'history_data', 1226881, 232, '2022-11-02 17:06:25', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (15, 'history_data', 1226881, 211, '2022-11-02 17:40:24', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (16, 'history_data', 1226881, 295, '2022-11-02 17:41:08', 'admin');
+INSERT INTO `biz_api_record` (`id`, `api_code`, `data_size`, `response_time`, `datetime`, `username`) VALUES (17, 'history_data', 1226881, 215, '2022-11-02 17:45:43', 'admin');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_data_directory
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_data_directory`;
+CREATE TABLE `biz_data_directory` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `org_id` bigint DEFAULT NULL,
+  `org_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门名称',
+  `parent_id` bigint DEFAULT NULL,
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '唯一编码',
+  `type` tinyint DEFAULT NULL COMMENT '类型',
+  `is_directory` tinyint DEFAULT NULL COMMENT '是否是目录',
+  `sort` int DEFAULT NULL COMMENT '排序',
+  `description` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
+  `create_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint DEFAULT '0' COMMENT '删除标志',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+
+-- ----------------------------
+-- Records of biz_data_directory
+-- ----------------------------
+BEGIN;
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (1, 5, '新能源所', 0, '新能源', 'xny', 0, 1, 99, '新能源', 'admin', '2022-05-05 16:16:19', 'admin', '2022-10-13 19:55:44', 0);
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (2, 5, '111', 0, '火电厂', 'hdc', 0, 1, 99, '火电厂', 'admin', '2022-05-05 16:16:46', 'admin', '2022-11-02 18:19:25', 0);
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (3, 2, '新能源所', 1, '鲁能迎风岭', 'lnyfl', 0, 0, 98, '鲁能迎风岭风电场', 'admin', '2022-05-05 16:17:34', 'admin', '2022-11-02 18:18:28', 0);
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (4, 2, '新能源所', 1, '天桥山', 'tqs', 0, 0, 98, '天桥山风电场', 'admin', '2022-05-05 16:17:47', 'admin', '2022-11-02 18:19:00', 0);
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (5, 2, '新能源所', 1, '大苏计', 'dsj', 0, 0, 99, '大苏计风电场', 'admin', '2022-05-05 16:18:10', 'admin', '2022-11-02 18:19:06', 0);
+INSERT INTO `biz_data_directory` (`id`, `org_id`, `org_name`, `parent_id`, `name`, `code`, `type`, `is_directory`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (6, 2, '新能源所', 1, '金阳风光储', NULL, 0, 0, 99, NULL, 'admin', '2022-10-11 15:46:08', 'admin', '2022-11-02 18:19:17', 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_device
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_device`;
+CREATE TABLE `biz_device` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `data_directory_id` bigint DEFAULT NULL COMMENT '所属数据目录',
+  `data_directory_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '所属数据目录名称',
+  `org_id` bigint DEFAULT NULL COMMENT '部门id',
+  `org_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门名称',
+  `responsible` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '责任人',
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '唯一编码',
+  `description` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
+  `update_frequency` tinyint DEFAULT NULL COMMENT '更新频率',
+  `major` tinyint DEFAULT NULL COMMENT '专业',
+  `point_count` int DEFAULT NULL COMMENT '测点数量',
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='组织机构表';
+
+-- ----------------------------
+-- Records of biz_device
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_interface
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_interface`;
+CREATE TABLE `biz_interface` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '唯一编码',
+  `description` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
+  `status` tinyint DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='组织机构表';
+
+-- ----------------------------
+-- Records of biz_interface
+-- ----------------------------
+BEGIN;
+INSERT INTO `biz_interface` (`id`, `name`, `code`, `description`, `status`) VALUES (1, '实时数据接口', 'real_data', '获取实时数据', 0);
+INSERT INTO `biz_interface` (`id`, `name`, `code`, `description`, `status`) VALUES (2, '历史数据接口', 'history_data', '获取历史数据', 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_point
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_point`;
+CREATE TABLE `biz_point` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `device_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备编码',
+  `device_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '数据点码',
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '点名',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_device_code` (`device_code`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of biz_point
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for biz_user_data_rel
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_user_data_rel`;
+CREATE TABLE `biz_user_data_rel` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `data_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `data_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '数据类型',
+  `data_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '数据编码',
+  `data_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '数据名称',
+  `data_direction_id` bigint DEFAULT NULL COMMENT '数据目录id',
+  `data_direction_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '数据目录名称',
+  `org_id` bigint DEFAULT NULL COMMENT '部门id',
+  `org_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '责任部门',
+  `apply_user_id` bigint DEFAULT NULL,
+  `apply_username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人',
+  `apply_time` datetime DEFAULT NULL COMMENT '申请时间',
+  `approved` tinyint DEFAULT NULL COMMENT '审批状态：0 审批中，1审批通过，2审批未通过',
+  `status` tinyint DEFAULT NULL COMMENT '状态：0启用，1禁用',
+  `approved_time` datetime DEFAULT NULL COMMENT '审批时间',
+  `process_instance_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+
+-- ----------------------------
+-- Records of biz_user_data_rel
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for dw_interface_info
+-- ----------------------------
+DROP TABLE IF EXISTS `dw_interface_info`;
+CREATE TABLE `dw_interface_info` (
+  `api_id` varchar(64) NOT NULL COMMENT 'ID',
+  `api_method` varchar(12) NOT NULL COMMENT 'HttpMethod：GET、PUT、POST',
+  `api_path` varchar(512) NOT NULL COMMENT '拦截路径',
+  `api_status` varchar(4) NOT NULL COMMENT '状态：0，1，2，3',
+  `api_comment` varchar(255) NOT NULL COMMENT '注释',
+  `api_type` varchar(24) NOT NULL COMMENT '脚本类型：SQL、DataQL',
+  `api_script` mediumtext NOT NULL COMMENT '查询脚本：xxxxxxx',
+  `api_schema` mediumtext NOT NULL COMMENT '接口的请求/响应数据结构',
+  `api_sample` mediumtext NOT NULL COMMENT '请求/响应/请求头样本数据',
+  `api_option` mediumtext NOT NULL COMMENT '扩展配置信息',
+  `api_create_time` varchar(32) NOT NULL COMMENT '创建时间',
+  `api_gmt_time` varchar(32) NOT NULL COMMENT '修改时间',
+  `project_id` int DEFAULT NULL COMMENT '所属项目id',
+  PRIMARY KEY (`api_id`) USING BTREE,
+  UNIQUE KEY `idx_interface_info` (`api_path`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='Dataway 中的API';
+
+-- ----------------------------
+-- Records of dw_interface_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `dw_interface_info` (`api_id`, `api_method`, `api_path`, `api_status`, `api_comment`, `api_type`, `api_script`, `api_schema`, `api_sample`, `api_option`, `api_create_time`, `api_gmt_time`, `project_id`) VALUES ('i_f2hmemj3k-42e', 'GET', '/api/test', '1', 'test', 'DataQL', '// a new Query.\nreturn ${message};', '{\"requestHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"requestBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"message\":{\"type\":\"string\"}}},\"responseHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"responseBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"executionTime\":{\"type\":\"number\"},\"code\":{\"type\":\"number\"},\"data\":{\"type\":\"string\"},\"success\":{\"type\":\"boolean\"},\"lifeCycleTime\":{\"type\":\"number\"},\"location\":{\"type\":[\"string\",\"boolean\",\"number\",\"object\",\"array\",\"null\"]},\"message\":{\"type\":\"string\"}}}}', '{\"requestHeader\":\"[]\",\"requestBody\":\"{\\\"message\\\":\\\"Hello DataQL.\\\"}\",\"responseHeader\":\"{}\",\"responseBody\":\"{\\n\\t\\\"success\\\":true,\\n\\t\\\"message\\\":\\\"OK\\\",\\n\\t\\\"code\\\":0,\\n\\t\\\"lifeCycleTime\\\":3,\\n\\t\\\"executionTime\\\":0,\\n\\t\\\"data\\\":\\\"Hello DataQL.\\\"\\n}\"}', '{\"enableCrossDomain\":false,\"hasor.dataway.globalConfig.responseFormat\":\"{\\n    \\\"success\\\"      : \\\"@resultStatus\\\",\\n    \\\"message\\\"      : \\\"@resultMessage\\\",\\n    \\\"location\\\"     : \\\"@blockLocation\\\",\\n    \\\"code\\\"         : \\\"@resultCode\\\",\\n    \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n    \\\"executionTime\\\": \\\"@timeExecution\\\",\\n    \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"API_BASE_URL\":\"/api/\",\"resultStructure\":true,\"showGitButton\":true,\"hasor.dataway.globalConfig.enableCrossDomain\":\"true\",\"CONTEXT_PATH\":\"/api\",\"hasor.dataway.globalConfig.resultStructure\":\"true\",\"responseFormat\":\"{\\n  \\\"success\\\"      : \\\"@resultStatus\\\",\\n  \\\"message\\\"      : \\\"@resultMessage\\\",\\n  \\\"location\\\"     : \\\"@codeLocation\\\",\\n  \\\"code\\\"         : \\\"@resultCode\\\",\\n  \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n  \\\"executionTime\\\": \\\"@timeExecution\\\",\\n  \\\"data\\\"        : \\\"@resultData\\\"\\n}\",\"wrapAllParameters\":false,\"hasor.dataway.globalConfig.wrapAllParameters\":\"false\",\"hasor.dataway.globalConfig.showGitButton\":\"true\",\"hasor.dataway.globalConfig.wrapParameterName\":\"root\",\"wrapParameterName\":\"root\"}', '1663731543836', '1663731626705', NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for dw_interface_release
+-- ----------------------------
+DROP TABLE IF EXISTS `dw_interface_release`;
+CREATE TABLE `dw_interface_release` (
+  `pub_id` varchar(64) NOT NULL COMMENT 'Publish ID',
+  `pub_api_id` varchar(64) NOT NULL COMMENT '所属API ID',
+  `pub_method` varchar(12) NOT NULL COMMENT 'HttpMethod：GET、PUT、POST',
+  `pub_path` varchar(512) NOT NULL COMMENT '拦截路径',
+  `pub_status` varchar(4) NOT NULL COMMENT '状态：0有效，1无效（可能被下线）',
+  `pub_type` varchar(24) NOT NULL COMMENT '脚本类型：SQL、DataQL',
+  `pub_script` mediumtext NOT NULL COMMENT '查询脚本：xxxxxxx',
+  `pub_script_ori` mediumtext NOT NULL COMMENT '原始查询脚本，仅当类型为SQL时不同',
+  `pub_schema` mediumtext NOT NULL COMMENT '接口的请求/响应数据结构',
+  `pub_sample` mediumtext NOT NULL COMMENT '请求/响应/请求头样本数据',
+  `pub_option` mediumtext NOT NULL COMMENT '扩展配置信息',
+  `pub_release_time` varchar(32) NOT NULL COMMENT '发布时间（下线不更新）',
+  `pub_comment` varchar(255) NOT NULL COMMENT '备注',
+  PRIMARY KEY (`pub_id`) USING BTREE,
+  KEY `idx_interface_release` (`pub_api_id`) USING BTREE,
+  KEY `idx_interface_release_path` (`pub_path`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='Dataway API 发布记录';
+
+-- ----------------------------
+-- Records of dw_interface_release
+-- ----------------------------
+BEGIN;
+INSERT INTO `dw_interface_release` (`pub_id`, `pub_api_id`, `pub_method`, `pub_path`, `pub_status`, `pub_type`, `pub_script`, `pub_script_ori`, `pub_schema`, `pub_sample`, `pub_option`, `pub_release_time`, `pub_comment`) VALUES ('r_f2hmemm6e-bli', 'i_f2hmemj3k-42e', 'POST', '/api/test', '3', 'DataQL', '// a new Query.\nreturn ${message};', '// a new Query.\nreturn ${message};', '{\"requestHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"requestBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"message\":{\"type\":\"string\"}}},\"responseHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"responseBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"executionTime\":{\"type\":\"number\"},\"code\":{\"type\":\"number\"},\"success\":{\"type\":\"boolean\"},\"lifeCycleTime\":{\"type\":\"number\"},\"location\":{\"type\":[\"string\",\"boolean\",\"number\",\"object\",\"array\",\"null\"]},\"message\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"}}}}', '{\"requestHeader\":\"[]\",\"requestBody\":\"{\\\"message\\\":\\\"Hello DataQL.\\\"}\",\"responseHeader\":\"{}\",\"responseBody\":\"{\\n\\t\\\"success\\\":true,\\n\\t\\\"message\\\":\\\"OK\\\",\\n\\t\\\"code\\\":0,\\n\\t\\\"lifeCycleTime\\\":5,\\n\\t\\\"executionTime\\\":0,\\n\\t\\\"value\\\":\\\"Hello DataQL.\\\"\\n}\"}', '{\"enableCrossDomain\":false,\"hasor.dataway.globalConfig.responseFormat\":\"{\\n    \\\"success\\\"      : \\\"@resultStatus\\\",\\n    \\\"message\\\"      : \\\"@resultMessage\\\",\\n    \\\"location\\\"     : \\\"@blockLocation\\\",\\n    \\\"code\\\"         : \\\"@resultCode\\\",\\n    \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n    \\\"executionTime\\\": \\\"@timeExecution\\\",\\n    \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"API_BASE_URL\":\"/api/\",\"resultStructure\":true,\"showGitButton\":true,\"hasor.dataway.globalConfig.enableCrossDomain\":\"true\",\"CONTEXT_PATH\":\"/api\",\"hasor.dataway.globalConfig.resultStructure\":\"true\",\"responseFormat\":\"{\\n  \\\"success\\\"      : \\\"@resultStatus\\\",\\n  \\\"message\\\"      : \\\"@resultMessage\\\",\\n  \\\"location\\\"     : \\\"@codeLocation\\\",\\n  \\\"code\\\"         : \\\"@resultCode\\\",\\n  \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n  \\\"executionTime\\\": \\\"@timeExecution\\\",\\n  \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"wrapAllParameters\":false,\"hasor.dataway.globalConfig.wrapAllParameters\":\"false\",\"hasor.dataway.globalConfig.showGitButton\":\"true\",\"hasor.dataway.globalConfig.wrapParameterName\":\"root\",\"wrapParameterName\":\"root\"}', '1663731545630', 'test');
+INSERT INTO `dw_interface_release` (`pub_id`, `pub_api_id`, `pub_method`, `pub_path`, `pub_status`, `pub_type`, `pub_script`, `pub_script_ori`, `pub_schema`, `pub_sample`, `pub_option`, `pub_release_time`, `pub_comment`) VALUES ('r_f2hmf29acafen', 'i_f2hmemj3k-42e', 'GET', '/api/test', '3', 'DataQL', '// a new Query.\nreturn ${message};', '// a new Query.\nreturn ${message};', '{\"requestHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"requestBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"message\":{\"type\":\"string\"}}},\"responseHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"responseBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"executionTime\":{\"type\":\"number\"},\"code\":{\"type\":\"number\"},\"success\":{\"type\":\"boolean\"},\"lifeCycleTime\":{\"type\":\"number\"},\"location\":{\"type\":[\"string\",\"boolean\",\"number\",\"object\",\"array\",\"null\"]},\"message\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"}}}}', '{\"requestHeader\":\"[]\",\"requestBody\":\"{\\\"message\\\":\\\"Hello DataQL.\\\"}\",\"responseHeader\":\"{}\",\"responseBody\":\"{\\n\\t\\\"success\\\":true,\\n\\t\\\"message\\\":\\\"OK\\\",\\n\\t\\\"code\\\":0,\\n\\t\\\"lifeCycleTime\\\":3,\\n\\t\\\"executionTime\\\":0,\\n\\t\\\"value\\\":\\\"Hello DataQL.\\\"\\n}\"}', '{\"enableCrossDomain\":false,\"hasor.dataway.globalConfig.responseFormat\":\"{\\n    \\\"success\\\"      : \\\"@resultStatus\\\",\\n    \\\"message\\\"      : \\\"@resultMessage\\\",\\n    \\\"location\\\"     : \\\"@blockLocation\\\",\\n    \\\"code\\\"         : \\\"@resultCode\\\",\\n    \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n    \\\"executionTime\\\": \\\"@timeExecution\\\",\\n    \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"API_BASE_URL\":\"/api/\",\"resultStructure\":true,\"showGitButton\":true,\"hasor.dataway.globalConfig.enableCrossDomain\":\"true\",\"CONTEXT_PATH\":\"/api\",\"hasor.dataway.globalConfig.resultStructure\":\"true\",\"responseFormat\":\"{\\n  \\\"success\\\"      : \\\"@resultStatus\\\",\\n  \\\"message\\\"      : \\\"@resultMessage\\\",\\n  \\\"location\\\"     : \\\"@codeLocation\\\",\\n  \\\"code\\\"         : \\\"@resultCode\\\",\\n  \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n  \\\"executionTime\\\": \\\"@timeExecution\\\",\\n  \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"wrapAllParameters\":false,\"hasor.dataway.globalConfig.wrapAllParameters\":\"false\",\"hasor.dataway.globalConfig.showGitButton\":\"true\",\"hasor.dataway.globalConfig.wrapParameterName\":\"root\",\"wrapParameterName\":\"root\"}', '1663731593532', 'test');
+INSERT INTO `dw_interface_release` (`pub_id`, `pub_api_id`, `pub_method`, `pub_path`, `pub_status`, `pub_type`, `pub_script`, `pub_script_ori`, `pub_schema`, `pub_sample`, `pub_option`, `pub_release_time`, `pub_comment`) VALUES ('r_f2hmf3kbk-2dj', 'i_f2hmemj3k-42e', 'GET', '/api/test', '3', 'DataQL', '// a new Query.\nreturn ${message};', '// a new Query.\nreturn ${message};', '{\"requestHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"requestBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"message\":{\"type\":\"string\"}}},\"responseHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"responseBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"executionTime\":{\"type\":\"number\"},\"code\":{\"type\":\"number\"},\"success\":{\"type\":\"boolean\"},\"lifeCycleTime\":{\"type\":\"number\"},\"location\":{\"type\":[\"string\",\"boolean\",\"number\",\"object\",\"array\",\"null\"]},\"message\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"}}}}', '{\"requestHeader\":\"[]\",\"requestBody\":\"{\\\"message\\\":\\\"Hello DataQL.\\\"}\",\"responseHeader\":\"{}\",\"responseBody\":\"{\\n\\t\\\"success\\\":true,\\n\\t\\\"message\\\":\\\"OK\\\",\\n\\t\\\"code\\\":0,\\n\\t\\\"lifeCycleTime\\\":4,\\n\\t\\\"executionTime\\\":0,\\n\\t\\\"value\\\":\\\"Hello DataQL.\\\"\\n}\"}', '{\"enableCrossDomain\":false,\"hasor.dataway.globalConfig.responseFormat\":\"{\\n    \\\"success\\\"      : \\\"@resultStatus\\\",\\n    \\\"message\\\"      : \\\"@resultMessage\\\",\\n    \\\"location\\\"     : \\\"@blockLocation\\\",\\n    \\\"code\\\"         : \\\"@resultCode\\\",\\n    \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n    \\\"executionTime\\\": \\\"@timeExecution\\\",\\n    \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"API_BASE_URL\":\"/api/\",\"resultStructure\":true,\"showGitButton\":true,\"hasor.dataway.globalConfig.enableCrossDomain\":\"true\",\"CONTEXT_PATH\":\"/api\",\"hasor.dataway.globalConfig.resultStructure\":\"true\",\"responseFormat\":\"{\\n  \\\"success\\\"      : \\\"@resultStatus\\\",\\n  \\\"message\\\"      : \\\"@resultMessage\\\",\\n  \\\"location\\\"     : \\\"@codeLocation\\\",\\n  \\\"code\\\"         : \\\"@resultCode\\\",\\n  \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n  \\\"executionTime\\\": \\\"@timeExecution\\\",\\n  \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"wrapAllParameters\":false,\"hasor.dataway.globalConfig.wrapAllParameters\":\"false\",\"hasor.dataway.globalConfig.showGitButton\":\"true\",\"hasor.dataway.globalConfig.wrapParameterName\":\"root\",\"wrapParameterName\":\"root\"}', '1663731613724', 'test');
+INSERT INTO `dw_interface_release` (`pub_id`, `pub_api_id`, `pub_method`, `pub_path`, `pub_status`, `pub_type`, `pub_script`, `pub_script_ori`, `pub_schema`, `pub_sample`, `pub_option`, `pub_release_time`, `pub_comment`) VALUES ('r_f2hmf4j0kai95', 'i_f2hmemj3k-42e', 'GET', '/api/test', '1', 'DataQL', '// a new Query.\nreturn ${message};', '// a new Query.\nreturn ${message};', '{\"requestHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"requestBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"message\":{\"type\":\"string\"}}},\"responseHeader\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}},\"responseBody\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"executionTime\":{\"type\":\"number\"},\"code\":{\"type\":\"number\"},\"data\":{\"type\":\"string\"},\"success\":{\"type\":\"boolean\"},\"lifeCycleTime\":{\"type\":\"number\"},\"location\":{\"type\":[\"string\",\"boolean\",\"number\",\"object\",\"array\",\"null\"]},\"message\":{\"type\":\"string\"}}}}', '{\"requestHeader\":\"[]\",\"requestBody\":\"{\\\"message\\\":\\\"Hello DataQL.\\\"}\",\"responseHeader\":\"{}\",\"responseBody\":\"{\\n\\t\\\"success\\\":true,\\n\\t\\\"message\\\":\\\"OK\\\",\\n\\t\\\"code\\\":0,\\n\\t\\\"lifeCycleTime\\\":3,\\n\\t\\\"executionTime\\\":0,\\n\\t\\\"data\\\":\\\"Hello DataQL.\\\"\\n}\"}', '{\"enableCrossDomain\":false,\"hasor.dataway.globalConfig.responseFormat\":\"{\\n    \\\"success\\\"      : \\\"@resultStatus\\\",\\n    \\\"message\\\"      : \\\"@resultMessage\\\",\\n    \\\"location\\\"     : \\\"@blockLocation\\\",\\n    \\\"code\\\"         : \\\"@resultCode\\\",\\n    \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n    \\\"executionTime\\\": \\\"@timeExecution\\\",\\n    \\\"value\\\"        : \\\"@resultData\\\"\\n}\",\"API_BASE_URL\":\"/api/\",\"resultStructure\":true,\"showGitButton\":true,\"hasor.dataway.globalConfig.enableCrossDomain\":\"true\",\"CONTEXT_PATH\":\"/api\",\"hasor.dataway.globalConfig.resultStructure\":\"true\",\"responseFormat\":\"{\\n  \\\"success\\\"      : \\\"@resultStatus\\\",\\n  \\\"message\\\"      : \\\"@resultMessage\\\",\\n  \\\"location\\\"     : \\\"@codeLocation\\\",\\n  \\\"code\\\"         : \\\"@resultCode\\\",\\n  \\\"lifeCycleTime\\\": \\\"@timeLifeCycle\\\",\\n  \\\"executionTime\\\": \\\"@timeExecution\\\",\\n  \\\"data\\\"        : \\\"@resultData\\\"\\n}\",\"wrapAllParameters\":false,\"hasor.dataway.globalConfig.wrapAllParameters\":\"false\",\"hasor.dataway.globalConfig.showGitButton\":\"true\",\"hasor.dataway.globalConfig.wrapParameterName\":\"root\",\"wrapParameterName\":\"root\"}', '1663731626708', 'test');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_config
@@ -548,7 +801,7 @@ CREATE TABLE `t_login_log` (
   `success` tinyint DEFAULT NULL COMMENT '是否成功',
   `error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '错误信息',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_login_log
@@ -567,6 +820,21 @@ INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`
 INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (11, 'admin', 0, '2022-11-02 18:21:30', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
 INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (12, 'admin', 0, '2022-11-02 18:58:44', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
 INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (13, 'admin', 0, '2022-11-02 19:01:35', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (14, 'admin', 0, '2022-11-04 16:04:56', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (15, 'admin', 1, '2022-11-04 16:05:03', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (16, 'admin', 0, '2022-11-04 16:29:06', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (17, 'admin', 1, '2022-11-04 16:34:41', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (18, 'admin', 3, '2022-11-06 13:45:51', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (19, 'admin', 0, '2022-11-06 13:45:49', '127.0.0.1', 'Chrome', 'OSX', 0, 'Token已被顶下线：753d637c-bb48-49fb-9ee1-d092268d0c58');
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (20, 'admin', 0, '2022-11-06 13:45:50', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (21, 'admin', 3, '2022-11-06 13:45:56', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (22, 'admin', 0, '2022-11-06 13:45:56', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (23, 'admin', 1, '2022-11-06 13:46:00', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (24, 'admin', 0, '2022-11-06 13:46:06', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (25, 'admin', 1, '2022-11-06 14:38:41', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (26, 'admin', 0, '2022-11-07 11:23:58', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (27, 'admin', 0, '2022-11-07 11:51:47', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
+INSERT INTO `t_login_log` (`id`, `username`, `type`, `datetime`, `ip`, `browser`, `os`, `success`, `error_message`) VALUES (28, 'admin', 0, '2022-11-07 12:08:29', '127.0.0.1', 'Chrome', 'OSX', 1, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -594,7 +862,7 @@ CREATE TABLE `t_menu` (
   `del_flag` tinyint DEFAULT '0' COMMENT '删除标志',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_permission` (`permission`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- ----------------------------
 -- Records of t_menu
@@ -685,6 +953,7 @@ INSERT INTO `t_menu` (`id`, `parent_id`, `type`, `name`, `path`, `component`, `p
 INSERT INTO `t_menu` (`id`, `parent_id`, `type`, `name`, `path`, `component`, `permission`, `icon`, `url`, `target`, `show`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (83, 77, '2', '执行任务', NULL, NULL, 'task:execute', NULL, NULL, '_none', 1, 99, NULL, 'admin', '2022-11-01 16:44:44', 'admin', '2022-11-01 16:44:44', 0);
 INSERT INTO `t_menu` (`id`, `parent_id`, `type`, `name`, `path`, `component`, `permission`, `icon`, `url`, `target`, `show`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (84, 77, '2', '启动任务', NULL, NULL, 'task:start', NULL, NULL, '_none', 1, 99, NULL, 'admin', '2022-11-01 16:59:40', 'admin', '2022-11-01 16:59:40', 0);
 INSERT INTO `t_menu` (`id`, `parent_id`, `type`, `name`, `path`, `component`, `permission`, `icon`, `url`, `target`, `show`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (85, 77, '2', '暂停任务', NULL, NULL, 'task:stop', NULL, NULL, '_none', 1, 99, NULL, 'admin', '2022-11-01 16:59:54', 'admin', '2022-11-01 16:59:54', 0);
+INSERT INTO `t_menu` (`id`, `parent_id`, `type`, `name`, `path`, `component`, `permission`, `icon`, `url`, `target`, `show`, `sort`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (86, 12, '1', '任务日志', '/log/task', 'system/task/TaskLog', NULL, 'icon-Report', NULL, '_component', 1, 99, NULL, 'admin', '2022-11-07 11:57:09', 'admin', '2022-11-07 11:57:09', 0);
 COMMIT;
 
 -- ----------------------------
@@ -712,7 +981,7 @@ CREATE TABLE `t_operation_log` (
   `error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '错误信息',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_datetime` (`datetime`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_operation_log
@@ -730,6 +999,8 @@ INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `
 INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (10, '组织管理', 'update', 'admin', '2022-11-02 18:19:35', '更新了组织[test].', '/api/org/update', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.rainy.system.controller.OrgController', 'update', '[Org(parentId=0, name=test, code=11111, sort=99, description=11, children=null)]', NULL, 2, 1, NULL);
 INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (11, '设备管理', 'import', 'admin', '2022-11-02 18:20:13', '导入了设备列表', '/api/devices/import', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.rainy.dmplatfrom.controller.DeviceController', 'importExcel', '[org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@6bd979c6]', NULL, 10, 1, 'You need to add dependency of \'poi-ooxml\' to your project, and version >= 4.1.2');
 INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (12, '设备管理', 'import', 'admin', '2022-11-02 18:21:45', '导入了设备列表', '/api/devices/import', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.rainy.dmplatfrom.controller.DeviceController', 'importExcel', '[org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@4cdb14c1]', NULL, 11684, 1, NULL);
+INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (13, '定时任务管理', 'add', 'admin', '2022-11-07 11:51:52', '执行了定时任务[定时打印一句话].', '/api/task/execute', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.rainy.job.controller.ScheduleTaskController', 'executeTask', '[ScheduleTask(id=1, category=test, name=定时打印一句话, cron=*/2 * * * * ?, className=com.rainy.job.SampleJob, status=1, description=打印一句话)]', NULL, 10, 1, NULL);
+INSERT INTO `t_operation_log` (`id`, `module`, `type`, `username`, `datetime`, `detail`, `path`, `method`, `remote_ip`, `browser`, `os`, `class_name`, `method_name`, `params`, `result`, `process_time`, `success`, `error_message`) VALUES (14, '菜单管理', 'add', 'admin', '2022-11-07 11:57:09', '新增了菜单[任务日志].', '/api/menu', 'POST', '127.0.0.1', 'Chrome', 'OSX', 'com.rainy.system.controller.MenuController', 'save', '[Menu(parentId=12, name=任务日志, path=/log/task, component=system/task/TaskLog, target=_component, type=1, icon=icon-Report, url=null, permission=null, show=true, sort=99, description=null, children=null)]', NULL, 9, 1, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -755,11 +1026,11 @@ CREATE TABLE `t_org` (
 -- Records of t_org
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (1, 0, '电科院', 'dfgx', '电科院', 99, '2022-04-05 17:57:52', 'admin', '2022-10-11 16:57:02', 'admin', 0);
-INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (2, 1, '新能源所', '5', '新能源所', 99, '2022-04-05 17:57:52', 'admin', '2022-10-11 16:57:18', 'admin', 0);
-INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (3, 1, '金属所', '6', '金属所', 99, '2022-04-10 19:53:58', 'admin', '2022-09-26 17:16:16', NULL, 0);
+INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (1, 0, '电科院', 'dky', '电科院', 99, '2022-04-05 17:57:52', 'admin', '2022-10-11 16:57:02', 'admin', 0);
+INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (2, 1, '新能源所', 'xny', '新能源所', 99, '2022-04-05 17:57:52', 'admin', '2022-10-11 16:57:18', 'admin', 0);
+INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (3, 1, '金属所', 'jss', '金属所', 99, '2022-04-10 19:53:58', 'admin', '2022-09-26 17:16:16', NULL, 0);
 INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (4, 1, '锅炉所', 'gls', '锅炉所', 99, '2022-09-26 17:16:35', NULL, '2022-09-26 17:16:49', NULL, 0);
-INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (5, 0, 'test', '11111', '11', 99, '2022-10-21 12:26:51', 'admin', '2022-11-02 18:19:35', 'admin', 0);
+INSERT INTO `t_org` (`id`, `parent_id`, `name`, `code`, `description`, `sort`, `create_time`, `create_by`, `update_time`, `update_by`, `del_flag`) VALUES (5, 0, 'test', 'test', '11', 99, '2022-10-21 12:26:51', 'admin', '2022-11-02 18:19:35', 'admin', 0);
 COMMIT;
 
 -- ----------------------------
@@ -993,6 +1264,29 @@ INSERT INTO `t_task` (`id`, `name`, `category`, `cron`, `class_name`, `status`, 
 COMMIT;
 
 -- ----------------------------
+-- Table structure for t_task_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_task_log`;
+CREATE TABLE `t_task_log` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '任务名称',
+  `category` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '任务分类',
+  `class_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'java 类名',
+  `datetime` datetime DEFAULT NULL COMMENT '执行时间',
+  `process_time` int DEFAULT NULL COMMENT '执行时长',
+  `success` tinyint DEFAULT NULL COMMENT '任务状态，0成功，1失败',
+  `error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '错误信息',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='定时任务执行日志';
+
+-- ----------------------------
+-- Records of t_task_log
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_task_log` (`id`, `name`, `category`, `class_name`, `datetime`, `process_time`, `success`, `error_message`) VALUES (1, '定时打印一句话', 'test', 'com.rainy.job.SampleJob', '2022-11-07 11:51:52', 5, 1, NULL);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
@@ -1029,7 +1323,7 @@ CREATE TABLE `t_user` (
 -- Records of t_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_user` (`id`, `org_id`, `position_id`, `username`, `password`, `salt`, `nick_name`, `birthday`, `avatar`, `email`, `telephone`, `phone_number`, `status`, `username_expired_time`, `password_expired_time`, `login_count`, `last_login_time`, `last_login_ip`, `browser`, `os`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (1, 1, 1, 'admin', 'Bonc@123', 'admin', '超级管理员', '2022-09-30', '/avatar.jpg', '1@qq.com', '0311-8852588', '13131111311', 0, NULL, NULL, 3, '2022-11-02 19:01:35', '127.0.0.1', 'Chrome', 'OSX', 'admin', '2022-03-29 18:52:44', 'admin', '2022-11-02 19:01:35', 0);
+INSERT INTO `t_user` (`id`, `org_id`, `position_id`, `username`, `password`, `salt`, `nick_name`, `birthday`, `avatar`, `email`, `telephone`, `phone_number`, `status`, `username_expired_time`, `password_expired_time`, `login_count`, `last_login_time`, `last_login_ip`, `browser`, `os`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (1, 1, 1, 'admin', 'Bonc@123', 'admin', '超级管理员', '2022-09-30', '/avatar.jpg', '1@qq.com', '0311-8852588', '13131111311', 0, NULL, NULL, 11, '2022-11-07 12:08:29', '127.0.0.1', 'Chrome', 'OSX', 'admin', '2022-03-29 18:52:44', 'admin', '2022-11-07 12:08:29', 0);
 INSERT INTO `t_user` (`id`, `org_id`, `position_id`, `username`, `password`, `salt`, `nick_name`, `birthday`, `avatar`, `email`, `telephone`, `phone_number`, `status`, `username_expired_time`, `password_expired_time`, `login_count`, `last_login_time`, `last_login_ip`, `browser`, `os`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (2, 1, 27, 'system', 'system', 'admin', '系统管理员', '2022-09-01', '/avatar.jpg', '2@qq.com', '0311-8852588', '13131111311', 0, NULL, NULL, 1, '2022-05-05 16:11:38', '127.0.0.1', 'Chrome/97.0.4692.71', 'OSX/10_15_7', 'admin', NULL, 'admin', '2022-10-25 14:56:21', 0);
 INSERT INTO `t_user` (`id`, `org_id`, `position_id`, `username`, `password`, `salt`, `nick_name`, `birthday`, `avatar`, `email`, `telephone`, `phone_number`, `status`, `username_expired_time`, `password_expired_time`, `login_count`, `last_login_time`, `last_login_ip`, `browser`, `os`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (3, 1, 28, 'audit', '123456', 'admin', '审计管理员', '2022-09-01', '/avatar.jpg', '3@qq.com', '0311-8852588', '13131111311', 0, NULL, NULL, 1, '2022-04-16 17:20:53', '127.0.0.1', 'Chrome/100.0.4896.127', 'Windows 10 or Windows Server 2016/10.0', 'admin', NULL, 'admin', '2022-10-04 21:31:06', 0);
 INSERT INTO `t_user` (`id`, `org_id`, `position_id`, `username`, `password`, `salt`, `nick_name`, `birthday`, `avatar`, `email`, `telephone`, `phone_number`, `status`, `username_expired_time`, `password_expired_time`, `login_count`, `last_login_time`, `last_login_ip`, `browser`, `os`, `create_by`, `create_time`, `update_by`, `update_time`, `del_flag`) VALUES (4, 6, NULL, 'test', 'test', NULL, 'test', '2022-01-01', '/avatar.jpg', '131@qq.com', '0311-8852588', '13131111311', 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'admin', '2022-10-02 22:31:51', 'admin', '2022-10-26 10:29:29', 0);

@@ -9,7 +9,7 @@
           <a-input v-model:value="queryParam.code" placeholder="请输唯一编码" />
         </a-form-item>
         <a-form-item label="字典分类">
-          <a-select style="width: 100px" v-model:value="queryParam.categoryCode" placeholder="请选择分类" @select="$refs.table.refresh()">
+          <a-select style="width: 150px" v-model:value="queryParam.categoryCode" placeholder="请选择分类" @select="$refs.table.refresh()">
             <a-select-option :key="item.value" v-for="item in appStore.dictItems('sys_dict_category')" :value="item.value">
               {{ item.name }}
             </a-select-option>

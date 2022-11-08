@@ -7,7 +7,7 @@ export const defaultConfig = {
   fixSiderbar: true,
   splitMenus: false,
   collapsed: false,
-  siderWidth: 210,
+  siderWidth: 240,
   collapsedWidth: 48,
   headerHeight: 55,
   multiTab: true,
