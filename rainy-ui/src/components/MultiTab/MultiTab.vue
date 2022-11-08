@@ -57,6 +57,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/store/app'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const appStore = useAppStore()
@@ -69,7 +70,7 @@ const indexRouter = {
   }
 }
 
-const tagList = ref(appStore.tagList)
+const { tagList } = storeToRefs(appStore)
 const activeKey = ref()
 
 watch(
@@ -133,6 +134,12 @@ const refresh = () => {
   reload()
 }
 const closeAll = () => {
+  if (indexRouter.fullPath === router.currentRoute.value.fullPath) {
+    tagList.value = [indexRouter]
+  } else {
+    tagList.value = [indexRouter, router.currentRoute.value]
+  }
+  activeKey.value = router.currentRoute.value.fullPath
 }
 </script>
 
